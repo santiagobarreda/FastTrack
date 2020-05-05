@@ -1,8 +1,5 @@
 
 procedure aggregate
-
-  ## make this work for f0 and also provide duration just because
-
   @getSettings
 
   beginPause: "Set Parameters"
