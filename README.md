@@ -5,7 +5,7 @@
 </p>   
 &nbsp;
 
-**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** 
+**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki)
 ###
 
 To get accurate formant measurements, Praat must look for the correct number of formants below some unknown cutoff frequency. If a user wants to look for a fixed number of formants, the question becomes: What should the cutoff frequency be?    
