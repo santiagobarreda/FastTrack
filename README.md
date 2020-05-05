@@ -1,7 +1,7 @@
 
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/stuff/docs/fasttrack.png?raw=true" width=630>
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/fasttrack.png?raw=true" width=630>
 </p>   
 &nbsp;
 
