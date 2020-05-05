@@ -34,7 +34,7 @@ Fast Track speeds up formant tracking by automatically trying multiple analysis-
 
 &nbsp;
 
-The above algorithm can be applied to a single file or to an entire folder at once. FastTrack generates (among other things): 
+The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
 
 * CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, and intensity sampled every 2 ms (by default). 
 
