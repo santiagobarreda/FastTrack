@@ -1,7 +1,7 @@
 
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FTT/blob/master/stuff/images/logo.png?raw=true" width=630>
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/stuff/images/logo.png?raw=true" width=630>
 </p>   
 &nbsp;
 
@@ -62,7 +62,7 @@ We can automatically generate an image comparing the alternate possible analyses
 
 &nbsp;
 
-[For more information please see the wiki](https://github.com/santiagobarreda/FastTrack_/wiki)!
+[For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
 
 
 ### Author
