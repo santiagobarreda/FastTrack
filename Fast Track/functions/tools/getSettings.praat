@@ -5,7 +5,7 @@ procedure getSettings
 
   folder$ = Get string: 1
 
-  if folder$ == "--please set your folder---"
+  if folder$ == "--please set your folder--"
     exitScript: "Please set your default working folder before proceeding."
   endif
 
