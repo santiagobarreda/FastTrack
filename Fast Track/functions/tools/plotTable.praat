@@ -1,7 +1,4 @@
 
-## needs a sound called snd and a tabler called output with the formant information
-## call with spectrogram object instead of sound!
-
 procedure plotTable .sp, .tbl, .maximum_plotting_frequency
   selectObject: .sp
   .total_duration = Get total duration

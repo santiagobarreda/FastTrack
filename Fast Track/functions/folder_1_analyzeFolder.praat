@@ -12,7 +12,7 @@ beginPause: "Set Parameters"
     comment: "Indicate your working directory. This folder shgould contain a folder inside of it."
     comment: "called 'sounds' that contains all of the sounds you wih to analyze."
     sentence: "Folder:", folder$
-    comment: "Recommended ranges: 4000-6500 for adult males, 5000-7000 for everyone else."
+    comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
 		positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
 		positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
     comment: "Number of analyses between low and high analysis limits. More analysis steps may"

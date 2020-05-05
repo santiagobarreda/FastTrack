@@ -1,7 +1,4 @@
 
-# saving images and csvs of formant objects no functional yet. (still?)
-## relies on external spectrogram file
-
 procedure editTracks: fr
   selectObject: fr
   #.nframes = Get number of frames

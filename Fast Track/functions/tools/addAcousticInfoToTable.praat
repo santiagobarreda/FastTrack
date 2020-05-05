@@ -1,6 +1,4 @@
 
-# there needs to be a table called output and a sound called snd
-
 procedure addAcousticInfoToTable .tbl, .snd
 
   selectObject: .tbl

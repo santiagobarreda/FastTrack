@@ -1,6 +1,4 @@
 
-## outputs totalerror, coeffs, and coeffcount
-
 procedure findError .fr
 
   ####################################################################################

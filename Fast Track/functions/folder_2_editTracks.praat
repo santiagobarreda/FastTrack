@@ -23,6 +23,7 @@ if ending$ == "\"
 endif
 
 createDirectory: folder$ + "/formants_edited"
+createDirectory: folder$ + "/images_edited"
 number_of_formants = number(number_of_formants$)
 
 maximum_plotting_frequency = maximum_plotting_frequency

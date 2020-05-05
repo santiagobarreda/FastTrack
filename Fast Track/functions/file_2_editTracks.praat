@@ -23,7 +23,6 @@ basename$ = selected$ ("Sound")
 total_duration = Get total duration
 sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 
-# this needs to be set to run but is not relevant in this context. tells finderror (inside this)
 @editTracks: fr
 removeObject: sp
 

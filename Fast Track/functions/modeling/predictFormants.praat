@@ -1,6 +1,5 @@
 
 procedure predictFormants .ff
-  ## this makes predictors, cosine waves. adding a column in a table with this name
   selectObject: "Table output"
   Copy: "regression"
   Remove column... frame
