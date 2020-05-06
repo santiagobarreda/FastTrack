@@ -205,10 +205,10 @@ procedure autoSelectFolder
     ## save image if desired
     if save_image = 1
 
-      Select outer viewport: .xlims#[.winner]-0.1, .xlims#[.winner]+3.3, .ylims#[.winner]-0.1, .ylims#[.winner]+2.1
-      Draw inner box
-      Select outer viewport: .xlims#[.winner]-0.05, .xlims#[.winner]+3.25, .ylims#[.winner]-0.05, .ylims#[.winner]+2.05
-      Draw inner box
+      #Select outer viewport: .xlims#[.winner]-0.1, .xlims#[.winner]+3.3, .ylims#[.winner]-0.1, .ylims#[.winner]+2.1
+      #Draw inner box
+      #Select outer viewport: .xlims#[.winner]-0.05, .xlims#[.winner]+3.25, .ylims#[.winner]-0.05, .ylims#[.winner]+2.05
+      #Draw inner box
 
       Font size: 10
       if number_of_steps = 8
@@ -225,7 +225,8 @@ procedure autoSelectFolder
       Save as 300-dpi PNG file: folder$ + "/images_comparison/" + .basename$+"_comparison.png"
     endif
 
-    nocheck removeObject: .snd, .sp
+    nocheck removeObject: .snd
+    nocheck removeObject: .sp
 
   endfor
   #########################################################################################################################
