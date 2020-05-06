@@ -137,7 +137,7 @@ procedure autoSelectFolder
         selectObject: "Table output"
         .tbl = selected ("Table")
         Font size: 8
-        @plotTable: .sp, .tbl, maximum_plotting_frequency
+        @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5
       endif
 
       removeObject: .fr

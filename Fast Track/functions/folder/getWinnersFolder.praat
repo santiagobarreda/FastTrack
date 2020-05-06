@@ -105,7 +105,7 @@ procedure getWinnersFolder
 
 			Erase all
 		  Select outer viewport: 0, 7.5, 0, 4.5
-		  @plotTable: .sp, .tbl, maximum_plotting_frequency
+		  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
 			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
 
 			@addAcousticInfoToTable: .tbl, .snd
@@ -172,7 +172,7 @@ procedure getWinnersFolder
 
 				Erase all
 			  Select outer viewport: 0, 7.5, 0, 4.5
-			  @plotTable: .sp, .tbl, maximum_plotting_frequency
+			  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
 				Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
 			endif
 			if save_csvs = 1

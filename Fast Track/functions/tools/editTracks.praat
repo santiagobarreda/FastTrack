@@ -63,7 +63,7 @@ procedure editTracks: fr
 
     Erase all
     Select outer viewport: 0, 7.5, 0, 4.5
-    @plotTable: sp, tbl, maximum_plotting_frequency
+    @plotTable: sp, tbl, maximum_plotting_frequency, 1
     beginPause: "Is the tracking acceptable?"
     .clicked = endPause: "Finish", "Edit", 1
 

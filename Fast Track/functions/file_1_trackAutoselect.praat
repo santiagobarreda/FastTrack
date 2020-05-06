@@ -111,7 +111,7 @@ if image = 1
   tbl = selected ("Table")
   selectObject: snd
   sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-  @plotTable: sp, tbl, maximum_plotting_frequency
+  @plotTable: sp, tbl, maximum_plotting_frequency, 1
   removeObject: sp
 
   # change to save with filename or not
@@ -133,7 +133,7 @@ if image = 1
 		 selectObject: "Table formants_" + string$(z)
 		 tbl = selected ("Table")
      Font size: 8
-		 @plotTable: sp, tbl, maximum_plotting_frequency
+		 @plotTable: sp, tbl, maximum_plotting_frequency, 0.5
 
 		 if z = winner
 			 Select outer viewport: xlims#[z]-0.1, xlims#[z]+3.3, ylims#[z]-0.1, ylims#[z]+2.1
