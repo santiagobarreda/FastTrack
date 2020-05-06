@@ -33,7 +33,7 @@ comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short s
 	        option: "Show image of winner"
 					option: "Show image comparing of all analyses"
 		comment: "Choose which data to save and/or return."
-		boolean: "return formant", 1 ;
+		boolean: "return formant", 0 ;
     boolean: "save formant", 0 ;
 		boolean: "save csv", 0 ;
 		boolean: "save all formants", 0

@@ -77,10 +77,10 @@ for i from 1 to nIntervals
     if count > 999
       filename$ = sndName$ + "_" + string$(count)
     endif
-    if count > 99 count < 1000
+    if count > 99 and count < 1000
       filename$ = sndName$ + "_0" + string$(count)
     endif
-    if count > 9 & count < 100
+    if count > 9 and count < 100
       filename$ = sndName$ + "_00" + string$(count)
     endif
     if count < 10

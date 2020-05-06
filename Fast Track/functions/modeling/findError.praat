@@ -101,5 +101,6 @@ procedure findError .fr
   for .ff from 1 to number_of_formants
     Remove column... error'.ff'
   endfor
+  Remove column... frame
 
 endproc

@@ -18,15 +18,15 @@ procedure plotTable .sp, .tbl, .maximum_plotting_frequency, pointSize
   Magenta
   nocheck Scatter plot (mark): "time", 0, .total_duration, "f4", 0, .maximum_plotting_frequency, pointSize+0.2, "no", "o"
 
-  Yellow
+  Colour: {255/256, 209/256, 26/256}
   Scatter plot (mark): "time", 0, .total_duration, "f1p", 0, .maximum_plotting_frequency, pointSize, "no", "."
-  Lime
+  Green
   Scatter plot (mark): "time", 0, .total_duration, "f2p", 0, .maximum_plotting_frequency, pointSize, "no", "."
   Cyan
   Scatter plot (mark): "time", 0, .total_duration, "f3p", 0, .maximum_plotting_frequency, pointSize-0.1, "no", "."
   Blue
   Scatter plot (mark): "time", 0, .total_duration, "f3p", 0, .maximum_plotting_frequency, pointSize, "no", "."
-  Magenta
+  Red
   nocheck Scatter plot (mark): "time", 0, .total_duration, "f4p", 0, .maximum_plotting_frequency, pointSize, "no", "."
 
   Line width: 1
