@@ -9,10 +9,10 @@ procedure findError .fr
   Rename: "output"
   number_of_frames = Get number of rows
   Remove column: "nformants"
-  Remove column: "F5(Hz)"
-  Remove column: "B5(Hz)"
-  Remove column: "F6(Hz)"
-  Remove column: "B6(Hz)"
+  nocheck Remove column: "F5(Hz)"
+  nocheck Remove column: "B5(Hz)"
+  nocheck Remove column: "F6(Hz)"
+  nocheck Remove column: "B6(Hz)"
   Set column label (label): "time(s)", "time"
 
   for .i from 1 to 4
@@ -69,14 +69,6 @@ procedure findError .fr
 
   ###############################################################################
   ### Here is where the error is calculated. add interquartile range and variance.
-
-
-  ## difference between predicted and observed
-  for .ff from 1 to number_of_formants
-    Append difference column... f'.ff' f'.ff'p error'.ff'
-    Formula... error'.ff' abs (self)
-    Formula... f'.ff'p round (self*10)/10
-  endfor
 
   formantError# = zero#(number_of_formants)
   totalerror = 0

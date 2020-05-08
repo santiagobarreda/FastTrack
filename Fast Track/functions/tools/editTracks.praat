@@ -2,7 +2,6 @@
 procedure editTracks: fr
   selectObject: fr
   #.nframes = Get number of frames
-  number_of_coefficients_for_formant_prediction = 5
 
   .clicked = 0
   while .clicked <> 1

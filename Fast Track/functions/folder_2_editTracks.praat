@@ -4,7 +4,7 @@ include tools/importFunctions.praat
 @getSettings
 
 beginPause: "Set Parameters"
-		sentence: "Working folder", folder$
+		sentence: "Folder", folder$
 		positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
 		optionMenu: "Number of formants", number_of_formants
 						option: "3"
@@ -24,6 +24,7 @@ endif
 
 createDirectory: folder$ + "/formants_edited"
 createDirectory: folder$ + "/images_edited"
+
 number_of_formants = number(number_of_formants$)
 
 maximum_plotting_frequency = maximum_plotting_frequency
@@ -36,7 +37,7 @@ for iii from 1 to nfiles
   filename$ = Get string: iii
   basename$ = filename$ - "_winner_.Formant"
   fr = Read from file: folder$ + "/formants_edited/"+ filename$
-  Rename: basename$ + "_edited_"
+  Rename: filename$ + "_edited_"
 
   snd = Read from file: folder$ + "/sounds/"+ basename$ + ".wav"
   total_duration = Get total duration

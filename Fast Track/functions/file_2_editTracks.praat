@@ -6,14 +6,15 @@ include tools/importFunctions.praat
 @getSettings
 
 beginPause: "Set Parameters"
-		positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
-		optionMenu: "Number of formants", number_of_formants
+	positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
+	optionMenu: "Number of formants", number_of_formants
 						option: "3"
 						option: "4"
-		boolean: "save formant", 0 ;
-		boolean: "return table", 1
+    positive: "Number of coefficients for formant prediction:", number_of_coefficients_for_formant_prediction
+	boolean: "save formant", 0 ;
+	boolean: "return table", 1
     boolean: "save csv", 0
-		boolean: "save image", 0
+	boolean: "save image", 0
 endPause: "Ok", 1
 
 number_of_formants = number(number_of_formants$)

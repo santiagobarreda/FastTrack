@@ -28,4 +28,6 @@ beginPause: "Set Parameters"
 
 endPause: "Ok", 1
 
+folder$ = default_working_directory$
+
 @saveSettings
