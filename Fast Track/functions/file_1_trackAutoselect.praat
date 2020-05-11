@@ -7,7 +7,7 @@ snd = selected ()
 basename$ = selected$ ("Sound")
 #total_duration = Get total duration
 
-include tools/importFunctions.praat
+include utils/importfunctions.praat
 
 @getSettings
 

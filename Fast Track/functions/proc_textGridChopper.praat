@@ -4,7 +4,7 @@ tg = selected ("TextGrid")
 snd = selected ("Sound")
 sndName$ = selected$ ("Sound")
 
-include tools/importFunctions.praat
+include utils/importfunctions.praat
 @getSettings
 
 beginPause: "Set Parameters"
