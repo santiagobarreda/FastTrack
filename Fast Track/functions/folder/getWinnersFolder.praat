@@ -90,11 +90,11 @@ procedure getWinnersFolder
 
 		  @findError: .tmp_fr
 			for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
-				winf1coeffs#[.jj] = f1coeffs[.jj]
-				winf2coeffs#[.jj] = f2coeffs[.jj]
-				winf3coeffs#[.jj] = f3coeffs[.jj]
+				winf1coeffs#[.jj] = f1coeffs#[.jj]
+				winf2coeffs#[.jj] = f2coeffs#[.jj]
+				winf3coeffs#[.jj] = f3coeffs#[.jj]
 				if number_of_formants == 4
-					winf4coeffs#[.jj] = f4coeffs[.jj]
+					winf4coeffs#[.jj] = f4coeffs#[.jj]
 				endif
 			endfor
 		  selectObject: "Table output"
@@ -155,11 +155,11 @@ procedure getWinnersFolder
 				@makeFormantTable: .tmp_fr
 			  @findError
 				for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
-					winf1coeffs#[.jj] = f1coeffs[.jj]
-					winf2coeffs#[.jj] = f2coeffs[.jj]
-					winf3coeffs#[.jj] = f3coeffs[.jj]
+					winf1coeffs#[.jj] = f1coeffs#[.jj]
+					winf2coeffs#[.jj] = f2coeffs#[.jj]
+					winf3coeffs#[.jj] = f3coeffs#[.jj]
 					if number_of_formants == 4
-						winf4coeffs#[.jj] = f4coeffs[.jj]
+						winf4coeffs#[.jj] = f4coeffs#[.jj]
 					endif
 				endfor
 			  selectObject: "Table output"

@@ -5,10 +5,7 @@ procedure getCoefficients
       comment: "Indicate your working directory. This folder should contain a folder inside of it."
       comment: "called 'infos' that contains regression coefficients for each sound."
       sentence: "Working directory:", folder$
-      optionMenu: "Number of formants:", number_of_formants
-          option: "3"
-          option: "4"
-    endPause: "Ok", 1
+     endPause: "Ok", 1
     
     ending$ = right$ (folder$,1)
     if ending$ == "/"
@@ -22,10 +19,14 @@ procedure getCoefficients
   Save as short text file: folder$ +"/fileList.Strings"
   .nfiles = Get number of strings
   .basename$ = Get string: 1
+  .basename$ = .basename$ - "analysis information"
 
   .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$
   .tmp$ = Get string: 7
   number_of_coefficients_for_formant_prediction = number (.tmp$)
+
+  .tmp$ = Get string: 9
+  number_of_formants = number (.tmp$)
 
   .output = Create Table with column names: "output", .nfiles, "file"
   for j from 1 to (number_of_coefficients_for_formant_prediction+1)
@@ -36,17 +37,16 @@ procedure getCoefficients
 
   createDirectory: folder$ + "/processed_data/"
 
-
   for .iii from 1 to .nfiles
     selectObject: .strs
     .basename$ = Get string: .iii
-    tmp$ = folder$ + "/infos/" + .basename$
     .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$
+    .basename$ = .basename$ - "_info.txt"
 
-    stringToVector_output# = {0,0,0,0,0,0}
-    f1coeffs# = {0,0,0,0,0,0}
-    f2coeffs# = {0,0,0,0,0,0}
-    f3coeffs# = {0,0,0,0,0,0}
+    stringToVector_output# = zero#(number_of_coefficients_for_formant_prediction + 1)
+    f1coeffs# = zero#(number_of_coefficients_for_formant_prediction + 1)
+    f2coeffs# = zero#(number_of_coefficients_for_formant_prediction + 1)
+    f3coeffs# = zero#(number_of_coefficients_for_formant_prediction + 1)
 
     if number_of_formants == 3
       .tmp$ = Get string: 18
@@ -60,7 +60,7 @@ procedure getCoefficients
       f3coeffs# = stringToVector_output#
     endif
     if number_of_formants == 4
-      f4coeffs# = {0,0,0,0,0,0}
+      f4coeffs# = zero#(number_of_coefficients_for_formant_prediction + 1)
       .tmp$ = Get string: 19
       @stringToVector: .tmp$
       f1coeffs# = stringToVector_output#
@@ -74,7 +74,6 @@ procedure getCoefficients
       @stringToVector: .tmp$
       f4coeffs# = stringToVector_output#
     endif
-
 
     selectObject: .output
     Set string value... .iii file '.basename$'

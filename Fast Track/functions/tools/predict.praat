@@ -1,8 +1,7 @@
 
 procedure predict
 
-Read Table from whitespace-separated file: "E:\H95\big\coefficients.txt"
-View & Edit
+nfiles = Get number of rows
 Down to TableOfReal: "vowel"
 
 To Discriminant
@@ -19,7 +18,7 @@ View & Edit
 selectObject: "ClassificationTable coefficients_coefficients"
 
 writeInfoLine: "winners and probs:"
-for i from 1 to 540
+for i from 1 to nfiles
 
   win_index = Get class index at maximum in row: i
   winp = Get value: i, win_index

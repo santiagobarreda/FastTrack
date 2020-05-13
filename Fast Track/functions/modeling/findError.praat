@@ -53,11 +53,19 @@ procedure findError .fr
 
   ####################################################################################
   ## prediction of formant values and collections of prediction coefficients
+
+  f1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  f2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  f3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  if number_of_formants == 4
+    f4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  endif
+
   for .fnum from 1 to number_of_formants
     @predictFormants: .fnum
-    f'.fnum'coeffs[1] = round (intercept * 10) / 10
+    f'.fnum'coeffs#[1] = round (intercept * 10) / 10
     for .cnum from 1 to number_of_coefficients_for_formant_prediction
-      f'.fnum'coeffs[.cnum+1] = round(coeff'.cnum' * 10) / 10
+      f'.fnum'coeffs#[.cnum+1] = round(coeff'.cnum' * 10) / 10
     endfor
   endfor
 
@@ -88,6 +96,26 @@ procedure findError .fr
   if number_of_formants == 4
     .tmp = Get quantile: "error4", 0.5
     formantError#[4] = round(.tmp*10)/10
+  endif
+  
+
+  ### HEURISTICS
+  select Table output
+  tmp = Get quantile: "b1", 0.5
+  if tmp > maximum_F1_bandwidth_value and enable_F1_bandwidth_heuristic == 1
+    formantError#[1] = formantError#[1] + 10000
+  endif
+
+  tmp = Get quantile: "b2", 0.5
+  if tmp > maximum_F2_bandwidth_value and enable_F2_bandwidth_heuristic == 1
+    formantError#[2] = formantError#[2] + 10000
+  endif
+
+  if number_of_formants == 4
+    tmp = Get quantile: "f4", 0.5
+    if tmp < minimum_F4_value and enable_F4_frequency_heuristic == 1
+      formantError#[4] = formantError#[4] + 10000
+    endif
   endif
 
   for .ff from 1 to number_of_formants

@@ -2,6 +2,7 @@
 procedure autoSelectFolder
   createDirectory: folder$ + "/csvs"
   createDirectory: folder$ + "/images_comparison"
+  createDirectory: folder$ + "/regression_infos"
 
   ## read file list
   .strs = Read from file: folder$ +"/fileList.Strings"
@@ -27,6 +28,7 @@ procedure autoSelectFolder
   winf1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
   winf2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
   winf3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  
   if number_of_formants == 4
     winf4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
   endif
@@ -90,6 +92,10 @@ procedure autoSelectFolder
       Erase all
     endif
 
+    writeFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","Regression analysis information for " + .basename$
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of formants: " + string$(number_of_formants)
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coeccicients " + string$(number_of_coefficients_for_formant_prediction)
+
     ##########################################################################################################
     ## loop across number of analysis steps
     for .z from 1 to number_of_steps
@@ -110,16 +116,23 @@ procedure autoSelectFolder
         .f4Error#[.z] = formantError#[4]
       endif
 
+      # creates regression information text files
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", formantError#
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f1coeffs#
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f2coeffs#
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f3coeffs#
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f4coeffs#
+
   	  if .totalerror#[.z] < .minerror
         .minerror = .totalerror#[.z]
         .winner = .z
         .cutoff = .cutoffs#[.z]
         for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
-          winf1coeffs#[.jj] = f1coeffs[.jj]
-          winf2coeffs#[.jj] = f2coeffs[.jj]
-          winf3coeffs#[.jj] = f3coeffs[.jj]
+          winf1coeffs#[.jj] = f1coeffs#[.jj]
+          winf2coeffs#[.jj] = f2coeffs#[.jj]
+          winf3coeffs#[.jj] = f3coeffs#[.jj]
           if number_of_formants == 4
-            winf4coeffs#[.jj] = f4coeffs[.jj]
+            winf4coeffs#[.jj] = f4coeffs#[.jj]
           endif
         endfor
         if save_csvs = 1
@@ -128,6 +141,8 @@ procedure autoSelectFolder
           Copy: "tmp"
         endif
       endif
+
+      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", "winner is:" + string$(.winner)
 
       ##################################################################################
       ## makes analysis plot if plot will be made
