@@ -36,8 +36,8 @@ while clicked > 1
 	endif
 
 	if optiontype == 1
-	  boolean: "Enable F1 bandwidth heuristic:", enable_F1_bandwidth_heuristic
-      positive: "Maximum F1 bandwidth value:", maximum_F1_bandwidth_value
+	  boolean: "Enable F1 frequency heuristic:", enable_F1_frequency_heuristic
+      positive: "Maximum F1 frequency value:", maximum_F1_frequency_value
 	  boolean: "Enable F2 bandwidth heuristic:", enable_F2_bandwidth_heuristic
       positive: "Maximum F2 bandwidth value:", maximum_F2_bandwidth_value
 	  boolean: "Enable F4 frequency heuristic:", enable_F4_frequency_heuristic
@@ -50,5 +50,5 @@ while clicked > 1
 endwhile
 
 folder$ = default_working_directory$
-writeInfoLine: enable_F1_bandwidth_heuristic
+writeInfoLine: enable_F1_frequency_heuristic
 @saveSettings

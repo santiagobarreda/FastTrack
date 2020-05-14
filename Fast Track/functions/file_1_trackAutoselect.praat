@@ -52,7 +52,7 @@ number_of_formants = number(number_of_formants$)
 
 formantError# = zero#(number_of_formants)
 totalError = 0
-minerror = 999
+minerror = 999999
 error# =  zero# (number_of_steps)
 cutoffs# = zero#(number_of_steps)
 

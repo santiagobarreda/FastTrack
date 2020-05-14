@@ -35,11 +35,11 @@ procedure saveSettings
 
   ## heuristics
 
-  enable_F1_bandwidth_heuristic$ = string$(enable_F1_bandwidth_heuristic)
-  Set string: 12, enable_F1_bandwidth_heuristic$
+  enable_F1_frequency_heuristic$ = string$(enable_F1_frequency_heuristic)
+  Set string: 12, enable_F1_frequency_heuristic$
 
-  maximum_F1_bandwidth_value$ = string$(maximum_F1_bandwidth_value)
-  Set string: 13, maximum_F1_bandwidth_value$
+  maximum_F1_frequency_value$ = string$(maximum_F1_frequency_value)
+  Set string: 13, maximum_F1_frequency_value$
 
   enable_F2_bandwidth_heuristic$ = string$(enable_F2_bandwidth_heuristic)
   Set string: 14, enable_F2_bandwidth_heuristic$

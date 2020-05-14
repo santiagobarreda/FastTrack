@@ -102,7 +102,12 @@ procedure findError .fr
   ### HEURISTICS
   select Table output
   tmp = Get quantile: "b1", 0.5
-  if tmp > maximum_F1_bandwidth_value and enable_F1_bandwidth_heuristic == 1
+  if tmp > maximum_F1_frequency_value and enable_F1_frequency_heuristic == 1
+    formantError#[1] = formantError#[1] + 10000
+  endif
+
+  tmp = Get quantile: "f1", 0.5
+  if tmp > 1200 ;maximum_F1_frequency_value and enable_F1_frequency_heuristic == 1
     formantError#[1] = formantError#[1] + 10000
   endif
 

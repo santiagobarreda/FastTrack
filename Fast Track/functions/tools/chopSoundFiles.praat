@@ -4,8 +4,8 @@ procedure chopSoundFiles
 
   beginPause: "Set Parameters"
     sentence: "Folder:", folder$
-    booleanon: "save sound", 1
-    booleanon: "save textgrid", 1
+    boolean: "save sound", 1
+    boolean: "save textgrid", 1
   endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)

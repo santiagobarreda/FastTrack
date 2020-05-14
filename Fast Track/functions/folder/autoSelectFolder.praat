@@ -65,7 +65,7 @@ procedure autoSelectFolder
 
     .winner = 0
     .cutoff = 0
-    .minerror = 999
+    .minerror = 9999999999
 
     selectObject: .strs
     .basename$ = Get string: .ii
@@ -92,9 +92,9 @@ procedure autoSelectFolder
       Erase all
     endif
 
-    writeFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","Regression analysis information for " + .basename$
+    writeFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","Regression analysis information for: " + .basename$
     appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of formants: " + string$(number_of_formants)
-    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coeccicients " + string$(number_of_coefficients_for_formant_prediction)
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coeccicients: " + string$(number_of_coefficients_for_formant_prediction)
 
     ##########################################################################################################
     ## loop across number of analysis steps
@@ -142,8 +142,6 @@ procedure autoSelectFolder
         endif
       endif
 
-      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", "winner is:" + string$(.winner)
-
       ##################################################################################
       ## makes analysis plot if plot will be made
 
@@ -158,6 +156,7 @@ procedure autoSelectFolder
       removeObject: .fr
       removeObject: "Table output"
     endfor
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", "winner is: " + string$(.winner)
 
     ##########################################################################################################
 

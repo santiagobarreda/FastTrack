@@ -48,11 +48,11 @@ procedure getSettings
 
   error_method$ = Get string: 11
 
-  enable_F1_bandwidth_heuristic$ = Get string: 12
-  enable_F1_bandwidth_heuristic = number(enable_F1_bandwidth_heuristic$)
+  enable_F1_frequency_heuristic$ = Get string: 12
+  enable_F1_frequency_heuristic = number(enable_F1_frequency_heuristic$)
 
-  maximum_F1_bandwidth_value$ = Get string: 13
-  maximum_F1_bandwidth_value = number(maximum_F1_bandwidth_value$)
+  maximum_F1_frequency_value$ = Get string: 13
+  maximum_F1_frequency_value = number(maximum_F1_frequency_value$)
 
   enable_F2_bandwidth_heuristic$ = Get string: 14
   enable_F2_bandwidth_heuristic = number(enable_F2_bandwidth_heuristic$)
