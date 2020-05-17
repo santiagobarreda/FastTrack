@@ -87,27 +87,26 @@ procedure findError .fr
   if number_of_formants == 4
     Formula: "error4", "abs (self)"
   endif
-  .tmp = Get quantile: "error1", 0.5
+  ;.tmp = Get quantile: "error1", 0.5
+  .tmp = Get mean: "error1"
   formantError#[1]  = round(.tmp*10)/10
-  .tmp = Get quantile: "error2", 0.5
+  ;.tmp = Get quantile: "error2", 0.5
+  .tmp = Get mean: "error2"
   formantError#[2] = round(.tmp*10)/10
-  .tmp = Get quantile: "error3", 0.5
+  ;.tmp = Get quantile: "error3", 0.5
+  .tmp = Get mean: "error3"
   formantError#[3] = round(.tmp*10)/10
   if number_of_formants == 4
-    .tmp = Get quantile: "error4", 0.5
+    ;.tmp = Get quantile: "error4", 0.5
+    .tmp = Get mean: "error4"
     formantError#[4] = round(.tmp*10)/10
   endif
   
 
   ### HEURISTICS
   select Table output
-  tmp = Get quantile: "b1", 0.5
-  if tmp > maximum_F1_frequency_value and enable_F1_frequency_heuristic == 1
-    formantError#[1] = formantError#[1] + 10000
-  endif
-
   tmp = Get quantile: "f1", 0.5
-  if tmp > 1200 ;maximum_F1_frequency_value and enable_F1_frequency_heuristic == 1
+  if tmp > maximum_F1_frequency_value and enable_F1_frequency_heuristic == 1
     formantError#[1] = formantError#[1] + 10000
   endif
 
@@ -116,9 +115,23 @@ procedure findError .fr
     formantError#[2] = formantError#[2] + 10000
   endif
 
+  tmp = Get quantile: "b3", 0.5
+  if tmp > 600 ;maximum_F2_bandwidth_value and enable_F2_bandwidth_heuristic == 1
+    formantError#[2] = formantError#[2] + 10000
+  endif
+
   if number_of_formants == 4
-    tmp = Get quantile: "f4", 0.5
-    if tmp < minimum_F4_value and enable_F4_frequency_heuristic == 1
+    tmp = Get quantile: "b4", 0.5
+    if tmp > 900 ;maximum_F2_bandwidth_value and enable_F2_bandwidth_heuristic == 1
+      formantError#[2] = formantError#[2] + 10000
+    endif
+    tmp4= Get quantile: "f4", 0.5
+    tmp1 = Get quantile: "f1", 0.5
+    tmp3 = Get quantile: "f3", 0.5
+    if tmp4 < minimum_F4_value and enable_F4_frequency_heuristic == 1
+      formantError#[4] = formantError#[4] + 10000
+    endif
+    if tmp1 > 500 and (tmp4-tmp3) < 500
       formantError#[4] = formantError#[4] + 10000
     endif
   endif

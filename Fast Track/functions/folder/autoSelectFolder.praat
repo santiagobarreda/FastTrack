@@ -121,7 +121,9 @@ procedure autoSelectFolder
       appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f1coeffs#
       appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f2coeffs#
       appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f3coeffs#
-      appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f4coeffs#
+      if number_of_formants == 4
+        appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f4coeffs#
+      endif
 
   	  if .totalerror#[.z] < .minerror
         .minerror = .totalerror#[.z]

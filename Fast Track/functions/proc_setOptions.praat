@@ -43,7 +43,7 @@ while clicked > 1
 	  boolean: "Enable F4 frequency heuristic:", enable_F4_frequency_heuristic
       positive: "Minimum F4 value:", minimum_F4_value
 	endif
-	clicked = endPause: "Ok", "Change Form", 1
+	clicked = endPause: "Ok", "Settings/Heuristics", 1
     if clicked == 2
 	  optiontype = optiontype * -1	  
 	endif
