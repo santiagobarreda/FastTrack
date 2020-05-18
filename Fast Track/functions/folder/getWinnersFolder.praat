@@ -35,6 +35,7 @@ procedure getWinnersFolder
 	@stringToVector: .tmp$
   .totalerror# = stringToVector_output#
 
+  removeObject: .info
 
 	createDirectory: folder$ + "/images_winners"
 
@@ -42,27 +43,27 @@ procedure getWinnersFolder
 	@daySecond
   .startSecond = daySecond
 
-	for .iii from 1 to .nfiles
+	for .counter from 1 to .nfiles
 		totalerror = 0
 		.winner = 0
 		.cutoff = 0
-		.minerror = 999
+		.minerror = 99999
 
 	  selectObject: .files
-	  .basename$ = Get string: .iii
+	  .basename$ = Get string: .counter
 	  .basename$ = .basename$ - ".wav"
 		.info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
 
 	  selectObject: .winners
-	  .winner = Get value: .iii, "winner"
-	  .wf1 = Get value: .iii, "F1"
-	  .wf2 = Get value: .iii, "F2"
-	  .wf3 = Get value: .iii, "F3"
+	  .winner = Get value: .counter, "winner"
+	  .wf1 = Get value: .counter, "F1"
+	  .wf2 = Get value: .counter, "F2"
+	  .wf3 = Get value: .counter, "F3"
 		if number_of_formants == 3
 	  	.wf4 = .wf3
 		endif
 		if number_of_formants == 4
-			.wf4 = Get value: .iii, "F4"
+			.wf4 = Get value: .counter, "F4"
 		endif
 
     selectObject: .info
@@ -73,13 +74,13 @@ procedure getWinnersFolder
 			Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)+" "+string$(.wf4)
 		endif
 
-		writeInfoLine: "Getting winners (step 3): " + string$(.iii) +" of " + string$(.nfiles) + ", " + .basename$
-		if .iii > 10 and .nfiles > 60
+		writeInfoLine: "Getting winners (step 3): " + string$(.counter) +" of " + string$(.nfiles) + ", " + .basename$
+		if .counter > 10 and .nfiles > 60
 			daySecond = 0
 			@daySecond
 			.nowSecond = daySecond
 			.elapsedTime = .nowSecond - .startSecond
-	    .totalTime = .elapsedTime * (.nfiles / .iii)
+	    .totalTime = .elapsedTime * (.nfiles / .counter)
 	    .endGuess = round (.totalTime / 60)
 	    appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
 	  endif
@@ -113,9 +114,9 @@ procedure getWinnersFolder
 		  Save as comma-separated file: folder$ + "/csvs/"+ .basename$ + ".csv"
 
 			nocheck removeObject: .tbl, .snd, .tmp_fr, .sp
-		endif
 
 		else
+
 	    .tmp_f1 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf1) + "_.Formant"
 	    .number_of_frames = Get number of frames
 	    .tmp_f2 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf2) + "_.Formant"
@@ -133,55 +134,50 @@ procedure getWinnersFolder
 	      .tb3 = Get bandwidth at time: 3, .tmp_time, "hertz", "Linear"
 
 	      selectObject: .tmp_f1
-	      Formula (frequencies): "if row = 2 and col=" + string$(.j) +" then " + string$(.tf2) + " else self endif"
-	      Formula (bandwidths): "if row = 2 and col=" + string$(.j) +" then " + string$(.tb2) + " else self endif"
-	      Formula (frequencies): "if row = 3 and col=" + string$(.j) +" then " + string$(.tf3) + " else self endif"
-	      Formula (bandwidths): "if row = 3 and col=" + string$(.j) +" then " + string$(.tb3) + " else self endif"
-				if number_of_formants == 4
+        Formula (frequencies): "if row = 2 and col=" + string$(.j) +" then " + string$(.tf2) + " else self endif"
+        Formula (bandwidths): "if row = 2 and col=" + string$(.j) +" then " + string$(.tb2) + " else self endif"
+        if (.tf3 <> undefined)
+          Formula (frequencies): "if row = 3 and col=" + string$(.j) +" then " + string$(.tf3) + " else self endif"
+          Formula (bandwidths): "if row = 3 and col=" + string$(.j) +" then " + string$(.tb3) + " else self endif"
+        endif
+				if (number_of_formants == 4) 
 					selectObject: .tmp_f4
-					.tf4 = Get value at time: 4, .tmp_time, "hertz", "Linear"
-					.tb4 = Get bandwidth at time: 4, .tmp_time, "hertz", "Linear"
-	      	Formula (frequencies): "if row = 4 and col=" + string$(.j) +" then " + string$(.tf4) + " else self endif"
-	      	Formula (bandwidths): "if row = 4 and col=" + string$(.j) +" then " + string$(.tb4) + " else self endif"
+          .tf4 = Get value at time: 4, .tmp_time, "hertz", "Linear"
+          .tb4 = Get bandwidth at time: 4, .tmp_time, "hertz", "Linear"
+          if (.tf4 <> undefined)
+     	      selectObject: .tmp_f1
+            Formula (frequencies): "if row = 4 and col=" + string$(.j) +" then " + string$(.tf4) + " else self endif"
+            Formula (bandwidths): "if row = 4 and col=" + string$(.j) +" then " + string$(.tb4) + " else self endif"
+          endif
 				endif
-
 	    endfor
 
 	    selectObject: .tmp_f1
 	    Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
+			@findError: .tmp_f1
+			for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
+				winf1coeffs#[.jj] = f1coeffs#[.jj]
+				winf2coeffs#[.jj] = f2coeffs#[.jj]
+				winf3coeffs#[.jj] = f3coeffs#[.jj]
+				if number_of_formants == 4
+					winf4coeffs#[.jj] = f4coeffs#[.jj]
+				endif
+			endfor
+		  selectObject: "Table output"
+		  .tbl = selected ("Table")
 
-			if (save_images = 1) or (save_csvs = 1)
-				snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
-				@makeFormantTable: .tmp_fr
-			  @findError
-				for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
-					winf1coeffs#[.jj] = f1coeffs#[.jj]
-					winf2coeffs#[.jj] = f2coeffs#[.jj]
-					winf3coeffs#[.jj] = f3coeffs#[.jj]
-					if number_of_formants == 4
-						winf4coeffs#[.jj] = f4coeffs#[.jj]
-					endif
-				endfor
-			  selectObject: "Table output"
-			  .tbl = selected ("Table")
-			  #nrows = Get number of rows   #delete?
-			endif
-	  	if save_images = 1
-				selectObject: .snd
-				.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
+  		.snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
+			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 
-				Erase all
-			  Select outer viewport: 0, 7.5, 0, 4.5
-			  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
-				Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
-			endif
-			if save_csvs = 1
-				@addAcousticInfoToTable: .tbl
-			  selectObject: "Table output"
-			  Save as comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
-			endif
+			Erase all
+		  Select outer viewport: 0, 7.5, 0, 4.5
+		  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
+			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
 
-			nocheck removeObject: .tbl, .snd, .tmp_f1, .tmp_f2, .tmp_f3, .tmp_f4, .sp
+			@addAcousticInfoToTable: .tbl, .snd
+		  selectObject: "Table output"
+		  Save as comma-separated file: folder$ + "/csvs/"+ .basename$ + ".csv"
+			nocheck removeObject: .tbl, .snd, .sp, .tmp_f1, .tmp_f2, .tmp_f3, .tmp_f4
 	  endif
 
 		selectObject: .info
@@ -214,6 +210,6 @@ procedure getWinnersFolder
 
 		removeObject: .info
 	endfor
-	removeObject: .winners, .files
+	removeObject: .winners, .files, .strs
 
 endproc

@@ -63,6 +63,11 @@ procedure autoSelectFolder
     endif
     formantError# = zero#(4)
 
+    ## to keep track of f4 intercept for roving f4 option
+    .f4ints# = zero#(number_of_steps)
+    .f4bws# = zero#(number_of_steps)
+
+
     .winner = 0
     .cutoff = 0
     .minerror = 9999999999
@@ -116,6 +121,9 @@ procedure autoSelectFolder
         .f4Error#[.z] = formantError#[4]
       endif
 
+      .f4ints#[.z] = f4coeffs#[1]
+      #.f4bws#[.z] = f4bandwidth
+
       # creates regression information text files
       appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", formantError#
       appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f1coeffs#
@@ -124,11 +132,16 @@ procedure autoSelectFolder
       if number_of_formants == 4
         appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", f4coeffs#
       endif
-
+      
+      # for winning f3 intercept
+      winf3 = 0
   	  if .totalerror#[.z] < .minerror
         .minerror = .totalerror#[.z]
         .winner = .z
         .cutoff = .cutoffs#[.z]
+
+        ## get winning f3 intercept
+         winf3 = f3coeffs#[1]
         for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
           winf1coeffs#[.jj] = f1coeffs#[.jj]
           winf2coeffs#[.jj] = f2coeffs#[.jj]
@@ -160,6 +173,20 @@ procedure autoSelectFolder
     endfor
     appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt", "winner is: " + string$(.winner)
 
+    ### secondary selection of an independent F4 winner
+    #.f4winner = 0
+    #.minf4error = 9999999999
+    # go through again and find winning f4. above 2900 and 55 Hz above F3 and bw under 900 and sharpests
+    #for .z from 1 to number_of_steps
+    #  #if (.f4bws#[.z] < .minf4error) and ((.f4ints#[.z]-winf3)>450)
+   	#  if (.f4Error#[.z] < .minf4error) and ((.f4ints#[.z]-winf3)>450)
+    #    .minf4error = .f4Error#[.z]
+    #    #.minf4error = .f4bws#[.z]
+    #    .f4winner = .z
+    #  endif
+    #endfor
+
+
     ##########################################################################################################
 
     ## saves csv file
@@ -179,6 +206,7 @@ procedure autoSelectFolder
     Set numeric value... .ii F2 .winner
     Set numeric value... .ii F3 .winner
     if number_of_formants == 4
+  	   #Set numeric value... .ii F4 .f4winner
   	   Set numeric value... .ii F4 .winner
     endif
     Set numeric value... .ii edit 0

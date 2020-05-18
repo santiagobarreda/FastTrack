@@ -125,6 +125,8 @@ procedure findError .fr
     if tmp > 900 ;maximum_F2_bandwidth_value and enable_F2_bandwidth_heuristic == 1
       formantError#[2] = formantError#[2] + 10000
     endif
+    #f4bandwidth= Get quantile: "b4", 0.5
+    #f4bandwidth= Get mean: "b4"
     tmp4= Get quantile: "f4", 0.5
     tmp1 = Get quantile: "f1", 0.5
     tmp3 = Get quantile: "f3", 0.5
@@ -134,6 +136,9 @@ procedure findError .fr
     if tmp1 > 500 and (tmp4-tmp3) < 500
       formantError#[4] = formantError#[4] + 10000
     endif
+    #if tmp4 > 4700 ;and enable_F4_frequency_heuristic == 1
+    #  formantError#[4] = formantError#[4] + 10000
+    #endif
   endif
 
   for .ff from 1 to number_of_formants
