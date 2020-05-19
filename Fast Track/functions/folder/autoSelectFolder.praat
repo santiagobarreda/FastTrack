@@ -121,7 +121,7 @@ procedure autoSelectFolder
         .f4Error#[.z] = formantError#[4]
       endif
 
-      .f4ints#[.z] = f4coeffs#[1]
+      #.f4ints#[.z] = f4coeffs#[1]
       #.f4bws#[.z] = f4bandwidth
 
       # creates regression information text files
