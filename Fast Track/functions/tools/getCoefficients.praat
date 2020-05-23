@@ -4,7 +4,7 @@ procedure getCoefficients
     beginPause: "Set Parameters"
       comment: "Indicate your working directory. This folder should contain a folder inside of it."
       comment: "called 'infos' that contains regression coefficients for each sound."
-      sentence: "Working directory:", folder$
+      sentence: "Folder:", folder$
      endPause: "Ok", 1
     
     ending$ = right$ (folder$,1)
@@ -81,7 +81,9 @@ procedure getCoefficients
       Set numeric value: .iii, "c1"+string$(.i), f1coeffs#[.i]
       Set numeric value: .iii, "c2"+string$(.i), f2coeffs#[.i]
       Set numeric value: .iii, "c3"+string$(.i), f3coeffs#[.i]
-      Set numeric value: .iii, "c4"+string$(.i), f4coeffs#[.i]
+      if number_of_formants == 4
+        Set numeric value: .iii, "c4"+string$(.i), f4coeffs#[.i]
+      endif
     endfor
     removeObject: .info
   endfor

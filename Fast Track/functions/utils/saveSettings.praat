@@ -41,17 +41,32 @@ procedure saveSettings
   maximum_F1_frequency_value$ = string$(maximum_F1_frequency_value)
   Set string: 13, maximum_F1_frequency_value$
 
+  enable_F1_bandwidth_heuristic$ = string$(enable_F1_bandwidth_heuristic)
+  Set string: 14, enable_F1_bandwidth_heuristic$
+
+  maximum_F1_bandwidth_value$ = string$(maximum_F1_bandwidth_value)
+  Set string: 15, maximum_F1_bandwidth_value$
+
   enable_F2_bandwidth_heuristic$ = string$(enable_F2_bandwidth_heuristic)
-  Set string: 14, enable_F2_bandwidth_heuristic$
+  Set string: 16, enable_F2_bandwidth_heuristic$
 
   maximum_F2_bandwidth_value$ = string$(maximum_F2_bandwidth_value)
-  Set string: 15, maximum_F2_bandwidth_value$
+  Set string: 17, maximum_F2_bandwidth_value$
+
+  enable_F3_bandwidth_heuristic$ = string$(enable_F3_bandwidth_heuristic)
+  Set string: 18, enable_F3_bandwidth_heuristic$
+
+  maximum_F3_bandwidth_value$ = string$(maximum_F3_bandwidth_value)
+  Set string: 19, maximum_F3_bandwidth_value$
 
   enable_F4_frequency_heuristic$ = string$(enable_F4_frequency_heuristic)
-  Set string: 16, enable_F4_frequency_heuristic$
+  Set string: 20, enable_F4_frequency_heuristic$
 
-  minimum_F4_value$ = string$(minimum_F4_value)
-  Set string: 17, minimum_F4_value$
+  minimum_F4_frequency_value$ = string$(minimum_F4_frequency_value)
+  Set string: 21, minimum_F4_frequency_value$
+
+  enable_F3F4_proximity_heuristic$ = string$(enable_F3F4_proximity_heuristic)
+  Set string: 22, enable_F3F4_proximity_heuristic$
 
   Save as raw text file: "../settings.txt"
   removeObject: .tmp_str

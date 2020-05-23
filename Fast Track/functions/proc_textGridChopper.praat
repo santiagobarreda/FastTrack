@@ -13,9 +13,22 @@ beginPause: "Set Parameters"
     positive: "Segment tier:", 1
 		positive: "Word tier:", 2
 		sentence: "Marker", "_x"
+ 		real: "Number of vowels:", 0
     boolean: "Save information:", 1
     boolean: "Return table:", 0
 endPause: "Ok", 1
+
+if number_of_vowels > 0
+  vwl = Create Table with column names: "vowels", number_of_vowels, "vowel"
+  for i from 1 to number_of_vowels
+    beginPause: ""
+      comment: "Enter the label for vowel number " + string$(i)
+      sentence: "Vowel label:", ""
+    endPause: "Ok", 1
+  Set string value: i, "vowel", vowel_label$
+  endfor
+endif 
+
 
 selectObject: tg
 nIntervals = Get number of intervals: segment_tier
@@ -27,8 +40,24 @@ for i from 1 to nIntervals
   selectObject: tg
   vowel$ = Get label of interval: segment_tier, i
   analyze_marker$ = right$ (vowel$,2)
+  
+  condition = 0
 
-  if analyze_marker$ = marker$
+  if analyze_marker$ = marker$ and number_of_vowels == 0
+    condition = 1
+  endif
+
+  if number_of_vowels > 0
+    selectObject: vwl
+    num = Search column: "vowel", vowel$
+    if num > 0
+      condition = 1
+    endif
+  endif
+
+  
+  if condition == 1
+    selectObject: tg
 
     next_sound$ = "--"
     previous_sound$ = "--"
@@ -45,7 +74,7 @@ for i from 1 to nIntervals
       endif
     endif
 
-    vowel$ = vowel$ - "_x"
+    ;vowel$ = vowel$ - "_x"
 
     vowelStart = Get start time of interval: segment_tier, i
     vowelEnd = Get end time of interval: segment_tier, i
