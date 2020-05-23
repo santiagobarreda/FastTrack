@@ -55,5 +55,4 @@ while clicked > 1
 endwhile
 
 folder$ = default_working_directory$
-writeInfoLine: enable_F1_frequency_heuristic
 @saveSettings
