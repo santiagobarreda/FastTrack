@@ -55,7 +55,7 @@ procedure aggregate
   for .iii from 1 to .nfiles
     selectObject: .strs
     .basename$ = Get string: .iii
-    .basename$ = .basename$ - ".wav"
+    .basename$ = .basename$ - ".csv"
 
     .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
     .nframes = Get number of rows
