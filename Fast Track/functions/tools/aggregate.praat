@@ -37,7 +37,7 @@ procedure aggregate
   number_of_formants = number(number_of_formants$)
   createDirectory: folder$ + "/processed_data/"
 
-  .strs = Create Strings as file list: "list", folder$ + "/csvs/*.wav"
+  .strs = Create Strings as file list: "list", folder$ + "/csvs/*.csv"
   Save as short text file: folder$ +"/fileList.Strings"
   .nfiles = Get number of strings
 
