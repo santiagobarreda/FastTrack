@@ -38,7 +38,7 @@ if comment_tier == 0
   tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word"
 endif
 if comment_tier > 0
-  tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word comments"
+  tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word comment"
 endif
 
 
@@ -149,7 +149,7 @@ for i from 1 to nIntervals
     Set string value: count, "next_sound", next_sound$
     Set string value: count, "previous_word", previous_word$
     Set string value: count, "next_word", next_word$
-    if comment_tire > 0
+    if comment_tier > 0
       Set string value: count, "comment", comment$
     endif
 
