@@ -25,6 +25,10 @@ procedure addAcousticInfoToTable .tbl, .snd
     selectObject: .p2
     .f0 = Get value at time: .time, "Hertz", "Linear"
     .f0 = round(.f0*10) / 10
+    if .f0 = undefined
+      .f0 = 0
+    endif
+
     selectObject: .tbl
     Set numeric value... .i f0 .f0
     

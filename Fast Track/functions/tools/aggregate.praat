@@ -75,12 +75,16 @@ procedure aggregate
     Set numeric value: .iii, "duration", .duration
 
     selectObject: .tbl
-    .tmp_tbl = Extract rows where column (text): "f0", "is not equal to", "--undefined--"
     .mf0 = Get mean: "f0"
-    .mf0 = round(.mf0 * 10) / 10
+
+    if .mf0 > 0
+      .tmp_tbl = Extract rows where column (number): "f0", "greater than", 0
+      .mf0 = Get mean: "f0"
+      .mf0 = round(.mf0 * 10) / 10
+      removeObject: .tmp_tbl
+    endif    
     selectObject: .output
     Set numeric value: .iii, "f0", .mf0
-    removeObject: .tmp_tbl
 
 
     for .j from 1 to number_of_bins

@@ -12,6 +12,7 @@ beginPause: "Set Parameters"
     sentence: "Folder:", folder$
     positive: "Segment tier:", 1
 		positive: "Word tier:", 2
+		positive: "Comment tier:", 0
 		sentence: "Marker", "_x"
  		real: "Number of vowels:", 0
     boolean: "Save information:", 1
@@ -33,7 +34,13 @@ endif
 selectObject: tg
 nIntervals = Get number of intervals: segment_tier
 
-tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word"
+if comment_tier == 0
+  tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word"
+endif
+if comment_tier > 0
+  tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word comments"
+endif
+
 
 count = 0
 for i from 1 to nIntervals
@@ -83,6 +90,13 @@ for i from 1 to nIntervals
     word$ = Get label of interval: word_tier, wordNum
     wordStart = Get start time of interval: word_tier, wordNum
     wordEnd = Get end time of interval: word_tier, wordNum
+
+
+    if comment_tier > 0
+      commentNum = Get interval at time: comment_tier, (vowelStart+vowelEnd)/2
+      comment$ = Get label of interval: comment_tier, commentNum
+    endif
+
 
     next_word$ = "-"
     previous_word$ = "-"
@@ -135,6 +149,10 @@ for i from 1 to nIntervals
     Set string value: count, "next_sound", next_sound$
     Set string value: count, "previous_word", previous_word$
     Set string value: count, "next_word", next_word$
+    if comment_tire > 0
+      Set string value: count, "comment", comment$
+    endif
+
   endif
 endfor
 selectObject: tbl
