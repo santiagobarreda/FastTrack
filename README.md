@@ -14,7 +14,7 @@ In the example on the left, the cutoff frequency is too low and Praat is finding
 
 &nbsp;
 
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/badtrack.png?raw=true" width=430>    <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/goodtrack.png?raw=true" width=430>
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/badtrack.png?raw=true" width=400>    <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/goodtrack.png?raw=true" width=400>
 
 &nbsp;
 &nbsp;
