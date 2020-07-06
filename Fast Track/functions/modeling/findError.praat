@@ -81,25 +81,25 @@ procedure findError .fr
   formantError# = zero#(number_of_formants)
   totalerror = 0
   select Table output
-  Formula: "error1", "abs (self)"
-  Formula: "error2", "abs (self)"
-  Formula: "error3", "abs (self)"
+  Formula: "error1", "abs(self)"
+  Formula: "error2", "abs(self)"
+  Formula: "error3", "abs(self)"
   if number_of_formants == 4
-    Formula: "error4", "abs (self)"
+    Formula: "error4", "abs(self)"
   endif
   ;.tmp = Get quantile: "error1", 0.5
   .tmp = Get mean: "error1"
-  formantError#[1]  = round(.tmp*10)/10
+  formantError#[1]  = round((.tmp)*10)/10
   ;.tmp = Get quantile: "error2", 0.5
   .tmp = Get mean: "error2"
-  formantError#[2] = round(.tmp*10)/10
+  formantError#[2] = round((.tmp)*10)/10
   ;.tmp = Get quantile: "error3", 0.5
   .tmp = Get mean: "error3"
-  formantError#[3] = round(.tmp*10)/10
+  formantError#[3] = round((.tmp)*10)/10
   if number_of_formants == 4
     ;.tmp = Get quantile: "error4", 0.5
     .tmp = Get mean: "error4"
-    formantError#[4] = round(.tmp*10)/10
+    formantError#[4] = round((.tmp)*10)/10
   endif
   
 

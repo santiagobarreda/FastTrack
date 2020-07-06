@@ -15,3 +15,4 @@ include tools/predict.praat
 include tools/getCoefficients.praat
 include tools/editFolder.praat
 include tools/chopSoundFiles.praat
+include tools/makeTextGrids.praat

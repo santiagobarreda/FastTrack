@@ -41,7 +41,7 @@ linreg = To linear regression
 info$ = Info
 intercept = extractNumber (info$, "Intercept: ")
 
-writeInfoLine: intercept, " ", vnum," ", snum
+#writeInfoLine: intercept, " ", vnum," ", snum
 s1 = 0
 v1 = 0
 for i from 2 to snum

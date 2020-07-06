@@ -3,9 +3,9 @@ procedure chopSoundFiles
   @getSettings
 
   beginPause: "Set Parameters"
-    sentence: "Folder:", folder$
-    boolean: "save sound", 1
-    boolean: "save textgrid", 1
+    sentence: "Input sound folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\sounds_original"
+    sentence: "Output sound folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\sounds"
+    sentence: "TextGrid folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\textgrids"
   endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
@@ -16,46 +16,30 @@ procedure chopSoundFiles
     folder$ = folder$ - "\"
   endif
  
-  #if corresponding selection is true
-  if save_sound == 1
-    createDirectory: folder$ + "/sounds"
-  endif
-  if save_textgrid == 1
-    createDirectory: folder$ + "/textgrids"
-  endif
-
-  obj = Create Strings as file list: "files", folder$ + "/*.wav"
+  obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
   nfiles = Get number of strings
 
   for i from 1 to nfiles
     selectObject: obj
     filename$ = Get string: i
-    basename$ = filename$ - ".wav"
-    .snd = Read from file: folder$ + "/" + filename$
+    basename$ = filename$ - ".TextGrid"
 
-    if !fileReadable: folder$ + "/textGrids/" + basename$ + ".TextGrid"
-      .tg = To TextGrid: "segments", ""
-      selectObject: .snd, .tg
-      View & Edit
+    .tg = Read from file: textGrid_folder$ + "/" + filename$
+    nintervals = Get number of intervals: 1
 
-      beginPause: ""
-        comment: "Press OK when done to save."
-      endPause: "OK", 0
-
+    if (fileReadable: input_sound_folder$ + "/" + basename$ + ".wav") & (nintervals > 1)
       selectObject: .tg
-      Set interval text: 1,2,"vowel"
-      Save as text file: folder$ + "/textGrids/" + basename$ + ".TextGrid"
       start = Get start time of interval: 1, 2
       end = Get end time of interval: 1, 2
-                
-      selectObject: .snd
-      .snd_small = Extract part: start - 0.025, end + 0.025, "rectangular", 1, "no"
-      Save as WAV file: folder$ + "/sounds/" + filename$  
-                
-      removeObject: .snd_small, .tg
-    endif
-    removeObject: .snd
 
+      .snd = Read from file: input_sound_folder$ + "/" + basename$ + ".wav"
+      .sndtmp = Extract part: start-0.025, end+0.025, "rectangular", 1, 0
+
+      Save as WAV file: output_sound_folder$ + "/" + basename$ +".wav"
+
+      removeObject: .sndtmp, .snd
+    endif
+    removeObject: .tg
   endfor
 
 endproc

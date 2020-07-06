@@ -9,7 +9,8 @@ beginPause: "Set Parameters"
       option: "Edit folder"
       option: "Aggregate"
       option: "Get coefficients"
-      option: "Cut sound files"
+      option: "Make TextGrids"
+      option: "Chop sound files with TextGrids"
 endPause: "Ok", 1
 
 if option == 1
@@ -22,5 +23,8 @@ if option == 3
   @getCoefficients
 endif
 if option == 4
+  @makeTextGrids
+endif
+if option == 5
   @chopSoundFiles
 endif
