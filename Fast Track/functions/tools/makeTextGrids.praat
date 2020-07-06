@@ -3,7 +3,7 @@ procedure makeTextGrids
   @getSettings
 
   beginPause: "Set Parameters"
-    sentence: "Folder:", folder$
+    sentence: "Folder:", ""
     boolean: "save sound", 1
     boolean: "save textgrid", 1
   endPause: "Ok", 1
