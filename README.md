@@ -8,7 +8,7 @@
 **A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki)
 ###
 
-To get accurate formant measurements, Praat must look for the correct number of formants below some unknown cutoff frequency. If a user wants to look for a fixed number of formants, the question becomes: What should the cutoff frequency be?    
+formant measurements, Praat must look for the correct number of formants below some unknown cutoff frequency. If a user wants to look for a fixed number of formants, the question becomes: What should the cutoff frequency be?    
 
 In the example on the left, the cutoff frequency is too low and Praat is finding formants where there are none. On the right, a more appropriate cutoff frequency is used, leading to a better analysis. Doing this by hand is time-consuming and impractical for large amounts of data.
 
