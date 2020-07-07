@@ -8,9 +8,7 @@
 **A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki)
 ###
 
-formant measurements, Praat must look for the correct number of formants below some unknown cutoff frequency. If a user wants to look for a fixed number of formants, the question becomes: What should the cutoff frequency be?    
-
-In the example on the left, the cutoff frequency is too low and Praat is finding formants where there are none. On the right, a more appropriate cutoff frequency is used, leading to a better analysis. Doing this by hand is time-consuming and impractical for large amounts of data.
+In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. In the example on the left, the maximum-formant frequency is too low and Praat is finding formants where there are none. On the right, a more appropriate maximum-formant frequency is used, leading to a better analysis. Manually adjusting analysis parameters until finding the right combination is time consuming, difficult to reproduce, and not systematic: characteristics which make it impractical and undesirable for large-scale projects. 
 
 &nbsp;
 
@@ -19,12 +17,12 @@ In the example on the left, the cutoff frequency is too low and Praat is finding
 &nbsp;
 &nbsp;
 
-Fast Track speeds up formant tracking by automatically trying multiple analysis-frequencies and attempting to find the 'best' one for the user. The general algorithm is:
+Fast Track speeds up formant tracking by automatically trying multiple maximum-formant settings and attempting to find the 'best' one for the user. The general algorithm is:
 &nbsp;
 
- 1) Formant tracking is carried out at multiple analysis frequencies.
+ 1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
  
- 2) The goodness of each candidate is established by considering a smoothness metric (and possibly some heuristics).
+ 2) The goodness of each candidate is established by considering the smoothness of the formant trajectories (and optional heuristics).
  
  3) The 'best' analysis is selected as the winner. Images are made for visual verification.
  
@@ -36,7 +34,7 @@ Fast Track speeds up formant tracking by automatically trying multiple analysis-
 
 The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
 
-* CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, and intensity sampled every 2 ms (by default). 
+* CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
 
 * Images for the visual verification of final analyses, and for the comparison of alternate analysis.
 
