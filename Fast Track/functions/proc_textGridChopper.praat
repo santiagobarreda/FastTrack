@@ -12,7 +12,7 @@ beginPause: "Set Parameters"
     sentence: "Folder:", folder$
     positive: "Segment tier:", 1
 		positive: "Word tier:", 2
-		positive: "Comment tier:", 0
+		integer: "Comment tier:", 0
 		sentence: "Marker", "_x"
  		real: "Number of vowels:", 0
     boolean: "Save information:", 1
@@ -41,9 +41,11 @@ if comment_tier > 0
   tbl = Create Table with column names: "table", 0, "file filename vowel interval start end word word_interval word_start word_end previous_sound next_sound previous_word next_word comment"
 endif
 
-
 count = 0
-for i from 1 to nIntervals
+writeInfoLine: ""
+
+for i from 2 to nIntervals
+  appendInfoLine: i
   selectObject: tg
   vowel$ = Get label of interval: segment_tier, i
   analyze_marker$ = right$ (vowel$,2)
@@ -62,7 +64,6 @@ for i from 1 to nIntervals
     endif
   endif
 
-  
   if condition == 1
     selectObject: tg
 

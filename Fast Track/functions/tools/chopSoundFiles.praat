@@ -3,9 +3,9 @@ procedure chopSoundFiles
   @getSettings
 
   beginPause: "Set Parameters"
-    sentence: "Input sound folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\sounds_original"
-    sentence: "Output sound folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\sounds"
-    sentence: "TextGrid folder:", "E:\storage\OneDrive\_1_current-projects\repetition-experiment\11\textgrids"
+    sentence: "Input sound folder:", ""
+    sentence: "Output sound folder:", ""
+    sentence: "TextGrid folder:", ""
   endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
