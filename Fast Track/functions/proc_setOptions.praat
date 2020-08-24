@@ -37,15 +37,16 @@ while clicked > 1
 
 	if optiontype == 1
 	  boolean: "Enable F1 frequency heuristic:", enable_F1_frequency_heuristic
-      positive: "Maximum F1 frequency value:", maximum_F1_frequency_value
+    positive: "Maximum F1 frequency value:", maximum_F1_frequency_value
     boolean: "Enable F1 bandwidth heuristic:", enable_F1_bandwidth_heuristic
-      positive: "Maximum F1 bandwidth value:", maximum_F1_bandwidth_value
+    positive: "Maximum F1 bandwidth value:", maximum_F1_bandwidth_value
 	  boolean: "Enable F2 bandwidth heuristic:", enable_F2_bandwidth_heuristic
-      positive: "Maximum F2 bandwidth value:", maximum_F2_bandwidth_value
+    positive: "Maximum F2 bandwidth value:", maximum_F2_bandwidth_value
 	  boolean: "Enable F3 bandwidth heuristic:", enable_F3_bandwidth_heuristic
-      positive: "Maximum F3 bandwidth value:", maximum_F3_bandwidth_value
+    positive: "Maximum F3 bandwidth value:", maximum_F3_bandwidth_value
 	  boolean: "Enable F4 frequency heuristic:", enable_F4_frequency_heuristic
-      positive: "Minimum F4 frequency value:", minimum_F4_frequency_value
+    positive: "Minimum F4 frequency value:", minimum_F4_frequency_value
+    boolean: "Enable rhotic heuristic:", enable_rhotic_heuristic
     boolean: "Enable F3F4 proximity heuristic:", enable_F3F4_proximity_heuristic
 	endif
 	clicked = endPause: "Ok", "Settings/Heuristics", 1

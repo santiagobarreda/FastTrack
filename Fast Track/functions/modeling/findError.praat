@@ -76,7 +76,7 @@ procedure findError .fr
   endfor
 
   ###############################################################################
-  ### Here is where the error is calculated. add interquartile range and variance.
+  ### Here is where the error is calculated. 
 
   formantError# = zero#(number_of_formants)
   totalerror = 0
@@ -128,30 +128,21 @@ procedure findError .fr
   tmp1 = Get quantile: "f1", 0.5
   tmp2 = Get quantile: "f2", 0.5
   tmp3 = Get quantile: "f3", 0.5
-  if (tmp2-tmp1)<500 and tmp3 < 2000 ;and enable_F3_bandwidth_heuristic == 1
+  if (tmp2-tmp1)<500 and tmp3 < 2000 and enable_rhotic_heuristic == 1
     formantError#[3] = formantError#[3] + 10000
   endif
 
   if number_of_formants == 4
-    #tmp = Get quantile: "b4", 0.5
-    #if tmp > 900 ;maximum_F2_bandwidth_value and enable_F2_bandwidth_heuristic == 1
-    #  formantError#[4] = formantError#[4] + 10000
-    #endif
-    #f4bandwidth= Get quantile: "b4", 0.5
-    #f4bandwidth= Get mean: "b4"
-    tmp4= Get quantile: "f4", 0.5
     tmp1 = Get quantile: "f1", 0.5
     tmp2 = Get quantile: "f2", 0.5
     tmp3 = Get quantile: "f3", 0.5
+    tmp4= Get quantile: "f4", 0.5
     if tmp4 < minimum_F4_frequency_value and enable_F4_frequency_heuristic == 1
       formantError#[4] = formantError#[4] + 10000
     endif
     if ((tmp2-tmp1) < 1500) and ((tmp4-tmp3) < 500) and (enable_F3F4_proximity_heuristic == 1)
       formantError#[4] = formantError#[4] + 10000
     endif
-    #if tmp4 > 4700 ;and enable_F4_frequency_heuristic == 1
-    #  formantError#[4] = formantError#[4] + 10000
-    #endif
   endif
 
   for .ff from 1 to number_of_formants

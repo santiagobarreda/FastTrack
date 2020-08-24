@@ -85,7 +85,10 @@ procedure getSettings
   minimum_F4_frequency_value = number(minimum_F4_frequency_value$)
 
   ###
-  enable_F3F4_proximity_heuristic$ = Get string: 22
+  enable_rhotic_heuristic$ = Get string: 22
+  enable_rhotic_heuristic = number(enable_rhotic_heuristic$)
+ 
+  enable_F3F4_proximity_heuristic$ = Get string: 23
   enable_F3F4_proximity_heuristic = number(enable_F3F4_proximity_heuristic$)
 
   removeObject: .settings

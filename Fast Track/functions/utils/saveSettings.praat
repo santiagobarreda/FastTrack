@@ -2,7 +2,6 @@
 procedure saveSettings
 
   .tmp_str = Read Strings from raw text file: "../settings.txt"
-
   Set string: 1, folder$
 
   if number_of_steps < 8
@@ -65,8 +64,11 @@ procedure saveSettings
   minimum_F4_frequency_value$ = string$(minimum_F4_frequency_value)
   Set string: 21, minimum_F4_frequency_value$
 
+  enable_rhotic_heuristic$ = string$(enable_rhotic_heuristic)
+  Set string: 22, enable_rhotic_heuristic$
+
   enable_F3F4_proximity_heuristic$ = string$(enable_F3F4_proximity_heuristic)
-  Set string: 22, enable_F3F4_proximity_heuristic$
+  Set string: 23, enable_F3F4_proximity_heuristic$
 
   Save as raw text file: "../settings.txt"
   removeObject: .tmp_str
