@@ -175,6 +175,21 @@ procedure getWinnersFolder
 			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
 
 			@addAcousticInfoToTable: .tbl, .snd
+
+      for .i from 1 to number_of_formants
+        if output_bandwidth == 0
+          Remove column... b'.i'
+        endif
+        if output_predictions == 0
+          Remove column... f'.i'p
+        endif
+      endfor
+      
+      if output_normalized_time == 0
+        Insert column: 2, "ntime"
+        Formula: "ntime", "row / nrow"
+      endif
+
 		  selectObject: "Table output"
 		  Save as comma-separated file: folder$ + "/csvs/"+ .basename$ + ".csv"
 			nocheck removeObject: .tbl, .snd, .sp, .tmp_f1, .tmp_f2, .tmp_f3, .tmp_f4
@@ -211,5 +226,8 @@ procedure getWinnersFolder
 		removeObject: .info
 	endfor
 	removeObject: .winners, .files, .strs
+
+  @aggregate: 1
+  @getCoefficients: 1
 
 endproc

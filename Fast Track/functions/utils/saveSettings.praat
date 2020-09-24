@@ -1,7 +1,7 @@
 
 procedure saveSettings
 
-  .tmp_str = Read Strings from raw text file: "../settings.txt"
+  .tmp_str = Read Strings from raw text file: "../settings/settings.txt"
   Set string: 1, folder$
 
   if number_of_steps < 8
@@ -32,45 +32,78 @@ procedure saveSettings
   Set string: 10, basis_functions$
   Set string: 11, error_method$
 
+  Save as raw text file: "../settings/settings.txt"
+  removeObject: .tmp_str
+
+
   ## heuristics
 
+  .tmp_str = Read Strings from raw text file: "../settings/heuristics.txt"
+
   enable_F1_frequency_heuristic$ = string$(enable_F1_frequency_heuristic)
-  Set string: 12, enable_F1_frequency_heuristic$
+  Set string: 1, enable_F1_frequency_heuristic$
 
   maximum_F1_frequency_value$ = string$(maximum_F1_frequency_value)
-  Set string: 13, maximum_F1_frequency_value$
+  Set string: 2, maximum_F1_frequency_value$
 
   enable_F1_bandwidth_heuristic$ = string$(enable_F1_bandwidth_heuristic)
-  Set string: 14, enable_F1_bandwidth_heuristic$
+  Set string: 3, enable_F1_bandwidth_heuristic$
 
   maximum_F1_bandwidth_value$ = string$(maximum_F1_bandwidth_value)
-  Set string: 15, maximum_F1_bandwidth_value$
+  Set string: 4, maximum_F1_bandwidth_value$
 
   enable_F2_bandwidth_heuristic$ = string$(enable_F2_bandwidth_heuristic)
-  Set string: 16, enable_F2_bandwidth_heuristic$
+  Set string: 5, enable_F2_bandwidth_heuristic$
 
   maximum_F2_bandwidth_value$ = string$(maximum_F2_bandwidth_value)
-  Set string: 17, maximum_F2_bandwidth_value$
+  Set string: 6, maximum_F2_bandwidth_value$
 
   enable_F3_bandwidth_heuristic$ = string$(enable_F3_bandwidth_heuristic)
-  Set string: 18, enable_F3_bandwidth_heuristic$
+  Set string: 7, enable_F3_bandwidth_heuristic$
 
   maximum_F3_bandwidth_value$ = string$(maximum_F3_bandwidth_value)
-  Set string: 19, maximum_F3_bandwidth_value$
+  Set string: 8, maximum_F3_bandwidth_value$
 
   enable_F4_frequency_heuristic$ = string$(enable_F4_frequency_heuristic)
-  Set string: 20, enable_F4_frequency_heuristic$
+  Set string: 9, enable_F4_frequency_heuristic$
 
   minimum_F4_frequency_value$ = string$(minimum_F4_frequency_value)
-  Set string: 21, minimum_F4_frequency_value$
+  Set string: 10, minimum_F4_frequency_value$
 
   enable_rhotic_heuristic$ = string$(enable_rhotic_heuristic)
-  Set string: 22, enable_rhotic_heuristic$
+  Set string: 11, enable_rhotic_heuristic$
 
   enable_F3F4_proximity_heuristic$ = string$(enable_F3F4_proximity_heuristic)
-  Set string: 23, enable_F3F4_proximity_heuristic$
+  Set string: 12, enable_F3F4_proximity_heuristic$
 
-  Save as raw text file: "../settings.txt"
+  Save as raw text file: "../settings/heuristics.txt"
   removeObject: .tmp_str
+
+
+  ## CSV output
+
+  .tmp_str = Read Strings from raw text file: "../settings/CSVoutput.txt"
+
+  output_bandwidth$ = string$(output_bandwidth)
+  Set string: 1, output_bandwidth$
+
+  output_predictions$ = string$(output_predictions)
+  Set string: 2, output_predictions$
+
+  output_pitch$ = string$(output_pitch)
+  Set string: 3, output_pitch$
+
+  output_intensity$ = string$(output_intensity)
+  Set string: 4, output_intensity$
+  
+  output_harmonicity$ = string$(output_harmonicity)
+  Set string: 5, output_harmonicity$
+  
+  output_normalized_time$ = string$(output_normalized_time)
+  Set string: 6, output_normalized_time$
+  
+  Save as raw text file: "../settings/CSVoutput.txt"
+  removeObject: .tmp_str
+
 
 endproc

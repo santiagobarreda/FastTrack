@@ -17,6 +17,13 @@ beginPause: "Set Parameters"
  		real: "Number of vowels:", 0
     boolean: "Save information:", 1
     boolean: "Return table:", 0
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "How much time should be added to edges (0 = no padding)?"
+    option: "Setting the buffer to 0.025 allows formant tracking to the edge of the sound when using"
+    option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros during analysis"
+    option: "with the track sound or track folder functionalities."
+    positive: "Buffer (s):", 0.025
 endPause: "Ok", 1
 
 if number_of_vowels > 0
@@ -117,7 +124,7 @@ for i from 2 to nIntervals
 
     count = count + 1
     selectObject: snd
-    snd_small = Extract part: vowelStart - 0.025, vowelEnd + 0.025, "rectangular", 1, "no"
+    snd_small = Extract part: vowelStart - buffer, vowelEnd + buffer, "rectangular", 1, "no"
     if count > 999
       filename$ = sndName$ + "_" + string$(count)
     endif

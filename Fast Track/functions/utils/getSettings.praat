@@ -1,7 +1,7 @@
 
 procedure getSettings
 
-  .settings = Read Strings from raw text file: "../settings.txt"
+  .settings = Read Strings from raw text file: "../settings/settings.txt"
 
   folder$ = Get string: 1
 
@@ -48,48 +48,79 @@ procedure getSettings
 
   error_method$ = Get string: 11
 
+  removeObject: .settings
+
+
+
   ###  ### HEURISTICS
 
-  enable_F1_frequency_heuristic$ = Get string: 12
+  .settings = Read Strings from raw text file: "../settings/heuristics.txt"
+
+  enable_F1_frequency_heuristic$ = Get string: 1
   enable_F1_frequency_heuristic = number(enable_F1_frequency_heuristic$)
 
-  maximum_F1_frequency_value$ = Get string: 13
+  maximum_F1_frequency_value$ = Get string: 2
   maximum_F1_frequency_value = number(maximum_F1_frequency_value$)
 
   ###
-  enable_F1_bandwidth_heuristic$ = Get string: 14
+  enable_F1_bandwidth_heuristic$ = Get string: 3
   enable_F1_bandwidth_heuristic = number(enable_F1_bandwidth_heuristic$)
 
-  maximum_F1_bandwidth_value$ = Get string: 15
+  maximum_F1_bandwidth_value$ = Get string: 4
   maximum_F1_bandwidth_value = number(maximum_F1_bandwidth_value$)
 
   ###
-  enable_F2_bandwidth_heuristic$ = Get string: 16
+  enable_F2_bandwidth_heuristic$ = Get string: 5
   enable_F2_bandwidth_heuristic = number(enable_F2_bandwidth_heuristic$)
 
-  maximum_F2_bandwidth_value$ = Get string: 17
+  maximum_F2_bandwidth_value$ = Get string: 6
   maximum_F2_bandwidth_value = number(maximum_F2_bandwidth_value$)
 
   ###
-  enable_F3_bandwidth_heuristic$ = Get string: 18
+  enable_F3_bandwidth_heuristic$ = Get string: 7
   enable_F3_bandwidth_heuristic = number(enable_F3_bandwidth_heuristic$)
 
-  maximum_F3_bandwidth_value$ = Get string: 19
+  maximum_F3_bandwidth_value$ = Get string: 8
   maximum_F3_bandwidth_value = number(maximum_F3_bandwidth_value$)
 
   ###
-  enable_F4_frequency_heuristic$ = Get string: 20
+  enable_F4_frequency_heuristic$ = Get string: 9
   enable_F4_frequency_heuristic = number(enable_F4_frequency_heuristic$)
 
-  minimum_F4_frequency_value$ = Get string: 21
+  minimum_F4_frequency_value$ = Get string: 10
   minimum_F4_frequency_value = number(minimum_F4_frequency_value$)
 
   ###
-  enable_rhotic_heuristic$ = Get string: 22
+  enable_rhotic_heuristic$ = Get string: 11
   enable_rhotic_heuristic = number(enable_rhotic_heuristic$)
  
-  enable_F3F4_proximity_heuristic$ = Get string: 23
+  enable_F3F4_proximity_heuristic$ = Get string: 12
   enable_F3F4_proximity_heuristic = number(enable_F3F4_proximity_heuristic$)
+
+  removeObject: .settings
+
+
+  ### CSV output
+
+  .settings = Read Strings from raw text file: "../settings/CSVoutput.txt"
+
+  output_bandwidth$ = Get string: 1
+  output_bandwidth = number(output_bandwidth$)
+
+  output_predictions$ = Get string: 2
+  output_predictions = number(output_predictions$)
+
+  output_pitch$ = Get string: 3
+  output_pitch = number(output_pitch$)
+
+  output_intensity$ = Get string: 4
+  output_intensity = number(output_intensity$)
+
+  output_harmonicity$ = Get string: 5
+  output_harmonicity = number(output_harmonicity$)
+
+  output_normalized_time$ = Get string: 6
+  output_normalized_time = number(output_normalized_time$)
 
   removeObject: .settings
 

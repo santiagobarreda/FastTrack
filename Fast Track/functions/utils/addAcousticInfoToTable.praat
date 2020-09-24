@@ -13,8 +13,10 @@ procedure addAcousticInfoToTable .tbl, .snd
   .p1 = noprogress To Pitch: 0.002, 60, 350
   .p2 = noprogress Smooth: 10
   removeObject: .p1
+
   selectObject: .snd
   .i1 = noprogress To Intensity: 130, 0.002, "yes"
+   
    selectObject: .snd
   .h = noprogress To Harmonicity (cc): 0.01, 75, 0.1, 1
 
@@ -28,7 +30,6 @@ procedure addAcousticInfoToTable .tbl, .snd
     if .f0 = undefined
       .f0 = 0
     endif
-
     selectObject: .tbl
     Set numeric value... .i f0 .f0
     
@@ -38,16 +39,26 @@ procedure addAcousticInfoToTable .tbl, .snd
     selectObject: .tbl
     Set numeric value... .i intensity .intn
 
+
     selectObject: .h
     .hrm = Get value at time: .time, "Cubic"
     .hrm = round(.hrm*10) / 10
     selectObject: .tbl
     Set numeric value... .i harmonicity .hrm
 
-
   endfor
   removeObject: .i1
   removeObject: .p2
   removeObject: .h
+
+  if output_pitch == 0
+    Remove column: "f0"
+  endif
+  if output_intensity == 0
+    Remove column: "intensity"
+  endif
+  if output_harmonicity == 0
+    Remove column: "harmonicity"
+  endif
 
 endproc

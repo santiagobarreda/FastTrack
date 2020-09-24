@@ -1,7 +1,9 @@
 
-procedure aggregate
+procedure aggregate autorun
   @getSettings
 
+
+  if autorun == 0
   beginPause: "Set Parameters"
     comment: "Indicate your working directory. This folder should contain a folder inside of it"
     comment: "called 'csvs' that contains all of the files you wish to aggregate."
@@ -22,6 +24,12 @@ procedure aggregate
   	        option: "median"
   					option: "mean"
   endPause: "Ok", 1
+  endif
+  if autorun == 1
+    number_of_bins$ = "5"
+    statistic = 1
+  endif
+
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"
@@ -30,6 +38,7 @@ procedure aggregate
   if ending$ == "\"
     folder$ = folder$ - "\"
   endif
+  
 
   @saveSettings
 
@@ -38,7 +47,6 @@ procedure aggregate
   createDirectory: folder$ + "/processed_data/"
 
   .strs = Create Strings as file list: "list", folder$ + "/csvs/*.csv"
-  Save as short text file: folder$ +"/fileList.Strings"
   .nfiles = Get number of strings
 
   Create Table with column names: "output", .nfiles, "file"

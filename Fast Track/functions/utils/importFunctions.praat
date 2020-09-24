@@ -11,8 +11,17 @@ include utils/addAcousticInfoToTable.praat
 include utils/editTracks.praat
 
 include tools/aggregate.praat
+include tools/addBuffer.praat
 include tools/predict.praat
 include tools/getCoefficients.praat
 include tools/editFolder.praat
 include tools/chopSoundFiles.praat
 include tools/makeTextGrids.praat
+
+
+versionPraat$ = left$(praatVersion$, (rindex(praatVersion$, ".")-1));
+versionPraat = 'versionPraat$' 
+
+if versionPraat < 6.1
+   exit "Please download a more recent version of Praat."
+endif

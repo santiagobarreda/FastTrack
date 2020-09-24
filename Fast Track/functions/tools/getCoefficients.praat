@@ -1,12 +1,15 @@
 
-procedure getCoefficients
+procedure getCoefficients autorun
 
+  if autorun == 0
     beginPause: "Set Parameters"
       comment: "Indicate your working directory. This folder should contain a folder inside of it."
       comment: "called 'infos' that contains regression coefficients for each sound."
       sentence: "Folder:", folder$
      endPause: "Ok", 1
-    
+  endif
+
+
     ending$ = right$ (folder$,1)
     if ending$ == "/"
       folder$ = folder$ - "/"

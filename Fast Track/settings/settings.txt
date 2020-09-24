@@ -1,0 +1,11 @@
+E:\fastTrackDemo
+20
+5
+4700
+7550
+4000
+0.002
+burg
+3
+dct
+mae

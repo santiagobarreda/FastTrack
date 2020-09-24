@@ -3,50 +3,83 @@
 ########################################################################################################################################################
 ## Initial setup
 
+include utils/importfunctions.praat
+
+
 snd = selected ()
 basename$ = selected$ ("Sound")
 #total_duration = Get total duration
 
-include utils/importfunctions.praat
+clicked = 2
+
+while clicked == 2
 
 @getSettings
 
 beginPause: "Set Parameters"
-  comment: "Indicate where you want any output files to go."
+	#boolean: "Analyze selection", 0 ;
+  optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Indicate where you want any output files to go. An image of the output is always saved."
   sentence: "Folder:", folder$
-  comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
+  optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
 	positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
 	positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
-	comment: "Number of analyses between low and high analysis limits. More analysis steps may"
-	comment: "results, but will increase analysis time (50% more steps = 50% longer to analyze)."
+	optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Number of analyses between low and high analysis limits. More analysis steps may"
+	  option: "improve results, but will increase analysis time and the amount of data generated: "
+    option: "50% more steps means a 50% longer analysis time, and 50% more generated files."
 	optionMenu: "Number of steps:", number_of_steps
-			option: "8"
-			option: "12"
-			option: "16"
-			option: "20"
-			option: "24"
-	comment: "More coefficients allow for more sudden, and 'wiggly' formant motion."
+		option: "8"
+		option: "12"
+		option: "16"
+		option: "20"
+		option: "24"
+	optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "More coefficients allow for more sudden, and 'wiggly' formant motion."
 	positive: "Number of coefficients for formant prediction:", number_of_coefficients_for_formant_prediction
+	optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "The best analysis will be found on average across all desired formants."
+    option: "Often, F4 can be difficult to track so that the best analysis including F4"
+	  option: "may not be the best analysis for F3 and below. If you only want 3 formants,"
+    option: "tracking 3 will ensure the analysis is optimized for those formants."
 	optionMenu: "Number of formants", number_of_formants
-					option: "3"
-					option: "4"
-	positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
+		option: "3"
+		option: "4"
+  positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
 	optionMenu: "Image", 1
-	        option: "Show image of winner"
-					option: "Show image comparing of all analyses"
+	  option: "Show image of winner"
+		option: "Show image comparing of all analyses"
 		comment: "Choose which data to save and/or return."
 		boolean: "return formant", 0 ;
     boolean: "save formant", 0 ;
 		boolean: "save csv", 0 ;
 		boolean: "save all formants", 0
 		boolean: "return table", 0
-endPause: "Ok", 1
-
+    
+clicked = endPause: "Ok","Apply", 1
 number_of_steps = number(number_of_steps$)
 number_of_formants = number(number_of_formants$)
 
+
+numberOfSelectedSounds  = numberOfSelected ("Sound")
+if numberOfSelectedSounds == 1
+  snd = selected ()
+  basename$ = selected$ ("Sound")
+endif
+
 @saveSettings
 
+
+#if analyze_selection == 1
+#	selectObject: snd
+#  tmp_snd = Extract selected sound (time from 0)
+#endif
 
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -63,12 +96,16 @@ for i from 1 to number_of_steps
   cutoffs#[i] = round (lowest_analysis_frequency+stepSize*(i-1))
 endfor
 
-
 writeInfoLine: "Median absolute error for frequency (total,F1 F2 F3 F4):"
 
 for z from 1 to number_of_steps
-
 	selectObject: snd
+
+  #if analyze_selection == 1
+  #  selectObject: tmp_snd
+  #endif
+
+  ## add buffer here. make silence, make copy of sound, make nother silence. concatenate, then erase everything!
 	if tracking_method$ == "burg"
     noprogress To Formant (burg): time_step, 5.5, cutoffs#[z], 0.025, 50
   endif
@@ -137,12 +174,13 @@ if image = 1
 		 tbl = selected ("Table")
      Font size: 8
 		 @plotTable: sp, tbl, maximum_plotting_frequency, 0.5
+     #Text: 0.5, "centre", 0.1, "Top", string$(cutoffs#[z])
 
 		 if z = winner
 			 Select outer viewport: xlims#[z]-0.1, xlims#[z]+3.3, ylims#[z]-0.1, ylims#[z]+2.1
-			 Draw inner box
+			 #Draw inner box
 			 Select outer viewport: xlims#[z]-0.05, xlims#[z]+3.25, ylims#[z]-0.05, ylims#[z]+2.05
-			 Draw inner box
+			 #Draw inner box
 		 endif
 	 endfor
 
@@ -166,6 +204,7 @@ nocheck removeObject: sp
 ########################################################################################################################################################
 ## Save data and delete backup files
 
+
 for z from 1 to number_of_steps
 	if (save_formant = 1 or save_all_formants = 1) and z = winner
 		selectObject: "Formant formants_" + string$(z)
@@ -180,7 +219,22 @@ endfor
 if save_csv = 1 or return_table = 1
 	selectObject: "Table formants_" + string$(winner)
 	tbl = selected ("Table")
-	@addAcousticInfoToTable: tbl, snd
+	@addAcousticInfoToTable: tbl, snd  
+
+  for .i from 1 to number_of_formants
+    if output_bandwidth == 0
+      Remove column... b'.i'
+    endif
+    if output_predictions == 0
+      Remove column... f'.i'p
+    endif
+  endfor
+
+  if output_normalized_time == 0
+    Insert column: 2, "ntime"
+    Formula: "ntime", "row / nrow"
+  endif
+
 endif
 
 if save_csv = 1
@@ -208,3 +262,9 @@ for z from 1 to number_of_steps
 endfor
 
 selectObject: snd
+
+
+
+
+endwhile
+

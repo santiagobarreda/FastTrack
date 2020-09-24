@@ -6,23 +6,24 @@ include utils/saveSettings.praat
 optiontype = -1
 clicked = 2
 
+menu = 1
 while clicked > 1
 	beginPause: "Set Parameters"
-	  if optiontype == -1
+ 	  if menu == 1
 	    comment: "Set default parameter settings."
-		sentence: "Default working directory:", folder$
-		comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
-		positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
-		positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
-		comment: "Number of analyses between low and high analysis limits. More analysis steps may improve"
-		comment: "results, but will increase analysis time (50% more steps = around 50% longer to analyze)."
-		optionMenu: "Number of steps:", number_of_steps
-		  option: "8"
-		  option: "12"
-		  option: "16"
-		  option: "20"
-		  option: "24"
-		comment: "More coefficients allow for more sudden, and 'wiggly' formant motion."
+		  sentence: "Default working directory:", folder$
+		  comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
+		  positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
+		  positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
+		  comment: "Number of analyses between low and high analysis limits. More analysis steps may improve"
+		  comment: "results, but will increase analysis time (50% more steps = around 50% longer to analyze)."
+		  optionMenu: "Number of steps:", number_of_steps
+		    option: "8"
+		    option: "12"
+		    option: "16"
+		    option: "20"
+		    option: "24"
+		  comment: "More coefficients allow for more sudden, and 'wiggly' formant motion."
 		  positive: "Number of coefficients for formant prediction:", number_of_coefficients_for_formant_prediction
 		  positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
 		  positive: "Time step (ms):", time_step
@@ -30,12 +31,7 @@ while clicked > 1
 		  sentence: "Basis functions:", basis_functions$
 		  sentence: "Error method:", error_method$
 		endif
-
-	if optiontype == 1
-		comment: "Heuristics:"
-	endif
-
-	if optiontype == 1
+	if menu == 2
 	  boolean: "Enable F1 frequency heuristic:", enable_F1_frequency_heuristic
     positive: "Maximum F1 frequency value:", maximum_F1_frequency_value
     boolean: "Enable F1 bandwidth heuristic:", enable_F1_bandwidth_heuristic
@@ -49,7 +45,22 @@ while clicked > 1
     boolean: "Enable rhotic heuristic:", enable_rhotic_heuristic
     boolean: "Enable F3F4 proximity heuristic:", enable_F3F4_proximity_heuristic
 	endif
-	clicked = endPause: "Ok", "Settings/Heuristics", 1
+
+	if menu == 3
+    boolean: "Output bandwidth:", output_bandwidth
+    boolean: "Output predictions", output_predictions
+    boolean: "Output pitch:", output_pitch
+    boolean: "Output intensity:", output_intensity
+    boolean: "Output harmonicity:", output_harmonicity
+    boolean: "Output normlized time:", output_normalized_time
+  endif
+
+    optionMenu: "Menu", 1
+    option: "Settings"
+    option: "Heuristics"
+    option: "CSV output"
+
+	clicked = endPause: "Ok", "Switch Options", 1
     if clicked == 2
 	  optiontype = optiontype * -1	  
 	endif

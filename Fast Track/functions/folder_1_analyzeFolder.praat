@@ -9,32 +9,52 @@ include folder/getWinnersFolder.praat
 @getSettings
 
 beginPause: "Set Parameters"
-    comment: "Indicate your working directory. This folder shgould contain a folder inside of it."
-    comment: "called 'sounds' that contains all of the sounds you wih to analyze."
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Indicate your working directory. This folder should contain"
+    option: "a folder inside of it called 'sounds' that contains all of"
+    option: "the sounds you wish to analyze."
     sentence: "Folder:", folder$
-    comment: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
 		positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
 		positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
-    comment: "Number of analyses between low and high analysis limits. More analysis steps may"
-    comment: "results, but will increase analysis time (50% more steps = 50% longer to analyze)."
-		optionMenu: "Number of steps:", number_of_steps
+    optionMenu: "", 1
+      option: "[Click to Read]"
+      option: "Number of analyses between low and high analysis limits. More analysis steps may"
+	    option: "improve results, but will increase analysis time and the amount of data generated: "
+      option: "50% more steps means a 50% longer analysis time, and 50% more generated files."		
+    optionMenu: "Number of steps:", number_of_steps
 			option: "8"
 			option: "12"
 			option: "16"
 			option: "20"
 			option: "24"
-    comment: "More coefficients allow for more sudden, and 'wiggly' formant motion."
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "More coefficients allow for more sudden, and 'wiggly' formant motion."
 		positive: "Number of coefficients for formant prediction:", number_of_coefficients_for_formant_prediction
-    comment: "How many formants will be judged to pick the winner?"
+    optionMenu: "", 1
+    option: "[Click to Read]"
+      option: "The best analysis will be found on average across all desired formants."
+      option: "Often, F4 can be difficult to track so that the best analysis including F4"
+      option: "may not be the best analysis for F3 and below. If you only want 3 formants,"
+      option: "tracking 3 will ensure the analysis is optimized for those formants."
     optionMenu: "Number of formants", number_of_formants
             option: "3"
             option: "4"
-    comment: "Images are recommended as they facilitate data validation and the selection of alternate analyses."
-    comment: "Making images does not add significant time (<5%) to the analysis."
+                optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Images are recommended as they facilitate data validation and the selection of "
+    option: "alternate analyses. Making images can add 10%-20% more time to the analysis."
     boolean: "Make images comparing analyses", 1
     boolean: "Make images showing winners", 1
     positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
-    comment: "Uncheck to skip step. Individual steps can be carried out if previous step has been completed."
+     optionMenu: "", 1
+    option: "[Click to Read]"
+   option: "Uncheck to skip step. Individual steps can be"
+   option: "carried out if previous step has been completed."
     boolean: "Track formants", 1
     boolean: "Autoselect winners", 1
     boolean: "Get winners", 1

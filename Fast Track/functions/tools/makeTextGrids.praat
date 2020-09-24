@@ -3,8 +3,18 @@ procedure makeTextGrids
   @getSettings
 
   beginPause: "Set Parameters"
+    comment: "Path to folder containing sounds"
     sentence: "Folder:", ""
+    comment: "If selected, vowels will be extracted and saved in new files."
     boolean: "save sound", 1
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "If sounds are extracted, how much time should be added to edges (0 = no padding)?"
+    option: "Setting the buffer to 0.025 allows formant tracking to the edge of the sound when using"
+    option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros during analysis"
+    option: "with the track sound or track folder functionalities."
+    positive: "Buffer (s):", 0.025 
+    comment: "If selected, TextGrid files will be saved."
     boolean: "save textgrid", 1
   endPause: "Ok", 1
 
@@ -49,7 +59,7 @@ procedure makeTextGrids
       end = Get end time of interval: 1, 2
                 
       selectObject: .snd
-      .snd_small = Extract part: start - 0.025, end + 0.025, "rectangular", 1, "no"
+      .snd_small = Extract part: start - buffer, end + buffer, "rectangular", 1, "no"
       Save as WAV file: folder$ + "/sounds/" + filename$  
                 
       removeObject: .snd_small, .tg

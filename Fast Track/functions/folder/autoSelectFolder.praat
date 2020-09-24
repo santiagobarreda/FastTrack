@@ -194,6 +194,22 @@ procedure autoSelectFolder
       selectObject: "Table tmp"
       .tbl = selected ("Table")
       @addAcousticInfoToTable: .tbl, .snd
+          
+      for .i from 1 to number_of_formants
+        if output_bandwidth == 0
+          Remove column... b'.i'
+        endif
+        if output_predictions == 0
+          Remove column... f'.i'p
+        endif
+      endfor
+      #add normalized time here
+
+      if output_normalized_time == 0
+        Insert column: 2, "ntime"
+        Formula: "ntime", "row / nrow"
+      endif
+
       Save as comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
       removeObject: "Table tmp"
     endif
