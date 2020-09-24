@@ -1,14 +1,10 @@
 
 procedure getWinnersFolder
-	.winners = Read Table from comma-separated file: folder$ + "/winners.csv"
-	.files = Read from file: folder$ + "/fileList.Strings"
-	.nfiles = Get number of strings
-	.basename$ = Get string: 1
-
-	## read file list
-  .strs = Read from file: folder$ +"/fileList.Strings"
+  .winners = Read Table from comma-separated file: folder$ + "/winners.csv"
+  .files = Read from file: folder$ + "/fileList.Strings"
   .nfiles = Get number of strings
   .basename$ = Get string: 1
+
 
   winf1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
   winf2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
@@ -52,7 +48,7 @@ procedure getWinnersFolder
 	  selectObject: .files
 	  .basename$ = Get string: .counter
 	  .basename$ = .basename$ - ".wav"
-		.info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
+	  .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
 
 	  selectObject: .winners
 	  .winner = Get value: .counter, "winner"
@@ -225,7 +221,7 @@ procedure getWinnersFolder
 
 		removeObject: .info
 	endfor
-	removeObject: .winners, .files, .strs
+	removeObject: .winners, .files
 
   @aggregate: 1
   @getCoefficients: 1

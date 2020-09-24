@@ -19,7 +19,6 @@ procedure getCoefficients autorun
     endif
 
   .strs = Create Strings as file list: "list", folder$ + "/infos/*.txt"
-  Save as short text file: folder$ +"/fileList.Strings"
   .nfiles = Get number of strings
   .basename$ = Get string: 1
   .basename$ = .basename$ - "analysis information"
