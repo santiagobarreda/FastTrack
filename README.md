@@ -5,7 +5,7 @@
 </p>   
 &nbsp;
 
-**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[paper]](https://docs.google.com/document/d/e/2PACX-1vTnh14lLkRXtJTOADP5qUFKkTyu5ea4Y04VmJj1PLW78gCrQLw74GbHwy-XvUDf9t9qdvvHBp_rUegW/pub)
+**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[paper]](https://docs.google.com/document/d/1sNTL8xrzTTcX9zRLPB89UoSfalet2Xs9A6_WwB3a7oM/edit?usp=sharing)
 ###
 
 
@@ -63,7 +63,7 @@ We can automatically generate an image comparing the alternate possible analyses
 &nbsp;
 
 [For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
-[Or check this paper out.](https://docs.google.com/document/d/e/2PACX-1vTnh14lLkRXtJTOADP5qUFKkTyu5ea4Y04VmJj1PLW78gCrQLw74GbHwy-XvUDf9t9qdvvHBp_rUegW/pub)
+[Or check this paper out.](https://docs.google.com/document/d/1sNTL8xrzTTcX9zRLPB89UoSfalet2Xs9A6_WwB3a7oM/edit?usp=sharing)
 
 ### Author
 
