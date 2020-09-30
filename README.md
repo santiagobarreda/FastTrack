@@ -65,7 +65,7 @@ We can automatically generate an image comparing the alternate possible analyses
 &nbsp;
 
 [For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
-[Or check this paper out.](https://docs.google.com/document/d/1sNTL8xrzTTcX9zRLPB89UoSfalet2Xs9A6_WwB3a7oM/edit?usp=sharing)
+[Or check this paper out.](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing)
 
 ### Author
 
