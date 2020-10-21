@@ -185,9 +185,9 @@ if image = 1
 
 		 if z = winner
 			 Select outer viewport: xlims#[z]-0.1, xlims#[z]+3.3, ylims#[z]-0.1, ylims#[z]+2.1
-			 #Draw inner box
+			 Draw inner box
 			 Select outer viewport: xlims#[z]-0.05, xlims#[z]+3.25, ylims#[z]-0.05, ylims#[z]+2.05
-			 #Draw inner box
+			 Draw inner box
 		 endif
 	 endfor
 
