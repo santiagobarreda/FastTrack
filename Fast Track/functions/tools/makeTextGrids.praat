@@ -5,6 +5,8 @@ procedure makeTextGrids
   beginPause: "Set Parameters"
     comment: "Path to folder containing sounds"
     sentence: "Folder:", ""
+    comment: "Label for TextGrid interval corresponding to vowel."
+    sentence: "Label:", ""
     comment: "If selected, vowels will be extracted and saved in new files."
     boolean: "save sound", 1
     optionMenu: "", 1
@@ -53,7 +55,7 @@ procedure makeTextGrids
       endPause: "OK", 0
 
       selectObject: .tg
-      Set interval text: 1,2,"vowel"
+      Set interval text: 1,2, label$
       Save as short text file: folder$ + "/textGrids/" + basename$ + ".TextGrid"
       start = Get start time of interval: 1, 2
       end = Get end time of interval: 1, 2

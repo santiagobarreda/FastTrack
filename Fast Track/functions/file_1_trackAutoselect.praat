@@ -24,7 +24,14 @@ beginPause: "Set Parameters"
   sentence: "Folder:", folder$
   optionMenu: "", 1
     option: "[Click to Read]"
-    option: "Recommended ranges: 4500-6500 for tall speakers, 5000-7000 for short speakers."
+	option: "Appropriate highest and lowest frequencies will vary as a function of talker vocal-tract length,"
+	option: "which is strongly related to height across all speakers. Talkers can be grouped into broad categories of:"
+	option: "   tall (>5 foot 8): recommended range 4500-6500 Hz"
+	option: "   medium (5 foot 8 >  > 5 foot 0): recommended range 5000-7000 Hz"
+	option: "   short (<5 foot 0) recommended range 5500-7500 Hz"
+    option: "These categories correspond roughly to adult males, adult females (and some older children),"
+    option: "and younger children. However, there is substantial overlap between categories and variation"
+    option: "within-category, so that adjustments may be required for individual voices."
 	positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
 	positive: "Highest analysis frequency (Hz):", highest_analysis_frequency
 	optionMenu: "", 1
