@@ -5,8 +5,12 @@
 </p>   
 &nbsp;
 
-**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki)
+**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[paper]](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing) [[YouTube]](https://www.youtube.com/watch?v=WUFj2QUtuEs&t)
+
 ###
+
+
+
 
 In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. In the example on the left, the maximum-formant frequency is too low and Praat is finding formants where there are none. On the right, a more appropriate maximum-formant frequency is used, leading to a better analysis. Manually adjusting analysis parameters until finding the right combination is time consuming, difficult to reproduce, and not systematic: characteristics which make it impractical and undesirable for large-scale projects. 
 
@@ -61,7 +65,7 @@ We can automatically generate an image comparing the alternate possible analyses
 &nbsp;
 
 [For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
-
+[Or check this paper out.](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing)
 
 ### Author
 
