@@ -129,6 +129,6 @@ for filecounter from 1 to nfiles
 
 endfor
      
-removeObject: vwlTbl
+removeObject: vwlTbl, obj
 
 endproc
