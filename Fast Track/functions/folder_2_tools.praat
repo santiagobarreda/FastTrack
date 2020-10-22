@@ -14,7 +14,7 @@ beginPause: "Set Parameters"
     option: "Aggregates CSVs resulting from folder analysis into a single CSV summarizing the data in each sound analysis."
     option: "The output is a CSV with a single row for each sound file analyzed. "
   optionMenu: "", 1
-    option:  "[Chop sound files with TextGrids]"
+    option:  "[Extract vowels with TextGrids]"
     option: "Allows you to extract vowels from sounds using textgrids. This can be"
     option: "done for an entire folder full of sounds (and one of TextGrids) at a time."
   optionMenu: "", 1
@@ -34,7 +34,7 @@ beginPause: "Set Parameters"
   choice: "Option:", 1
       option: "Add buffer to edge of files"
       option: "Aggregate"
-      option: "Chop sound files with TextGrids"
+      option: "Extract vowels with TextGrids"
       option: "Edit folder"
       option: "Get coefficients"
       option: "Make TextGrids"
@@ -47,7 +47,7 @@ if option == 2
   @aggregate: 0
 endif
 if option == 3
-  @chopSoundFiles
+  @extractVowelswithTG
 endif
 if option == 4
   @editFolder
