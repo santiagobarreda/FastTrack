@@ -29,7 +29,7 @@ beginPause: "Set Parameters"
 	option: "   tall (>5 foot 8): recommended range 4500-6500 Hz"
 	option: "   medium (5 foot 8 >  > 5 foot 0): recommended range 5000-7000 Hz"
 	option: "   short (<5 foot 0) recommended range 5500-7500 Hz"
-    option: "These categories correspond roughly to adult males, adult females (and some older children),"
+    option: "These categories correspond roughly to adult males, adult females (and teenagers),"
     option: "and younger children. However, there is substantial overlap between categories and variation"
     option: "within-category, so that adjustments may be required for individual voices."
 	positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
