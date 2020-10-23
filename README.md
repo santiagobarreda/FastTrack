@@ -31,7 +31,7 @@ Along with CSV files containing detailed analysis information (formant frequenci
 
 &nbsp;
 
-  #### Tools and Functions
+#### Tools and Functions
   
   Fast Track includes to (among other things):
   
@@ -44,8 +44,9 @@ Along with CSV files containing detailed analysis information (formant frequenci
 * Aggregate fine-sampled data into coarser measures (e.g., average formants for every 20% of duration).
 
 
-  
-  #### Output
+&nbsp;
+ 
+#### Output
 The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
 
 * CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
