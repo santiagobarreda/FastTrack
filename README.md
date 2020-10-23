@@ -9,6 +9,8 @@
 
 ###
 
+In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
+
 Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one (surrounded by extra boxes):
 
 <p align="center">
@@ -21,17 +23,16 @@ And returns this the winning analysis to the user:
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
 </p>
 
-Along with CSV files containing detailed analysis information sampled every 2 ms from the start to the end of the sound:
+Along with CSV files containing detailed analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
 
 <p align="center">
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
 </p>
 
-In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
 
-&nbsp;
 
-Fast Track speeds up formant tracking by automatically trying multiple maximum-formant settings and attempting to find the 'best' one for the user. The general algorithm is:
+#### Algorithm
+The general algorithm is:
 &nbsp;
 
  1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
@@ -46,6 +47,7 @@ Fast Track speeds up formant tracking by automatically trying multiple maximum-f
 
 &nbsp;
 
+#### Output
 The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
 
 * CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
