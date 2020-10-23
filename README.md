@@ -17,15 +17,11 @@ Fast Track automatically runs multiple formant analyses on a given sound file, a
 
 And returns this to the user:
 
-&nbsp;
+<p align="center">
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
+</p>
 
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/badtrack.png?raw=true" width=400>    <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/goodtrack.png?raw=true" width=400>
-
-&nbsp;
-
-
-
-In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. In the example on the left, the maximum-formant frequency is too low and Praat is finding formants where there are none. On the right, a more appropriate maximum-formant frequency is used, leading to a better analysis. Manually adjusting analysis parameters until finding the right combination is time consuming, difficult to reproduce, and not systematic: characteristics which make it impractical and undesirable for large-scale projects. 
+In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
 
 &nbsp;
 
@@ -53,14 +49,6 @@ The above algorithm can be applied to a single file or to an entire folder at on
 * A log of the selected analyses, which can then be used to select alternate preferred analysis. 
 
 * Detailed information regarding the analyses carried out for each sound.   
-
-&nbsp;
-
-For example, when Fast Track is run on the sound above we can have Fast Track select the best analysis for us:
-
-<p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
-</p>
 
 &nbsp;
 
