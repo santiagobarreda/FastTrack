@@ -93,8 +93,9 @@ This project is licensed under the MIT License - see the [License](LICENSE) file
 
 ### Acknowledgments
 
-This work is the implementation of the ideas presented in several previous works (more coming):
+This work is the implementation of the ideas presented in several previous works:
 
 * Nearey, T. M., Assmann, P. F., & Hillenbrand, J. M. (2002). Evaluation of a strategy for automatic formant tracking. The Journal of the Acoustical Society of America, 112(5), 2323-2323.
 * Wassink, A. B., & Koops, C. (2013). Quantifying and interpreting vowel formant trajectory information. In Best Practices in Sociophonetics Workshop at NWAV (Vol. 42).
 * Weenink, D. (2015). Improved formant frequency measurements of short segments. In ICPhS.
+* Zhang, C., Morrison, G. S., Enzinger, E., and Ochoa, F. (2013). Effects of telephone transmission on the performance of formant-trajectory-based forensic voice comparison – Female voices. Speech Communication, 55(6), 796–813. https://doi.org/10.1016/j.specom.2013.01.011
