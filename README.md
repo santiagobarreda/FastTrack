@@ -9,38 +9,46 @@
 
 ###
 
-Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one (surrounded by extra boxes):
+Fast Track is a Praat plugin mean to make very accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
+
+Fast Track has built-in functions to help along every step of a vowel analysis project from start to finish (with more coming):
+  
+* Extract vowel sounds from larger recordings with TextGrids files.
+
+* Automatic selection of the 'best' analysis.
+
+* Automatically generate images of analysis for data validation. All alternate Analyses are saved for easy corrections. 
+
+* Quick workflow for manually editing formant tracks. 
+
+* Aggregate fine-sampled data into coarser measures (e.g., average formants for every 20% of duration).
+
+* Automatic generation of images showing final analyses for data validation. 
+
+* Automatic generation of data files containing fine-sampled acoustic analysis calculated every 2 ms along the vowel. 
+
+Comparison of multiple analyses:
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/santiagobarreda/FastTrack/master/docs/file_comparison.png" width=700>
 </p>
 
-And returns this to the user:
+Image of winning analysis:
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png" width=600>
 </p>
 
-In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
+CSV file containing analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
+
+<p align="center">
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
+</p>
 
 &nbsp;
-
-Fast Track speeds up formant tracking by automatically trying multiple maximum-formant settings and attempting to find the 'best' one for the user. The general algorithm is:
-&nbsp;
-
- 1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
  
- 2) The goodness of each candidate is established by considering the smoothness of the formant trajectories (and optional heuristics).
- 
- 3) The 'best' analysis is selected as the winner. Images are made for visual verification.
- 
- 4) The user accepts the automatic selection, or indicates an alternate analysis.
- 
- 5) The user is given an opportunity to manually edit winners to ensure completely-accurate tracks.
-
-&nbsp;
-
-The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
+#### Output
+The plugin can analyze to a single file or to an entire folder of sounds at once. Fast Track generates (among other things): 
 
 * CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
 
@@ -51,6 +59,22 @@ The above algorithm can be applied to a single file or to an entire folder at on
 * Detailed information regarding the analyses carried out for each sound.   
 
 &nbsp;
+
+#### Algorithm
+The general algorithm is:
+&nbsp;
+
+ 1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
+ 
+ 2) The goodness of each candidate is established by considering the smoothness of the formant trajectories using a regression analysis (and optional heuristics).
+ 
+ 3) The 'best' analysis is selected as the winner. Images are made for visual verification.
+ 
+ 4) The user accepts the automatic selection, or indicates an alternate analysis.
+ 
+ 5) The user is given an opportunity to manually edit winners to ensure completely-accurate tracks.
+
+&nbsp;  
 
 &nbsp;
 
@@ -69,8 +93,9 @@ This project is licensed under the MIT License - see the [License](LICENSE) file
 
 ### Acknowledgments
 
-This work is the implementation of the ideas presented in several previous works (more coming):
+This work is the implementation of the ideas presented in several previous works:
 
 * Nearey, T. M., Assmann, P. F., & Hillenbrand, J. M. (2002). Evaluation of a strategy for automatic formant tracking. The Journal of the Acoustical Society of America, 112(5), 2323-2323.
 * Wassink, A. B., & Koops, C. (2013). Quantifying and interpreting vowel formant trajectory information. In Best Practices in Sociophonetics Workshop at NWAV (Vol. 42).
 * Weenink, D. (2015). Improved formant frequency measurements of short segments. In ICPhS.
+* Zhang, C., Morrison, G. S., Enzinger, E., and Ochoa, F. (2013). Effects of telephone transmission on the performance of formant-trajectory-based forensic voice comparison – Female voices. Speech Communication, 55(6), 796–813. https://doi.org/10.1016/j.specom.2013.01.011
