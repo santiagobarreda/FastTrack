@@ -39,8 +39,7 @@ Image of winning analysis:
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png" width=600>
 </p>
 
-CSV file containing analysis information:
-Along with CSV files containing detailed analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
+CSV file containing analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
 
 <p align="center">
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
