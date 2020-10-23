@@ -48,7 +48,7 @@ CSV file containing analysis information (formant frequencies and bandwidths, f0
 &nbsp;
  
 #### Output
-The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
+The plugin can analyze to a single file or to an entire folder of sounds at once. Fast Track generates (among other things): 
 
 * CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
 
@@ -66,7 +66,7 @@ The general algorithm is:
 
  1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
  
- 2) The goodness of each candidate is established by considering the smoothness of the formant trajectories (and optional heuristics).
+ 2) The goodness of each candidate is established by considering the smoothness of the formant trajectories using a regression analysis (and optional heuristics).
  
  3) The 'best' analysis is selected as the winner. Images are made for visual verification.
  
