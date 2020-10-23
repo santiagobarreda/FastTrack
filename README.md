@@ -15,10 +15,16 @@ Fast Track automatically runs multiple formant analyses on a given sound file, a
 <img src="https://raw.githubusercontent.com/santiagobarreda/FastTrack/master/docs/file_comparison.png" width=700>
 </p>
 
-And returns this to the user:
+And returns this the winning analysis to the user:
 
 <p align="center">
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
+</p>
+
+Along with CSV files containing detailed analysis information sampled every 2 ms from the start to the end of the sound:
+
+<p align="center">
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
 </p>
 
 In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
