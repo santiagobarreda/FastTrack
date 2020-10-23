@@ -9,7 +9,7 @@
 
 ###
 
-In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of times. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things cna make accurate formant tracking tedious in many cases. 
+In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of time. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things can make accurate formant tracking tedious in many cases. 
 
 Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one (surrounded by extra boxes):
 
@@ -29,7 +29,34 @@ Along with CSV files containing detailed analysis information (formant frequenci
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
 </p>
 
+&nbsp;
 
+  #### Tools and Functions
+  
+  Fast Track includes to (among other things):
+  
+* Extract vowel sounds from larger recordings with TextGrids files.
+
+* Quick workflow for manually editing formant tracks. 
+
+* Quickly make textgrids for folders of sound files.
+
+* Aggregate fine-sampled data into coarser measures (e.g., average formants for every 20% of duration).
+
+
+  
+  #### Output
+The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
+
+* CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
+
+* Images for the visual verification of final analyses, and for the comparison of alternate analysis.
+
+* A log of the selected analyses, which can then be used to select alternate preferred analysis. 
+
+* Detailed information regarding the analyses carried out for each sound.   
+
+&nbsp;
 
 #### Algorithm
 The general algorithm is:
@@ -45,20 +72,7 @@ The general algorithm is:
  
  5) The user is given an opportunity to manually edit winners to ensure completely-accurate tracks.
 
-&nbsp;
-
-#### Output
-The above algorithm can be applied to a single file or to an entire folder at once. Fast Track generates (among other things): 
-
-* CSV files containing the frequencies of F1-F4, predicted formant values (for error checking), formant bandwidths (F1-F4), f0, intensity, and harmonicity, each sampled every 2 ms (by default). 
-
-* Images for the visual verification of final analyses, and for the comparison of alternate analysis.
-
-* A log of the selected analyses, which can then be used to select alternate preferred analysis. 
-
-* Detailed information regarding the analyses carried out for each sound.   
-
-&nbsp;
+&nbsp;  
 
 &nbsp;
 
