@@ -29,6 +29,7 @@ Add action command: "Formant", 0, "", 0, "", 0, "Tools...", "", 1, "../folder_2_
 Add action command: "Formant", 0, "", 0, "", 0, "Set options...", "", 1, "../proc_setOptions.praat"
 
 Add action command: "Table", 0, "", 0, "", 0, "Fast Track -", "", 0, ""
+Add action command: "Table", 0, "", 0, "", 0, "Plot formants", "", 1, "../file_4_plotFormants.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Track folder...", "", 1, "../folder_1_analyzeFolder.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Tools...", "", 1, "../folder_2_tools.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Set options...", "", 1, "../proc_setOptions.praat"
