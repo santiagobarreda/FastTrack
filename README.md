@@ -59,7 +59,7 @@ For example, when Fast Track is run on the sound above we can have Fast Track se
 We can automatically generate an image comparing the alternate possible analyses (the winner has extra boxes):
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_comparison.png?raw=true" width=700>
+<img src="https://raw.githubusercontent.com/santiagobarreda/FastTrack/master/docs/file_comparison.png" width=700>
 </p>
 
 &nbsp;
