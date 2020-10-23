@@ -9,40 +9,42 @@
 
 ###
 
-In order to get accurate formant measurements from a linear predictive coding (LPC) analysis, the user must set appropriate analysis parameters. However, it is difficult to know what these are ahead of time. It can also be a pain to extract formant values and to correct analyses in the case of errors. All of these things can make accurate formant tracking tedious in many cases. 
+Fast Track is a Praat plugin mean to make very accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
 
-Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one (surrounded by extra boxes):
+Fast Track has built-in functions to help along every step of a vowel analysis project from start to finish (with more coming):
+  
+* Extract vowel sounds from larger recordings with TextGrids files.
+
+* Automatic selection of the 'best' analysis.
+
+* Automatically generate images of analysis for data validation. All alternate Analyses are saved for easy corrections. 
+
+* Quick workflow for manually editing formant tracks. 
+
+* Aggregate fine-sampled data into coarser measures (e.g., average formants for every 20% of duration).
+
+* Automatic generation of images showing final analyses for data validation. 
+
+* Automatic generation of data files containing fine-sampled acoustic analysis calculated every 2 ms along the vowel. 
+
+Comparison of multiple analyses:
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/santiagobarreda/FastTrack/master/docs/file_comparison.png" width=700>
 </p>
 
-And returns this the winning analysis to the user:
+Image of winning analysis:
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png?raw=true" width=600>
+<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png" width=600>
 </p>
 
+CSV file containing analysis information:
 Along with CSV files containing detailed analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
 
 <p align="center">
 <img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
 </p>
-
-&nbsp;
-
-#### Tools and Functions
-  
-  Fast Track includes to (among other things):
-  
-* Extract vowel sounds from larger recordings with TextGrids files.
-
-* Quick workflow for manually editing formant tracks. 
-
-* Quickly make textgrids for folders of sound files.
-
-* Aggregate fine-sampled data into coarser measures (e.g., average formants for every 20% of duration).
-
 
 &nbsp;
  
