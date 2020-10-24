@@ -8,16 +8,30 @@ include utils/importfunctions.praat
 
 snd = selected ()
 basename$ = selected$ ("Sound")
-#total_duration = Get total duration
+total_duration = Get total duration
+
+View & Edit
 
 clicked = 2
+return_formant = 0
+save_formant = 0
+save_csv = 0
+save_all_formants = 0
+return_table = 0
+analyze_selection = 0
+what_to_track= 1
 
 while clicked == 2
 
 @getSettings
 
 beginPause: "Set Parameters"
-	#boolean: "Analyze selection", 0 ;
+  optionMenu: "What to track:", what_to_track
+    option: "Entire sound"
+	option: "Selection in Edit Window (plot visible)"
+	option: "Selection in Edit Window (plot only selection)"
+	option: "Selection in Edit Window (plot whole sound)"
+	## plot over visible spectrogram eventually?
   optionMenu: "", 1
     option: "[Click to Read]"
     option: "Indicate where you want any output files to go. An image of the output is always saved."
@@ -63,11 +77,11 @@ beginPause: "Set Parameters"
 	  option: "Show image of winner"
 		option: "Show image comparing of all analyses"
 		comment: "Choose which data to save and/or return."
-		boolean: "return formant", 0 ;
-    boolean: "save formant", 0 ;
-		boolean: "save csv", 0 ;
-		boolean: "save all formants", 0
-		boolean: "return table", 0
+		boolean: "return formant", return_formant ;
+    boolean: "save formant", save_formant ;
+		boolean: "save csv", save_csv ;
+		boolean: "save all formants", save_all_formants
+		boolean: "return table", return_table
     
 clicked = endPause: "Ok","Apply", 1
 number_of_steps = number(number_of_steps$)
@@ -82,10 +96,37 @@ endif
 
 @saveSettings
 
+if what_to_track > 1
+  analyze_selection = 1
+endif
+plot_in_context = 1
+if what_to_track == 3
+  plot_in_context = 0
+endif
 
-#if analyze_selection == 1
-#	selectObject: snd
-#  tmp_snd = Extract selected sound (time from 0)
+if analyze_selection == 1	
+  editor: snd
+    start = Get start of selection
+    end = Get end of selection
+  endeditor
+  if start > 0.025
+    start = start - 0.025
+  endif
+  if (end + 0.025) < total_duration
+    end = end + 0.025
+  endif
+  selectObject: snd
+  if plot_in_context == 1
+    Extract part: start, end, "rectangular", 1, "yes"
+  endif
+  if plot_in_context == 0
+    Extract part: start, end, "rectangular", 1, "no"
+  endif
+  tmp_snd = selected()
+endif
+
+
+
 #endif
 
 ########################################################################################################################################################
@@ -108,9 +149,9 @@ writeInfoLine: "Median absolute error for frequency (total,F1 F2 F3 F4):"
 for z from 1 to number_of_steps
 	selectObject: snd
 
-  #if analyze_selection == 1
-  #  selectObject: tmp_snd
-  #endif
+    if analyze_selection == 1
+      selectObject: tmp_snd
+    endif
 
   ## add buffer here. make silence, make copy of sound, make nother silence. concatenate, then erase everything!
 	if tracking_method$ == "burg"
@@ -157,9 +198,28 @@ if image = 1
   selectObject: "Table formants_" + string$(winner)
   tbl = selected ("Table")
   selectObject: snd
-  sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-  @plotTable: sp, tbl, maximum_plotting_frequency, 1
-  removeObject: sp
+  if plot_in_context == 0
+    selectObject: tmp_snd
+  endif
+
+  if what_to_track <> 2
+    sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
+	@plotTable: sp, tbl, maximum_plotting_frequency, 1
+    removeObject: sp
+  endif
+  if what_to_track == 2
+    editor: snd
+	  sp = Extract visible spectrogram
+	  info$ = Editor info
+  	  viewstart = extractNumber (info$, "Window start: ")
+  	  viewend = extractNumber (info$, "Window end: ")
+    endeditor
+	  @plotTableContext: sp, tbl, maximum_plotting_frequency, 1
+      removeObject: sp
+	endif
+
+
+
 
   # change to save with filename or not
   Save as 300-dpi PNG file: folder$ + "/file_winner.png"
@@ -168,6 +228,9 @@ if image = 1
  if image = 2
 	 Erase all
 	 ### here is where it would need to write out to a plot
+	if plot_in_context == 0
+      selectObject: tmp_snd
+    endif
 	 selectObject: snd
 	 sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 
@@ -267,6 +330,10 @@ for z from 1 to number_of_steps
  nocheck removeObject: "Formant formants_" + string$(z)
  nocheck removeObject: "Table formants_" + string$(z)
 endfor
+
+if analyze_selection == 1
+  removeObject: tmp_snd
+endif
 
 selectObject: snd
 

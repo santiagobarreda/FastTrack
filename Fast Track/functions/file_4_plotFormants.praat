@@ -54,11 +54,11 @@ beginPause: "Set Parameters"
     option: "Maroon"
 		boolean: "Draw grid:", draw_grid ;
 		boolean: "add", add ;
-  comment: "Contour options:"
+  comment: "Options for plotting vowel contours:"
   positive: "Line width:", line_width
   positive: "Arrow size:", arrow_size
   real: "Point size:", point_size
-  comment: "Plot options:"
+  comment: "Options for plotting symbols:"
   word: "Plotting symbol:", plotting_symbol$
   positive: "Which bin to plot:", which_bin_to_plot
 	boolean: "All points", all_points ;
@@ -68,7 +68,6 @@ beginPause: "Set Parameters"
   positive: "Maximum F1:", maximum_F1
   positive: "Minimum F2:", minimum_F2
   positive: "Maximum F2:", maximum_F2
-
 
 clicked = endPause: "Ok","Apply", 2
 
