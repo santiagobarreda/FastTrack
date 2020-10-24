@@ -19,7 +19,7 @@ save_csv = 0
 save_all_formants = 0
 return_table = 0
 analyze_selection = 0
-what_to_track= 1
+what_to_track= 2
 
 while clicked == 2
 
