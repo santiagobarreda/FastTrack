@@ -36,7 +36,7 @@ while clicked == 2
 @getSettings
 
 beginPause: "Set Parameters"
-
+	boolean: "Add", add ;
   choice: "Type of plot:", type_of_plot
     option: "Contours"
     option: "Points"
@@ -52,8 +52,7 @@ beginPause: "Set Parameters"
     option: "Navy"
     option: "Pink"
     option: "Maroon"
-		boolean: "Draw grid:", draw_grid ;
-		boolean: "add", add ;
+		boolean: "Draw grid", draw_grid ;
   comment: "Options for plotting vowel contours:"
   positive: "Line width:", line_width
   positive: "Arrow size:", arrow_size
