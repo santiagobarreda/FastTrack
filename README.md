@@ -65,7 +65,6 @@ The plugin can analyze to a single file or to an entire folder of sounds at once
 &nbsp;
 
 #### Algorithm
-The general algorithm is:
 &nbsp;
 
  1) Formant tracking is carried out at multiple maximum-formant settings, always looking for 5.5 formants. 
