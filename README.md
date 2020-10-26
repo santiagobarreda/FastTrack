@@ -1,7 +1,7 @@
 
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/fasttrack.png?raw=true" width=630>
+<img src="https://raw.githubusercontent.com/santiagobarreda/vowelhost/main/FT-wiki/fasttrack.png?raw=true" width=630>
 </p>   
 &nbsp;
 
@@ -34,19 +34,19 @@ Fast Track has built-in functions to help along every step of a vowel analysis p
 Comparison of multiple analyses:
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/santiagobarreda/FastTrack/master/docs/file_comparison.png" width=700>
+<img src="https://raw.githubusercontent.com/santiagobarreda/vowelhost/main/FT-wiki/file_comparison.png" width=700>
 </p>
 
 Image of winning analysis:
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/file_winner.png" width=600>
+<img src="https://raw.githubusercontent.com/santiagobarreda/vowelhost/main/FT-wiki/file_winner.png" width=600>
 </p>
 
 CSV file containing analysis information (formant frequencies and bandwidths, f0, harmonicity, intensity, etc.) sampled every 2 ms from the start to the end of the sound:
 
 <p align="center">
-<img src="https://github.com/santiagobarreda/FastTrack/blob/master/docs/csvoutput.png?raw=true" width=80%>
+<img src="https://raw.githubusercontent.com/santiagobarreda/vowelhost/main/FT-wiki/csvoutput.png?raw=true" width=80%>
 </p>
 
 &nbsp;
