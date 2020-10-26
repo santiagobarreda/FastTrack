@@ -109,6 +109,15 @@ if analyze_selection == 1
     start = Get start of selection
     end = Get end of selection
   endeditor
+  ## if selection is greater than 30 milliseconds
+  if (end - start) < 0.03 
+    exitScript: "Selection is less than 30 milliseconds, please select more sound."
+  endif
+endif
+
+
+
+if analyze_selection == 1	
   if start > 0.025
     start = start - 0.025
   endif
