@@ -7,10 +7,9 @@ procedure extractVowels
 
     selectObject: tg
     nIntervals = Get number of intervals: segment_tier
-
+    count = 0
 
     ## loop to go through all segment intervals
-    count = 0
     for i from 1 to nIntervals
     selectObject: tg
     vowel$ = Get label of interval: segment_tier, i

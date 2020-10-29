@@ -15,7 +15,7 @@ Add action command: "Sound", 0, "Table", 0, "", 0, "Plot Table...", "", 1, "../f
 Add action command: "Sound", 0, "Table", 0, "", 0, "Set options...", "", 1, "../proc_setOptions.praat"
 
 Add action command: "Sound", 0, "TextGrid", 0, "", 0, "Fast Track -", "", 0, ""
-Add action command: "Sound", 0, "TextGrid", 0, "", 0, "Chop up sound file...", "", 0, "../proc_textGridChopper.praat"
+Add action command: "Sound", 0, "TextGrid", 0, "", 0, "Extract vowels with TextGrid...", "", 0, "../file_5_extractVowelswithTG.praat"
 Add action command: "Sound", 0, "TextGrid", 0, "", 0, "Set options...", "", 0, "../proc_setOptions.praat"
 
 Add action command: "Strings", 0, "", 0, "", 0, "Fast Track -", "", 0, ""

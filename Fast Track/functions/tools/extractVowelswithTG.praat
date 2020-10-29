@@ -25,6 +25,10 @@ beginPause: "Set Parameters"
     option: "When this form is generated, a Strings object called vowels is created and appears in the"
     option: "Praat object window.  Any vowels found here will be extracted. All arpabet vowels are included"
     option: "by default. Once this form is closed the strings object can no longer be edited."
+    option: "Alternatively, you can write the vowels you want in a text file, one per lines. You can read"
+    option: "this in by specifying a path to a text file below."
+    comment: "Path to optional text file with alternate vowels (--)"
+    sentence: "Vowels file:", "--"
     comment: "Folder containing sounds to extract vowels from"
     sentence: "Sound folder:", ""
     comment: "Folder containing TextGrids corresponding to each sound file"
@@ -56,6 +60,12 @@ beginPause: "Set Parameters"
     option: "with another function provided by Fast Track."
     positive: "Buffer (s):", 0.025
 endPause: "Ok", 1
+
+if vowels_file$ <> "--"
+  removeObject: "Strings vowels"
+  Read Strings from raw text file: vowels_file$
+  Rename: "vowels"
+endif
 
 words_to_skip = 0
 ## make table with words to skip
