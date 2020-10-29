@@ -2,6 +2,9 @@
 
 include utils/importfunctions.praat
 
+tables# = selected# ("Table")
+
+
 @getSettings
 beginPause: "Set Parameters"
   comment: "Click for more info:"
@@ -14,6 +17,9 @@ beginPause: "Set Parameters"
     option: "Aggregates CSVs resulting from folder analysis into a single CSV summarizing the data in each sound analysis."
     option: "The output is a CSV with a single row for each sound file analyzed. "
   optionMenu: "", 1
+    option:  "[Aggregate Tables]"
+    option: "Same as above but for Tables in the object window instead of CSV files. "
+ optionMenu: "", 1
     option:  "[Extract vowels with TextGrids]"
     option: "Allows you to extract vowels from sounds using textgrids. This can be"
     option: "done for an entire folder full of sounds (and one of TextGrids) at a time."
@@ -34,6 +40,7 @@ beginPause: "Set Parameters"
   choice: "Option:", 1
       option: "Add buffer to edge of files"
       option: "Aggregate"
+      option: "Aggregate Tables"
       option: "Extract vowels with TextGrids"
       option: "Edit folder"
       option: "Get coefficients"
@@ -47,15 +54,18 @@ if option == 2
   @aggregate: 0
 endif
 if option == 3
-  @extractVowelswithTG
+  @aggregateTables
 endif
 if option == 4
-  @editFolder
+  @extractVowelswithTG
 endif
 if option == 5
-  @getCoefficients: 0
+  @editFolder
 endif
 if option == 6
+  @getCoefficients: 0
+endif
+if option == 7
   @makeTextGrids
 endif
 

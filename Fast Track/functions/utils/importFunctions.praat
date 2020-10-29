@@ -12,6 +12,7 @@ include utils/editTracks.praat
 include utils/extractVowels.praat
 
 include tools/aggregate.praat
+include tools/aggregateTables.praat
 include tools/addBuffer.praat
 include tools/predict.praat
 include tools/getCoefficients.praat

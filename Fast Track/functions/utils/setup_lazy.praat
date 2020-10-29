@@ -30,6 +30,7 @@ Add action command: "Formant", 0, "", 0, "", 0, "Set options...", "", 0, "../pro
 
 Add action command: "Table", 0, "", 0, "", 0, "Fast Track -", "", 0, ""
 Add action command: "Table", 0, "", 0, "", 0, "Plot formants...", "", 0, "../file_4_plotFormants.praat"
+Add action command: "Table", 0, "", 0, "", 0, "Plot aggregate...", "", 0, "../folder_3_plotAggregate.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Track folder...", "", 0, "../folder_1_analyzeFolder.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Tools...", "", 0, "../folder_2_tools.praat"
 Add action command: "Table", 0, "", 0, "", 0, "Set options...", "", 0, "../proc_setOptions.praat"
