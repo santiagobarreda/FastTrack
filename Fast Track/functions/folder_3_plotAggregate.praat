@@ -64,6 +64,8 @@ beginPause: "Set Parameters"
   real: "Point size:", point_size
   comment: "Options for plotting symbols:"
   sentence: "Plotting symbols:", plotting_symbols$
+  word: "Symbol column:", "--"
+  word: "Color column:", "--"
   positive: "Which bin to plot:", which_bin_to_plot
   positive: "Font size:", font_size
   comment: "Plot ranges:"
@@ -102,8 +104,6 @@ if plotting_symbols$ <> "--"
 endif
 
 
-writeInfoLine: ""
-
 for i from 1 to nrows
   for j from 1 to number_of_bins
 
@@ -113,9 +113,6 @@ for i from 1 to nrows
     if color$ == "Multi"
       selectObject: .clr_str 
       color_use = (i mod (.ncolors)) + 1
-
-      appendInfoLine: color_use
-
       color_use$ = Get string: color_use
       Colour: color_use$
     endif
