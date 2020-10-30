@@ -118,8 +118,14 @@ endif
 
 
 if analyze_selection == 1	
+  if start < 0.025
+    start = 0
+  endif
   if start > 0.025
     start = start - 0.025
+  endif
+  if (end + 0.025) > total_duration
+    end = total_duration
   endif
   if (end + 0.025) < total_duration
     end = end + 0.025

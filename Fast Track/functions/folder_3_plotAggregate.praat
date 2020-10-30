@@ -22,7 +22,8 @@ clicked = 2
 plotting_symbols$ = "--"
 font_size = 28
 number_of_bins = 5
-add = 0
+add_axes = 1
+erase = 1
 which_bin_to_plot = 3
 all_points = 0
 line_width = 2
@@ -42,7 +43,8 @@ while clicked == 2
 @getSettings
 
 beginPause: "Set Parameters"
-	boolean: "Add", add ;
+	boolean: "Erase", erase ;
+	boolean: "Add axes", add_axes ;
   choice: "Type of plot:", type_of_plot
     option: "Contours"
     option: "Points"
@@ -85,8 +87,11 @@ selectObject: .clr_str
 
 selectObject: tbl
 
-if add == 0
+if erase == 1
   Erase all
+endif
+
+if add_axes == 1
   Colour: "White"
   Font size: 14
   Scatter plot (mark): "f21", maximum_F2, minimum_F2, "f11", maximum_F1, minimum_F1, 5, "no", plotting_symbols$
