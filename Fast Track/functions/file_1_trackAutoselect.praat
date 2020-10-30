@@ -83,7 +83,7 @@ beginPause: "Set Parameters"
 		boolean: "save all formants", save_all_formants
 		boolean: "return table", return_table
     
-clicked = endPause: "Ok","Apply", 1
+nocheck clicked = endPause: "Ok","Apply", 1
 number_of_steps = number(number_of_steps$)
 number_of_formants = number(number_of_formants$)
 

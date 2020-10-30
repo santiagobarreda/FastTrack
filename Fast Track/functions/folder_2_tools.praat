@@ -45,7 +45,7 @@ beginPause: "Set Parameters"
       option: "Edit folder"
       option: "Get coefficients"
       option: "Make TextGrids"
-endPause: "Ok", 1
+nocheck endPause: "Ok", 1
 
 if option == 1
   @addBuffer

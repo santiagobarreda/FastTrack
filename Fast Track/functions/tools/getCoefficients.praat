@@ -6,7 +6,7 @@ procedure getCoefficients autorun
       comment: "Indicate your working directory. This folder should contain a folder inside of it."
       comment: "called 'infos' that contains regression coefficients for each sound."
       sentence: "Folder:", folder$
-     endPause: "Ok", 1
+     nocheck endPause: "Ok", 1
   endif
 
 

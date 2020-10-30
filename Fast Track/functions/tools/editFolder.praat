@@ -13,7 +13,7 @@ procedure editFolder
       boolean: "save formant", 1 ;
       boolean: "save csv", 1
       boolean: "save image", 1
-  endPause: "Ok", 1
+ nocheck endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"

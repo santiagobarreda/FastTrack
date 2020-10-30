@@ -34,6 +34,8 @@ minimum_F1 = 200
 maximum_F1 = 1200
 minimum_F2 = 500
 maximum_F2 = 3000
+symbol_column$ = "--"
+color_column$ = "--"
 
 while clicked == 2
 
@@ -64,8 +66,8 @@ beginPause: "Set Parameters"
   real: "Point size:", point_size
   comment: "Options for plotting symbols:"
   sentence: "Plotting symbols:", plotting_symbols$
-  word: "Symbol column:", "--"
-  word: "Color column:", "--"
+  word: "Symbol column:", symbol_column$
+  word: "Color column:", color_column$
   positive: "Which bin to plot:", which_bin_to_plot
   positive: "Font size:", font_size
   comment: "Plot ranges:"
@@ -74,7 +76,7 @@ beginPause: "Set Parameters"
   positive: "Minimum F2:", minimum_F2
   positive: "Maximum F2:", maximum_F2
 
-clicked = endPause: "Ok","Apply", 2
+nocheck clicked = endPause: "Ok","Apply", 2
 
 
 selectObject: .clr_str 
@@ -107,14 +109,16 @@ endif
 for i from 1 to nrows
   for j from 1 to number_of_bins
 
-
     color_use$ = color$
-
     if color$ == "Multi"
       selectObject: .clr_str 
       color_use = (i mod (.ncolors)) + 1
       color_use$ = Get string: color_use
-      Colour: color_use$
+    endif
+
+    if color_column$ <> "--"
+        selectObject: tbl
+        color_use$ = Get value: i, color_column$
     endif
 
     Colour: color_use$
@@ -151,6 +155,12 @@ for i from 1 to nrows
         selectObject: .plot_symbols
         label$ = Get string: i
       endif
+
+      if symbol_column$ <> "--"
+        selectObject: tbl
+        label$ = Get value: i, symbol_column$
+      endif
+
       Text special: x, "Centre", y, "Half", "Helvetica", font_size, "0", label$
     endif
   endfor

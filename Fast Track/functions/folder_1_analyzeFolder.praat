@@ -65,7 +65,7 @@ beginPause: "Set Parameters"
     boolean: "Track formants", 1
     boolean: "Autoselect winners", 1
     boolean: "Get winners", 1
-endPause: "Ok", 1
+nocheck endPause: "Ok", 1
 
 number_of_steps = number(number_of_steps$)
 number_of_formants = number(number_of_formants$)

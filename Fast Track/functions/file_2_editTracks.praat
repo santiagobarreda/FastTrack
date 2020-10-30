@@ -15,7 +15,7 @@ beginPause: "Set Parameters"
 	boolean: "return table", 1
     boolean: "save csv", 0
 	boolean: "save image", 0
-endPause: "Ok", 1
+nocheck endPause: "Ok", 1
 
 number_of_formants = number(number_of_formants$)
 

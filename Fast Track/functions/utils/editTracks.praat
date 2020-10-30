@@ -1,4 +1,3 @@
-
 procedure editTracks: fr
   selectObject: fr
   #.nframes = Get number of frames
@@ -67,7 +66,7 @@ procedure editTracks: fr
     #Play
 
     beginPause: "Is the tracking acceptable?"
-    .clicked = endPause: "Finish", "Edit", 1
+    nocheck .clicked = endPause: "Finish", "Edit", 1
 
     if .clicked = 2
       selectObject: fr
@@ -75,7 +74,7 @@ procedure editTracks: fr
       .gr = Down to FormantGrid
       View & Edit
       beginPause: "Done Editing"
-      endPause: "OK", 1
+      nocheck endPause: "OK", 1
 
       removeObject: fr
       fr = To Formant: 0.002, 0.1

@@ -8,7 +8,7 @@ include utils/importfunctions.praat
 @getSettings
 beginPause: "Set Parameters"
 		positive: "Maximum plotting frequency (Hz): ", maximum_plotting_frequency
-endPause: "Ok", 1
+nocheck endPause: "Ok", 1
 
 maximum_plotting_frequency = maximum_plotting_frequency
 

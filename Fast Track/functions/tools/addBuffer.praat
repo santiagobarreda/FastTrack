@@ -17,7 +17,7 @@ procedure addBuffer
     comment: "How much time (in seconds) should be added to edges?"
     positive: "Buffer (s):", 0.025 
 
-  endPause: "Ok", 1
+  nocheck endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"

@@ -18,7 +18,7 @@ procedure makeTextGrids
     positive: "Buffer (s):", 0.025 
     comment: "If selected, TextGrid files will be saved."
     boolean: "save textgrid", 1
-  endPause: "Ok", 1
+  nocheck endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"
@@ -52,7 +52,7 @@ procedure makeTextGrids
 
       beginPause: ""
         comment: "Press OK when done to save."
-      endPause: "OK", 0
+      nocheck endPause: "OK", 0
 
       selectObject: .tg
       Set interval text: 1,2, label$

@@ -19,7 +19,7 @@ procedure chopSoundFiles
     option: "with the track sound or track folder functionalities."
     positive: "Buffer (s):", 0.025 
 
-  endPause: "Ok", 1
+  nocheck endPause: "Ok", 1
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"

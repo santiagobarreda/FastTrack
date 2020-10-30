@@ -60,7 +60,7 @@ while clicked > 1
     option: "Heuristics"
     option: "CSV output"
 
-	clicked = endPause: "Ok", "Switch Options", 1
+	nocheck clicked = endPause: "Ok", "Switch Options", 1
     if clicked == 2
 	  optiontype = optiontype * -1	  
 	endif

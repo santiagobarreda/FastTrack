@@ -68,7 +68,7 @@ beginPause: "Set Parameters"
   positive: "Minimum F2:", minimum_F2
   positive: "Maximum F2:", maximum_F2
 
-clicked = endPause: "Ok","Apply", 2
+nocheck clicked = endPause: "Ok","Apply", 2
 
 
 numberOfSelectedTables  = numberOfSelected ("Table")

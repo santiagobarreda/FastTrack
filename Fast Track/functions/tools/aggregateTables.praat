@@ -18,7 +18,7 @@ procedure aggregateTables
     	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
-  endPause: "Ok", 1
+  nocheck endPause: "Ok", 1
 
   @saveSettings
 
