@@ -65,11 +65,12 @@ beginPause: "Set Parameters"
   positive: "Arrow size:", arrow_size
   real: "Point size:", point_size
   comment: "Options for plotting symbols:"
-  sentence: "Plotting symbols:", plotting_symbols$
   word: "Symbol column:", symbol_column$
   word: "Color column:", color_column$
   positive: "Which bin to plot:", which_bin_to_plot
   positive: "Font size:", font_size
+  comment: "You can specify a symbol for each row, separated by a spae. This is a simple way to plot a small number of vowels."
+  sentence: "Plotting symbols:", plotting_symbols$
   comment: "Plot ranges:"
   positive: "Minimum F1:", minimum_F1
   positive: "Maximum F1:", maximum_F1

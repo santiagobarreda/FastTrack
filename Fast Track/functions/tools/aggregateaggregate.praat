@@ -18,9 +18,8 @@ procedure aggregateAggregate autorun
         option: "9"
         option: "10"
     word: "Grouping column:"
-    word: "Label column:"
-    word: "Color column:"
-    	optionMenu: "Statistic", 1
+    positive: "Number of groups:", 1
+   	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
   nocheck endPause: "Ok", 1
