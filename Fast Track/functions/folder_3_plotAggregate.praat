@@ -155,7 +155,7 @@ for i from 1 to nrows
       selectObject: tbl
       x = Get value: i, "f2"+string$(j)
       y = Get value: i, "f1"+string$(j)
-      label$ = Get value: i, "file"
+      label$ = string$(i)
 
       if plotting_symbols$ <> "--"
         selectObject: .plot_symbols
