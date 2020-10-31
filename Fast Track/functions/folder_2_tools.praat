@@ -34,8 +34,6 @@ beginPause: "Set Parameters"
   optionMenu: "", 1
     option:  "[Make TextGrids]"
     option: "This function if for quickly making textgrids for a folder of sounds, each containing a single word with a single vowel of interest."
-    option: "bla"
-
   comment: "Select Tool:"
   choice: "Option:", 1
       option: "Add buffer to edge of files"

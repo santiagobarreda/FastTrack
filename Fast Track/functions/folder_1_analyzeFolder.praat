@@ -51,13 +51,28 @@ beginPause: "Set Parameters"
     optionMenu: "Number of formants", number_of_formants
             option: "3"
             option: "4"
-                optionMenu: "", 1
+    optionMenu: "", 1
     option: "[Click to Read]"
     option: "Images are recommended as they facilitate data validation and the selection of "
     option: "alternate analyses. Making images can add 10%-20% more time to the analysis."
     boolean: "Make images comparing analyses", 1
     boolean: "Make images showing winners", 1
     positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
+    optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "Aggregation options. How many temporal bins should be used, "
+    option: "and which statistic should be calculated in each bin? Regression coefficients"
+    option: "for each formant are also collected by default. Output is in processed_data folder. "
+    optionMenu: "Number of bins:", 3
+  			option: "1"
+  			option: "3"
+  			option: "5"
+        option: "7"
+        option: "9"
+        option: "10"
+    optionMenu: "Statistic", 1
+  	        option: "median"
+  					option: "mean"
      optionMenu: "", 1
     option: "[Click to Read]"
    option: "Uncheck to skip step. Individual steps can be"
@@ -65,6 +80,7 @@ beginPause: "Set Parameters"
     boolean: "Track formants", 1
     boolean: "Autoselect winners", 1
     boolean: "Get winners", 1
+    boolean: "Aggregate", 1
 nocheck endPause: "Ok", 1
 
 number_of_steps = number(number_of_steps$)
@@ -97,6 +113,11 @@ endif
 if get_winners = 1
   save_images = make_images_showing_winners
   @getWinnersFolder
+endif
+
+if aggregate = 1
+  @aggregate: 1
+  @getCoefficients: 1
 endif
 
 @daySecond

@@ -25,11 +25,6 @@ procedure aggregate autorun
   					option: "mean"
   nocheck endPause: "Ok", 1
   endif
-  if autorun == 1
-    number_of_bins$ = "5"
-    statistic = 1
-  endif
-
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"

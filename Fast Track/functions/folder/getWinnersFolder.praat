@@ -223,7 +223,4 @@ procedure getWinnersFolder
 	endfor
 	removeObject: .winners, .files
 
-  @aggregate: 1
-  @getCoefficients: 1
-
 endproc
