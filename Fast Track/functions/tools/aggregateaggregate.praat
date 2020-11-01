@@ -2,6 +2,7 @@
 procedure aggregateAggregate autorun
   @getSettings
 
+  .tbl = selected("Table")
 
   if autorun == 0
   beginPause: "Set Parameters"
@@ -19,6 +20,9 @@ procedure aggregateAggregate autorun
         option: "10"
     word: "Grouping column:"
     positive: "Number of groups:", 1
+    word: "Label column:"
+    word: "Color column:"
+
    	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
@@ -30,9 +34,7 @@ procedure aggregateAggregate autorun
   number_of_bins = number(number_of_bins$)
   number_of_formants = number(number_of_formants$)
 
-  .nfiles = Get number of strings
-
-  Create Table with column names: "output", .nfiles, "file"
+  Create Table with column names: "output", number_of_groups, "file"
   .output = selected ("Table")
 
   Append column: "f0"
@@ -43,44 +45,27 @@ procedure aggregateAggregate autorun
     endfor
   endfor
 
-  for .iii from 1 to .nfiles
-    selectObject: .strs
-    .basename$ = Get string: .iii
-    .basename$ = .basename$ - ".csv"
 
-    .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
-    .nframes = Get number of rows
-    Append column: "ntime"
-    for .j from 1 to .nframes
-      tmp = .j / (.nframes/number_of_bins)
-      Set numeric value: .j, "ntime", ceiling( tmp )
-    endfor
+  for .iii from 1 to number_of_groups
 
     selectObject: .tbl
-    .firstFrameTime = Get value: 1, "time"
-    .lastFrameTime = Get value: .nframes, "time"
-    .duration = .lastFrameTime - .firstFrameTime
-    .duration = round(.duration * 1000) / 1000
+    .tmp_tbl = Extract rows where column (number): "group", "is equal to", .iii
 
-    selectObject: .output
-    Set numeric value: .iii, "duration", .duration
-
-    selectObject: .tbl
-    .mf0 = Get mean: "f0"
-
-    if .mf0 > 0
-      .tmp_tbl = Extract rows where column (number): "f0", "greater than", 0
+    if statistic == 2
       .mf0 = Get mean: "f0"
-      .mf0 = round(.mf0 * 10) / 10
-      removeObject: .tmp_tbl
-    endif    
-    selectObject: .output
-    Set numeric value: .iii, "f0", .mf0
+      .mduration = Get mean: "duration"
+    endif
+    if statistic == 1
+      .mf0 = Get quantile: "f0", 0.5
+      .mduration = Get quantile: "duration", 0.5
+    endif
 
+    #selectObject: .output
+    #Set numeric value: .iii, "duration", .duration
+    #.mf0 = round(.mf0 * 10) / 10
 
     for .j from 1 to number_of_bins
-      selectObject: .tbl
-      .tmp_tbl = Extract rows where column (number): "ntime", "equal to", .j
+      selectObject: .tmp_tbl
       for .k from 1 to number_of_formants
         if statistic == 2
           .mf'.k''.j' = Get mean: "f"+string$(.k)
@@ -89,16 +74,22 @@ procedure aggregateAggregate autorun
           .mf'.k''.j' = Get quantile: "f"+string$(.k), 0.5
         endif
       endfor
-      removeObject: .tmp_tbl
     endfor
 
+    selectObject: .tmp_tbl
+    ## get color and vowel in first row if these exist
+
+
     selectObject: .output
-    Set string value... .iii file '.basename$'
+    Set string value... .iii "vowel" vowel$
     for .j from 1 to number_of_bins
       for .i from 1 to number_of_formants
         Set numeric value... .iii f'.i''.j' round(.mf'.i''.j')
       endfor
     endfor
+
+    Set numeric value... .iii "duration" round(.mduration)
+    Set numeric value... .iii "f0" round(.mf0)
 
     removeObject: .tbl
   endfor
