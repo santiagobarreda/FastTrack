@@ -10,30 +10,29 @@ include folder/getWinnersFolder.praat
 
 beginPause: "Set Parameters"
     optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "Folder: Indicate your working directory. This folder should contain a folder inside of it called 'sounds' that contains all of the sounds you wish to analyze."
+    option: "[Click to Read Additional Information]"
+    option: "Folder: Indicate your working directory. This folder should contain a folder inside of it"
+    option: "called 'sounds' that contains all of the sounds you wish to analyze."
     option: " "
-    option: "Appropriate highest and lowest frequencies will vary as a function of talker vocal-tract length, which is strongly related to height"
-    option: "across all speakers. Talkers can be grouped into broad categories of:"
+    option: "Highest an lowest analysis frequencies: Appropriate highest and lowest frequencies will vary as a function of talker vocal-tract length,"
+    option: "which is strongly related to height across all speakers. Talkers can be grouped into broad categories of:"
     option: "   tall (>5 foot 8): recommended range 4500-6500 Hz"
     option: "   medium (5 foot 8 >  > 5 foot 0): recommended range 5000-7000 Hz"
     option: "   short (<5 foot 0) recommended range 5500-7500 Hz"
     option: "These categories correspond roughly to adult males, adult females (and teenagers), and younger children. However, there is "
     option: "substantial overlap between categories and variation within-category, so that adjustments may be required for individual voices."		
     option: " "
-    option: "Number of analyses between low and high analysis limits. More analysis steps may improve results, but will increase analysis time and the "
-    option: "amount of data generated: 50% more steps means a 50% longer analysis time, and 50% more generated files."		
+    option: "Number of steps: the analyses between low and high analysis limits. More analysis steps may improve results, but will increase"
+    option: "analysis time and the amount of data generated: 50% more steps means a 50% longer analysis time, and 50% more generated files."		
     option: " "
-    option: "More coefficients allow for more sudden, and 'wiggly' formant motion."
+    option: "Number of Coefficients: More coefficients allow for more sudden, and 'wiggly' formant motion."
     option: " "
-    option: "The best analysis will be found on average across all desired formants. Often, F4 can be difficult to track so that the best analysis including F4"
+    option: "Number of formants: The best analysis will be found on average across all desired formants. Often, F4 can be difficult to track so that the best analysis including F4"
     option: "may not be the best analysis for F3 and below. If you only want 3 formants,tracking 3 will ensure the analysis is optimized for those formants."
     option: " "
-    option: "Images are recommended as they facilitate data validation and the selection of alternate analyses. Making images can add 10%-20% more time to the analysis."
+    option: "Images: Images are recommended as they facilitate data validation and the selection of alternate analyses. Making images can add 10%-20% more time to the analysis."
     option: " "
-    option: "Aggregation options. How many temporal bins should be used, and which statistic should be calculated in each bin?"
-    option: "Regression coefficients for each formant are also collected by default. Output is in processed_data folder. "
-    
+    option: "Aggregation options: How many temporal bins should be used, and which statistic should be calculated in each bin?"
     
     sentence: "Folder:", folder$
     positive: "Lowest analysis frequency (Hz):", lowest_analysis_frequency
@@ -104,8 +103,77 @@ endif
 
 if aggregate = 1
   @aggregate: 1
-  @getCoefficients: 1
+  selectObject: "Table aggregated"
+  tbl = selected()
+
+  plotting_symbols$ = "--"
+  font_size = 28
+  number_of_bins = 5
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 1
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 0
+  symbol_column$ = "label"
+  color_column$ = "color"
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: folder$ + "/contours.png"
+  
+  plotting_symbols$ = "--"
+  font_size = 18
+  number_of_bins = 5
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 2
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 0
+  symbol_column$ = "label"
+  color_column$ = "color"
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: folder$ + "/label.png"
+
+  tbl = selected()
+  plotting_symbols$ = "--"
+  font_size = 28
+  number_of_bins = 5
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 2
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 0
+  symbol_column$ = "number"
+  color_column$ = "color"
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: folder$ + "/number.png"
+
+
+  #@getCoefficients: 1
 endif
+
 
 @daySecond
 overAllEnd = daySecond

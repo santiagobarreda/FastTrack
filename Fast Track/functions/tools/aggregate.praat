@@ -2,7 +2,6 @@
 procedure aggregate autorun
   @getSettings
 
-
   if autorun == 0
   beginPause: "Set Parameters"
     comment: "Indicate your working directory. This folder should contain a folder inside of it"
@@ -34,31 +33,39 @@ procedure aggregate autorun
     folder$ = folder$ - "\"
   endif
   
-
   @saveSettings
 
   number_of_bins = number(number_of_bins$)
   number_of_formants = number(number_of_formants$)
   createDirectory: folder$ + "/processed_data/"
 
-  .strs = Create Strings as file list: "list", folder$ + "/csvs/*.csv"
-  .nfiles = Get number of strings
+  if !fileReadable: folder$ + "/file_information.csv"
+    @prepareFileInfo: 1
+  endif
 
+  .file_info = Read Table from comma-separated file: folder$ + "/file_information.csv"
+  .nfiles = Get number of rows
+
+  ## add columns to ouput table
   Create Table with column names: "output", .nfiles, "file"
   .output = selected ("Table")
-
   Append column: "f0"
   Append column: "duration"
+  Append column: "label"
+  Append column: "group"
+  Append column: "color"
+  Append column: "number"
   for j from 1 to number_of_bins
     for i from 1 to number_of_formants
       Append column: "f"+string$(i)+string$(j)
     endfor
   endfor
 
+   
   for .iii from 1 to .nfiles
-    selectObject: .strs
-    .basename$ = Get string: .iii
-    .basename$ = .basename$ - ".csv"
+    selectObject: .file_info
+    .basename$ = Get value: .iii, "file"
+    .basename$ = .basename$ - ".wav"
 
     .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
     .nframes = Get number of rows
@@ -111,6 +118,18 @@ procedure aggregate autorun
         Set numeric value... .iii f'.i''.j' round(.mf'.i''.j')
       endfor
     endfor
+
+      selectObject: .file_info
+      group$ = Get value: .iii, "group"
+      label$ = Get value: .iii, "label"
+      color$ = Get value: .iii, "color"
+      number$ = Get value: .iii, "number"
+      selectObject: .output
+      Set string value: .iii, "group", group$
+      Set string value: .iii, "label", label$
+      Set string value: .iii, "color", color$
+      Set string value: .iii, "number", number$
+    endif
 
     removeObject: .tbl
   endfor

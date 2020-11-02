@@ -1,10 +1,9 @@
 
-procedure aggregateAggregate autorun
+procedure aggregateAggregate 
+
+  .tbl = tables# [1]
+
   @getSettings
-
-  .tbl = selected("Table")
-
-  if autorun == 0
   beginPause: "Set Parameters"
     comment: "How many sections should signal be divided into? 1 returns the overall aggregated value. 3 returns"
     comment: "aggregated results for the first third, midle third, and final third, and so on."
@@ -18,23 +17,28 @@ procedure aggregateAggregate autorun
         option: "7"
         option: "9"
         option: "10"
-    word: "Grouping column:"
-    positive: "Number of groups:", 1
-    word: "Label column:"
-    word: "Color column:"
-
+    word: "Group column:", "group"
+    word: "Label column:", "label"
+    word: "Color column:", "color"
    	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
   nocheck endPause: "Ok", 1
-  endif
  
   @saveSettings
+
+  selectObject: .tbl
+  label$ = label_column$
+  group$ = group_column$
+  color$ = color_column$
+
+  selectObject: .tbl
+  number_of_groups = Get maximum: group$
 
   number_of_bins = number(number_of_bins$)
   number_of_formants = number(number_of_formants$)
 
-  Create Table with column names: "output", number_of_groups, "file"
+  Create Table with column names: "output", number_of_groups, "group"
   .output = selected ("Table")
 
   Append column: "f0"
@@ -45,11 +49,17 @@ procedure aggregateAggregate autorun
     endfor
   endfor
 
+  if label$ <> "NA"
+    Append column: "label"
+  endif
+  if color$ <> "NA"
+    Append column: "color"
+  endif
 
   for .iii from 1 to number_of_groups
 
     selectObject: .tbl
-    .tmp_tbl = Extract rows where column (number): "group", "is equal to", .iii
+    .tmp_tbl = Extract rows where column (number): "group", "equal to", .iii
 
     if statistic == 2
       .mf0 = Get mean: "f0"
@@ -68,32 +78,39 @@ procedure aggregateAggregate autorun
       selectObject: .tmp_tbl
       for .k from 1 to number_of_formants
         if statistic == 2
-          .mf'.k''.j' = Get mean: "f"+string$(.k)
+          .mf'.k''.j' = Get mean: "f"+string$(.k)+string$(.j)
         endif
         if statistic == 1
-          .mf'.k''.j' = Get quantile: "f"+string$(.k), 0.5
+          .mf'.k''.j' = Get quantile: "f"+string$(.k)+string$(.j), 0.5
         endif
       endfor
     endfor
 
-    selectObject: .tmp_tbl
     ## get color and vowel in first row if these exist
-
-
+    selectObject: .tmp_tbl
+    tmp_label$ = Get value: 1, label$
     selectObject: .output
-    Set string value... .iii "vowel" vowel$
+    Set string value: .iii, label$, tmp_label$
+
+    selectObject: .tmp_tbl
+    tmp_group$ = Get value: 1, group$ 
+    selectObject: .output
+    Set string value: .iii, group$, tmp_group$
+
+    Set numeric value: .iii, group$, .iii
     for .j from 1 to number_of_bins
       for .i from 1 to number_of_formants
         Set numeric value... .iii f'.i''.j' round(.mf'.i''.j')
       endfor
     endfor
 
-    Set numeric value... .iii "duration" round(.mduration)
+    Set numeric value... .iii "duration" round(.mduration*1000) / 1000
     Set numeric value... .iii "f0" round(.mf0)
 
-    removeObject: .tbl
+    removeObject:  .tmp_tbl
   endfor
+
   selectObject: .output
-  Save as comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
-  Rename: "aggregated"
+  #Save as comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
+  #Rename: "aggregated"
 endproc

@@ -5,9 +5,9 @@ procedure autoSelectFolder
   createDirectory: folder$ + "/regression_infos"
 
   ## read file list
-  .strs = Read from file: folder$ +"/fileList.Strings"
-  .nfiles = Get number of strings
-  .basename$ = Get string: 1
+  .file_info = Read Table from comma-separated file: folder$ +"/file_information.csv"
+  .nfiles = Get number of rows
+  .basename$ = Get value: 1, "file"
 
   ## get information about previous analysis using the first info file
   .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
@@ -72,8 +72,8 @@ procedure autoSelectFolder
     .cutoff = 0
     .minerror = 9999999999
 
-    selectObject: .strs
-    .basename$ = Get string: .ii
+    selectObject: .file_info 
+    .basename$ = Get value: .ii, "file"
     .basename$ = .basename$ - ".wav"
     writeInfoLine: "Selecting winners (step 2): " +string$(.ii) +" of " + string$(.nfiles) + ", " + .basename$
 
@@ -295,5 +295,5 @@ procedure autoSelectFolder
   selectObject: "Table winners"
   Save as comma-separated file: folder$ + "/winners.csv"
   removeObject: "Table winners"
-  removeObject: .strs, .info
+  removeObject: .file_info, .info
 endproc

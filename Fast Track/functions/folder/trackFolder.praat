@@ -5,13 +5,6 @@ procedure trackFolder
   createDirectory: folder$ + "/formants_winners"
   createDirectory: folder$ + "/formants"
 
-  .strs = Create Strings as file list: "list", folder$ + "/sounds/*.wav"
-  .nfiles = Get number of strings
-  .strsOut = Create Strings as tokens: "", ""
-
-  .analyzed = Create Table with column names: "skipped", .nfiles, "file analyzed"
-  Formula: "analyzed", "0"
-
   @daySecond
   .startSecond = daySecond
   .stepSize = (highest_analysis_frequency-lowest_analysis_frequency) / (number_of_steps-1)
@@ -21,28 +14,25 @@ procedure trackFolder
     .cutoffs#[.i] = round (lowest_analysis_frequency+.stepSize*(.i-1))
   endfor
 
+  if !fileReadable: folder$ + "/file_information.csv"
+    @prepareFileInfo: 1
+  endif
+
+  file_info = Read Table from comma-separated file: folder$ + "/file_information.csv"
+  selectObject: file_info
+  Append column: "omit"
+  .nfiles = Get number of rows
 
   for .iii from 1 to .nfiles
-  ;for .iii from 6 to 6
-    selectObject: "Strings list"
-    .basename$ = Get string: .iii
+    selectObject: file_info
+    .basename$ = Get value: .iii, "file"
     .snd = Read from file: folder$ + "/sounds/" + .basename$
     .totdur = Get total duration
-
-    selectObject: .analyzed
-    Set string value: .iii, "file", .basename$
-
-    
-    #writeInfoLine: .totdur, "  ", (number_of_coefficients_for_formant_prediction*2*time_step)
-    #appendInfoLine: .totdur > (number_of_coefficients_for_formant_prediction*2*time_step)
-    #1+a
-
+  
     if (.totdur - 0.050) > (number_of_coefficients_for_formant_prediction*2*time_step)
-      selectObject: .analyzed
-      Set numeric value: .iii, "analyzed", 1
+      selectObject: file_info
+      Set numeric value: .iii, "omit", 0
 
-      selectObject: .strsOut
-      Insert string: 0, .basename$
       .basename$ = .basename$ - ".wav"
 
       ## message about expected computing time
@@ -57,7 +47,6 @@ procedure trackFolder
       endif
 
       for .z from 1 to number_of_steps
-
         selectObject: .snd
         if tracking_method$ == "burg"
           noprogress To Formant (burg): time_step, 5.5, .cutoffs#[.z], 0.025, 50
@@ -80,17 +69,17 @@ procedure trackFolder
         appendFileLine: folder$ + "/infos/" + .basename$ + "_info.txt",  number_of_formants
       endfor
     endif
-
+    if (.totdur - 0.050) < (number_of_coefficients_for_formant_prediction*2*time_step)
+      selectObject: file_info
+      Set numeric value: .iii, "omit", 1
+    endif
     removeObject: .snd
   endfor
 
-  selectObject: .analyzed
-  .skipped = Search column: "analyzed", "0"
-  if .skipped > 0
-    Save as comma-separated file: folder$ +"/skip-log.csv"
-  endif
+  selectObject: file_info
+  analyzed = Extract rows where column (number): "omit", "not equal to", 1
+  Remove column: "omit"
+  Save as comma-separated file: folder$ + "/file_information.csv"
 
-  selectObject: .strsOut
-  Save as short text file: folder$ +"/fileList.Strings"
-  removeObject: .strs, .strsOut, .analyzed
+  removeObject: file_info, analyzed
 endproc

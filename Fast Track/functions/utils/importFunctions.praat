@@ -10,6 +10,7 @@ include utils/saveSettings.praat
 include utils/addAcousticInfoToTable.praat
 include utils/editTracks.praat
 include utils/extractVowels.praat
+include utils/plotAggregate.praat
 
 include tools/aggregate.praat
 include tools/aggregateAggregate.praat
@@ -21,6 +22,7 @@ include tools/editFolder.praat
 include tools/chopSoundFiles.praat
 include tools/makeTextGrids.praat
 include tools/extractVowelswithTG.praat
+include tools/prepareFileInfo.praat
 
 
 versionPraat$ = left$(praatVersion$, (rindex(praatVersion$, ".")-1));

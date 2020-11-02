@@ -38,35 +38,40 @@ beginPause: "Set Parameters"
   choice: "Option:", 1
       option: "Add buffer to edge of files"
       option: "Aggregate"
+      option: "Aggregate aggregate"
       option: "Aggregate Tables"
       option: "Extract vowels with TextGrids"
       option: "Edit folder"
       option: "Get coefficients"
       option: "Make TextGrids"
+      option: "Prepare file information"
 nocheck endPause: "Ok", 1
 
 if option == 1
   @addBuffer
-endif
-if option == 2
+
+elsif option == 2
   @aggregate: 0
-endif
-#if option == 3
-#  @aggregateAggregate
-#endif
-if option == 3
+
+elsif option == 3
+  @aggregateAggregate
+
+elsif option == 4
   @aggregateTables
-endif
-if option == 4
+
+elsif option == 5
   @extractVowelswithTG
-endif
-if option == 5
+
+elsif option == 6
   @editFolder
-endif
-if option == 6
+
+elsif option == 7
   @getCoefficients: 0
-endif
-if option == 7
+
+elsif option == 8
   @makeTextGrids
+
+elsif option == 9
+  @prepareFileInfo: 0
 endif
 
