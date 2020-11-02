@@ -128,7 +128,7 @@ if aggregate = 1
   Save as 300-dpi PNG file: folder$ + "/contours.png"
   
   plotting_symbols$ = "--"
-  font_size = 18
+  font_size = 8
   number_of_bins = 5
   add_axes = 1
   erase = 1
@@ -150,7 +150,7 @@ if aggregate = 1
 
   tbl = selected()
   plotting_symbols$ = "--"
-  font_size = 28
+  font_size = 8
   number_of_bins = 5
   add_axes = 1
   erase = 1
