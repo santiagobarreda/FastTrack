@@ -71,9 +71,17 @@ procedure extractVowels
         endif
         endif
 
-        if comment_tier > 0
-        commentNum = Get interval at time: comment_tier, (vowelStart+vowelEnd)/2
-        comment$ = Get label of interval: comment_tier, commentNum
+        if comment_tier1 > 0
+          commentNum1 = Get interval at time: comment_tier1, (vowelStart+vowelEnd)/2
+          comment1$ = Get label of interval: comment_tier1, commentNum1
+        endif
+        if comment_tier2 > 0
+          commentNum2 = Get interval at time: comment_tier2, (vowelStart+vowelEnd)/2
+          comment2$ = Get label of interval: comment_tier2, commentNum2
+        endif
+        if comment_tier3 > 0
+          commentNum3 = Get interval at time: comment_tier3, (vowelStart+vowelEnd)/2
+          comment3$ = Get label of interval: comment_tier3, commentNum3
         endif
 
         ## only do this block if there is a word tier
@@ -137,8 +145,14 @@ procedure extractVowels
         Set string value: count, "next_word", next_word$
         endif
 
-        if comment_tier > 0
-        Set string value: count, "comment", comment$
+        if comment_tier1 > 0
+          Set string value: count, "comment1", comment1$
+        endif
+        if comment_tier2 > 0
+          Set string value: count, "comment2", comment2$
+        endif
+        if comment_tier3 > 0
+          Set string value: count, "comment3", comment3$
         endif
 
     endif

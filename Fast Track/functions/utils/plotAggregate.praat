@@ -47,7 +47,6 @@ procedure plotAggregate autorun
       positive: "Font size:", font_size
       comment: "You can specify a symbol for each row, separated by a spae. This is a simple way to plot a small number of vowels."
       sentence: "Plotting symbols:", plotting_symbols$
-      comment: "Plot ranges:"
       positive: "Minimum F1:", minimum_F1
       positive: "Maximum F1:", maximum_F1
       positive: "Minimum F2:", minimum_F2

@@ -29,18 +29,22 @@ beginPause: "Set Parameters"
     option: "this in by specifying a path to a text file below."
     comment: "Path to optional text file with alternate vowels (--)"
     sentence: "Vowels file:", "--"
-    comment: "Folder containing sounds to extract vowels from"
+    optionMenu: "", 1
+    option: "[**IMPORTANT** Click to Read]"
+    option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
+    option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
+    option: "Folder: all output sounds and CSV files will go here."
     sentence: "Sound folder:", ""
-    comment: "Folder containing TextGrids corresponding to each sound file"
     sentence: "TextGrid folder:", ""
-    comment: "Files will be saved directly into the folder specified below"
     sentence: "Folder:", folder$
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
 		integer: "Word tier:", word_tier
-    comment: "Optional tier containing comments that will also be collected."
-		integer: "Comment tier:", 0
+    comment: "Optional tiers (up to 3) containing comments that will also be collected."
+		integer: "Comment tier1:", 0
+		integer: "Comment tier2:", 0
+		integer: "Comment tier3:", 0
     comment: "Collect vowels with the following stress."
     optionMenu: "Select stress", 2
     option: "Only primary stress"
@@ -126,10 +130,17 @@ for filecounter from 1 to nfiles
     Append column: "previous_word"
     Append column: "next_word"
     endif
-    if comment_tier > 0
-    Append column: "comment"
-    endif
     
+    if comment_tier1 > 0
+      Append column: "comment1"
+    endif
+    if comment_tier2 > 0
+      Append column: "comment2"
+    endif
+    if comment_tier3 > 0
+      Append column: "comment3"
+    endif
+
     @extractVowels
 
     selectObject: tbl
