@@ -49,9 +49,9 @@ beginPause: "Set Parameters"
     option: "Any"
     optionMenu: "", 1
     option: "[Click to Read]"
-    option: "Vowels will not be extracted from any words specified here. Please spell"
-    option: "words exactly as they will appear in the textgrid (including capitalization)."
-    option: "Words should be separated by a space."
+    option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
+    option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
+    option: "A path to a .txt file can also be provided instead. Each line should contain one word to be skipped."
 		sentence: "Words to skip:", "--"
     optionMenu: "", 1
     option: "[Click to Read]"
@@ -113,7 +113,15 @@ words_to_skip = 0
 ## make table with words to skip
 if words_to_skip$ <> "--"
   words_to_skip = 1
-  .skipWords = Create Strings as tokens: words_to_skip$, " ,"
+  .end$ = right$ (words_to_skip$, 4)
+ 
+  if .end$ <> ".txt"
+    .skipWords = Create Strings as tokens: words_to_skip$, " ,"
+  endif
+  if .end$ == ".txt"
+    .skipWords = Read Strings from raw text file: words_to_skip$
+  endif
+
   Rename: "wordstoskip"
   n = Get number of strings
 
@@ -125,6 +133,7 @@ if words_to_skip$ <> "--"
     Set string value: i, "word", tmp$
   endfor
   removeObject: "Strings wordstoskip"
+  
 endif
 
 
