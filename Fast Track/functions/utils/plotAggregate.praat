@@ -1,10 +1,6 @@
 
 procedure plotAggregate autorun
 
-  # set parameter for specifying vowels. make table
-  .clr_str = Create Strings as tokens: "Red Blue Green Magenta Black Lime Purple Teal Navy Pink Maroon Olive Grey", " ,"
-  Rename: "colors"
-
   clicked = 2
 
   @getSettings
@@ -24,7 +20,7 @@ procedure plotAggregate autorun
         option: "Points"
       integer: "Number of bins:", number_of_bins
       optionMenu: "Color", 1
-        option: "Multi"
+        option: "From Table"
         option: "Red"
         option: "Blue"
         option: "Green"
@@ -41,8 +37,6 @@ procedure plotAggregate autorun
       positive: "Arrow size:", arrow_size
       real: "Point size:", point_size
       comment: "Options for plotting symbols:"
-      word: "Symbol column:", symbol_column$
-      word: "Color column:", color_column$
       positive: "Which bin to plot:", which_bin_to_plot
       positive: "Font size:", font_size
       comment: "You can specify a symbol for each row, separated by a spae. This is a simple way to plot a small number of vowels."
@@ -56,13 +50,9 @@ procedure plotAggregate autorun
 
   endif
 
- if autorun == 1
-   clicked = 1
+  if autorun == 1
+    clicked = 1
   endif
-
-
-  selectObject: .clr_str 
-  .ncolors = Get number of strings
 
   selectObject: tbl
 
@@ -92,19 +82,18 @@ procedure plotAggregate autorun
 
 
   for i from 1 to nrows
-    for j from 1 to number_of_bins
-
-      color_use$ = color$
-      if color$ == "Multi"
-        selectObject: .clr_str 
-        color_use = (i mod (.ncolors)) + 1
-        color_use$ = Get string: color_use
-      endif
 
       selectObject: tbl
       color_use$ = Get value: i, color_column$
 
+      if color > 1
+        color_use$ color$
+      endif
+
       Colour: color_use$
+      
+    for j from 1 to number_of_bins
+
       if j > 1 and type_of_plot == 1
         oj = j - 1
         selectObject: tbl
@@ -139,10 +128,8 @@ procedure plotAggregate autorun
           label$ = Get string: i
         endif
 
-        if symbol_column$ <> "--"
-          selectObject: tbl
-          label$ = Get value: i, symbol_column$
-        endif
+        selectObject: tbl
+        label$ = Get value: i, "label"
 
         Text special: x, "Centre", y, "Half", "Helvetica", font_size, "0", label$
       endif

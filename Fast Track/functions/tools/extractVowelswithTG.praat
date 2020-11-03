@@ -31,9 +31,9 @@ beginPause: "Set Parameters"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
     option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
     option: "Folder: all output sounds and CSV files will go here."
-    sentence: "Sound folder:", "C:\Users\santi\Desktop\textgrids"
-    sentence: "TextGrid folder:", "C:\Users\santi\Desktop\textgrids"
-    sentence: "Folder:", "C:\Users\santi\Desktop\textgrids\output" ;folder$
+    sentence: "Sound folder:", folder$
+    sentence: "TextGrid folder:", folder$
+    sentence: "Folder:", folder$
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
