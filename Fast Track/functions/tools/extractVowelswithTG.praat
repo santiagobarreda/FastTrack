@@ -51,7 +51,9 @@ beginPause: "Set Parameters"
     option: "[Click to Read]"
     option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
     option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
-    option: "A path to a .txt file can also be provided instead. Each line should contain one word to be skipped."
+    option: " "
+    option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
+    option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
 		sentence: "Words to skip:", "--"
     optionMenu: "", 1
     option: "[Click to Read]"
@@ -113,15 +115,15 @@ words_to_skip = 0
 ## make table with words to skip
 if words_to_skip$ <> "--"
   words_to_skip = 1
-  .end$ = right$ (words_to_skip$, 4)
- 
-  if .end$ <> ".txt"
-    .skipWords = Create Strings as tokens: words_to_skip$, " ,"
-  endif
-  if .end$ == ".txt"
-    .skipWords = Read Strings from raw text file: words_to_skip$
-  endif
+  .skipWords = Create Strings as tokens: words_to_skip$, " ,"
+endif
 
+if fileReadable ("../dat/wordstoskip.txt")
+  words_to_skip = 1
+  .skipWords = Read Strings from raw text file: "../dat/wordstoskip.txt"
+endif
+
+if words_to_skip == 1
   Rename: "wordstoskip"
   n = Get number of strings
 
@@ -132,8 +134,7 @@ if words_to_skip$ <> "--"
     selectObject: "Table wordstoskip"
     Set string value: i, "word", tmp$
   endfor
-  removeObject: "Strings wordstoskip"
-  
+  removeObject: "Strings wordstoskip"  
 endif
 
 
