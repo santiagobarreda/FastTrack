@@ -30,8 +30,8 @@ procedure extractVowels
     ## check if vowel should be analyzed
     analyze = 0
 
-    selectObject: vwlTbl
-    num = Search column: "vowel", vowel$
+    selectObject: vwl_tbl
+    num = Search column: "label", vowel$
     if num > 0
         analyze = 1
     endif
@@ -136,14 +136,28 @@ procedure extractVowels
         Set string value: count, "next_sound", next_sound$
         Set string value: count, "stress", stress$
 
+        
+        selectObject: vwl_tbl
+        spot = Search column: "label", vowel$
+        tmp_clr$ = Get value: spot, "color"
+
+        selectObject: file_info
+        Append row
+        Set numeric value: count, "number", count
+        Set string value: count, "file", filename$ + ".wav"
+        Set string value: count, "label", vowel$
+        Set numeric value: count, "group", spot
+        Set string value: count, "color", tmp_clr$
+
+        selectObject: tbl
         if word_tier > 0
-        Set string value: count, "word", word$
-        Set numeric value: count, "word_interval", wordNum
-        Set numeric value: count, "word_start", wordStart
-        Set numeric value: count, "word_end", wordEnd
-        Set string value: count, "previous_word", previous_word$
-        Set string value: count, "next_word", next_word$
-        endif
+          Set string value: count, "word", word$
+          Set numeric value: count, "word_interval", wordNum
+          Set numeric value: count, "word_start", wordStart
+          Set numeric value: count, "word_end", wordEnd
+          Set string value: count, "previous_word", previous_word$
+          Set string value: count, "next_word", next_word$
+          endif
 
         if comment_tier1 > 0
           Set string value: count, "comment1", comment1$

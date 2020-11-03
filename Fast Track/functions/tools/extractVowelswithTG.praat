@@ -4,9 +4,7 @@ procedure extractVowelswithTG
 segment_tier = 1
 word_tier = 0
 
-# set parameter for specifying vowels. make table
-.vwl_str = Create Strings as tokens: "AA AE AH AO AW AX AY EH ER EY IH IX IY OW OY UH UW UX", " ,"
-Rename: "vowels"
+
 
 #selectObject: tg
 #tmp$ = Get tier name: 1
@@ -22,11 +20,10 @@ Rename: "vowels"
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "When this form is generated, a Strings object called vowels is created and appears in the"
-    option: "Praat object window.  Any vowels found here will be extracted. All arpabet vowels are included"
-    option: "by default. Once this form is closed the strings object can no longer be edited."
-    option: "Alternatively, you can write the vowels you want in a text file, one per lines. You can read"
-    option: "this in by specifying a path to a text file below."
+    option: "All arpabet vowels are extracted by default. If you want to extract a subset or some other vowels,"
+    option: "make a *copy* of the vowels.csv file in 'functions/dat/' and place all desired sounds in the 'label' "
+    option: "column. You can also specify colors and groups for each sound. Provide the path to the *copy* of this file"
+    option: "below. If you modify the vowels.csv in place, the settings will become your default extraction settings."
     comment: "Path to optional text file with alternate vowels (--)"
     sentence: "Vowels file:", "--"
     optionMenu: "", 1
@@ -34,9 +31,9 @@ beginPause: "Set Parameters"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
     option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
     option: "Folder: all output sounds and CSV files will go here."
-    sentence: "Sound folder:", ""
-    sentence: "TextGrid folder:", ""
-    sentence: "Folder:", folder$
+    sentence: "Sound folder:", "C:\Users\santi\Desktop\textgrids"
+    sentence: "TextGrid folder:", "C:\Users\santi\Desktop\textgrids"
+    sentence: "Folder:", "C:\Users\santi\Desktop\textgrids\output" ;folder$
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
@@ -66,10 +63,51 @@ beginPause: "Set Parameters"
 nocheck endPause: "Ok", 1
 
 if vowels_file$ <> "--"
-  removeObject: "Strings vowels"
-  Read Strings from raw text file: vowels_file$
+  vwl_tbl = Read Table from comma-separated file: vowels_file$
   Rename: "vowels"
 endif
+if vowels_file$ == "--"
+  if !fileReadable ("/../dat/vowels.csv")
+    exitScript: "Please make sure to install the 'dat' folder from a current version of Fast Track."
+  endif  
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
+  Rename: "vowels"
+endif
+
+################################################################################################
+###### This section adds group and color information to vowel tables if the user has not provided it
+
+selectObject: vwl_tbl
+fill_group = Get column index: "group"
+fill_color = Get column index: "color"
+nrows = Get number of rows
+
+if fill_group == 0
+  Append column: "group"
+endif
+
+if fill_color == 0
+  Append column: "color"
+  .clr_str = Create Strings as tokens: "Red Blue Black Green Olive Yellow Magenta Black Lime Purple Teal Navy Pink Maroon Grey Silver Cyan Black", " ,"
+endif
+
+for .tmpi from 1 to nrows
+  if fill_group == 0
+    selectObject: vwl_tbl
+    Set numeric value: .tmpi, "group", .tmpi
+  endif
+  if fill_color == 0
+    selectObject: .clr_str
+     color_use = (.tmpi mod (18)) + 1
+    .tmp_clr = Get string: .tmpi
+    selectObject: vwl_tbl
+    Set string value: .tmpi, "color", "Blue"
+  endif  
+endfor
+
+nocheck removeObject: .clr_str
+################################################################################################
+
 
 words_to_skip = 0
 ## make table with words to skip
@@ -89,24 +127,12 @@ if words_to_skip$ <> "--"
   removeObject: "Strings wordstoskip"
 endif
 
-## make table with vowels to collect
-selectObject: "Strings vowels"
-n = Get number of strings
-vwlTbl = Create Table with column names: "vowels", n, "vowel"
-  for i from 1 to n
-    selectObject: "Strings vowels"
-    tmp$ = Get string: i
-    selectObject: "Table vowels"
-    Set string value: i, "vowel", tmp$
-  endfor
-  removeObject: "Strings vowels"
-endif
-
-
 
 obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
 
+all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound stress"
+all_file_info = Create Table with column names: "all_file_info", 0, "number file label group color"
 
 
 for filecounter from 1 to nfiles
@@ -130,6 +156,8 @@ for filecounter from 1 to nfiles
     Append column: "previous_word"
     Append column: "next_word"
     endif
+
+    file_info = Create Table with column names: "fileinfo", 0, "number file label group color"
     
     if comment_tier1 > 0
       Append column: "comment1"
@@ -145,11 +173,37 @@ for filecounter from 1 to nfiles
 
     selectObject: tbl
     Save as comma-separated file: folder$ + "/"+ basename$+ "_segmentation_info.csv"
-    removeObject: tbl, snd, tg
+
+    selectObject: tbl
+    plusObject: "Table all_tbl"
+    Append
+    removeObject: tbl, "Table all_tbl"
+    selectObject: "Table appended"
+    Rename: "all_tbl"
+
+    selectObject: file_info
+    Save as comma-separated file: folder$ + "/"+ basename$+ "_file_information.csv"
+   
+    selectObject: file_info
+    plusObject: "Table all_file_info"
+    Append
+    removeObject: file_info, "Table all_file_info"
+    selectObject: "Table appended"
+    Rename: "all_file_info"
+
+    removeObject: snd, tg
 
 
 endfor
-     
-removeObject: vwlTbl, obj
+
+selectObject: "Table all_tbl"
+Save as comma-separated file: folder$ + "/segmentation_information.csv"
+
+selectObject: "Table all_file_info"
+Save as comma-separated file: folder$ + "/file_information.csv"
+
+selectObject: vwl_tbl
+nocheck Save as comma-separated file: vowels_file$
+removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info"
 
 endproc

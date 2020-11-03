@@ -217,7 +217,7 @@ if image = 1
 
   if what_to_track <> 2
     sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-	@plotTable: sp, tbl, maximum_plotting_frequency, 1
+	  @plotTable: sp, tbl, maximum_plotting_frequency, 1
     removeObject: sp
   endif
   if what_to_track == 2
@@ -226,9 +226,11 @@ if image = 1
 	  info$ = Editor info
   	  viewstart = extractNumber (info$, "Window start: ")
   	  viewend = extractNumber (info$, "Window end: ")
+  	  maximum_plotting_frequency = extractNumber (info$, "Spectrogram view to: ")
+      writeInfoLine: maximum_plotting_frequency
     endeditor
 	  @plotTableContext: sp, tbl, maximum_plotting_frequency, 1
-      removeObject: sp
+    removeObject: sp
 	endif
 
 

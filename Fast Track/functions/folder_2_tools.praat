@@ -49,29 +49,29 @@ nocheck endPause: "Ok", 1
 
 if option == 1
   @addBuffer
-
-elsif option == 2
+endif
+if option == 2
   @aggregate: 0
-
-elsif option == 3
+endif
+if option == 3
   @aggregateAggregate
-
-elsif option == 4
+endif
+if option == 4
   @aggregateTables
-
-elsif option == 5
+endif
+if option == 5
   @extractVowelswithTG
-
-elsif option == 6
+endif
+if option == 6
   @editFolder
-
-elsif option == 7
+endif
+if option == 7
   @getCoefficients: 0
-
-elsif option == 8
+endif
+if option == 8
   @makeTextGrids
-
-elsif option == 9
+endif
+if option == 9
   @prepareFileInfo: 0
 endif
 

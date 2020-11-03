@@ -48,13 +48,10 @@ procedure aggregateAggregate
       Append column: "f"+string$(i)+string$(j)
     endfor
   endfor
+  Append column: "label"
+  Append column: "color"
 
-  if label$ <> "NA"
-    Append column: "label"
-  endif
-  if color$ <> "NA"
-    Append column: "color"
-  endif
+## fix this so that is only does represented groups. it goes from to 1 to max still. 
 
   for .iii from 1 to number_of_groups
 
@@ -96,6 +93,11 @@ procedure aggregateAggregate
     tmp_group$ = Get value: 1, group$ 
     selectObject: .output
     Set string value: .iii, group$, tmp_group$
+
+    selectObject: .tmp_tbl
+    tmp_color$ = Get value: 1, color$ 
+    selectObject: .output
+    Set string value: .iii, color$, tmp_color$
 
     Set numeric value: .iii, group$, .iii
     for .j from 1 to number_of_bins

@@ -131,9 +131,10 @@ procedure aggregate autorun
       Set string value: .iii, "number", number$
     endif
 
-    removeObject: .tbl
+    nocheck removeObject: .tbl
   endfor
   selectObject: .output
   Save as comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
   Rename: "aggregated"
+  
 endproc

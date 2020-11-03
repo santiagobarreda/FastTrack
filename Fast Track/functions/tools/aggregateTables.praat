@@ -25,11 +25,9 @@ procedure aggregateTables
   number_of_bins = number(number_of_bins$)
   number_of_formants = number(number_of_formants$)
 
-  Create Table with column names: "output", size(tables#), "file"
+  Create Table with column names: "output", size(tables#), "file f0 duration number label group color"
   .output = selected ("Table")
 
-  Append column: "f0"
-  Append column: "duration"
   for j from 1 to number_of_bins
     for i from 1 to number_of_formants
       Append column: "f"+string$(i)+string$(j)
@@ -66,6 +64,13 @@ procedure aggregateTables
     endif    
     selectObject: .output
     Set numeric value: .iii, "f0", .mf0
+
+    # label, group, column, number
+
+    Set numeric value: .iii, "number", .iii
+    Set string value: .iii, "label", "*"
+    Set numeric value: .iii, "group", 1
+    Set string value: .iii, "color", "Blue"
 
 
     for .j from 1 to number_of_bins
