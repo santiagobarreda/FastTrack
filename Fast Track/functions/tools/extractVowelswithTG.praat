@@ -68,7 +68,6 @@ if !fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
 endif 
 
-vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
 Rename: "vowels"
 
 ################################################################################################
