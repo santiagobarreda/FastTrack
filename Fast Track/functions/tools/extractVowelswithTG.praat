@@ -20,7 +20,7 @@ word_tier = 0
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstocollect.csv'"
+    option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
     option: "in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
     option: "for each sound. The file should be set up before running this function. You can use the 'arpabet.csv' file in /dat/ as a template."
     optionMenu: "", 1
@@ -62,7 +62,7 @@ beginPause: "Set Parameters"
 nocheck endPause: "Ok", 1
 
 if fileReadable ("/../dat/vowelstocollect.csv")
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstocollect.csv"
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
 endif 
 if !fileReadable ("/../dat/vowelstocollect.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
