@@ -61,10 +61,10 @@ beginPause: "Set Parameters"
     positive: "Buffer (s):", 0.025
 nocheck endPause: "Ok", 1
 
-if fileReadable ("/../dat/vowelstocollect.csv")
+if fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
 endif 
-if !fileReadable ("/../dat/vowelstocollect.csv")
+if !fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
 endi 
 
