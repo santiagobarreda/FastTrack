@@ -20,14 +20,11 @@ word_tier = 0
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All arpabet vowels are extracted by default. If you want to extract a subset or some other vowels,"
-    option: "make a *copy* of the vowels.csv file in 'functions/dat/' and place all desired sounds in the 'label' "
-    option: "column. You can also specify colors and groups for each sound. Provide the path to the *copy* of this file"
-    option: "below. If you modify the vowels.csv in place, the settings will become your default extraction settings."
-    comment: "Path to optional text file with alternate vowels (--)"
-    sentence: "Vowels file:", "--"
+    option: "All arpabet vowels are extracted by default. You can edit the vowels.csv file in 'functions/dat/' and place all"
+    option: "sounds to be extracted in the 'label' column. You can (and should) also specify colors and groups for each sound."
+    option: "Set this file up before running this function."
     optionMenu: "", 1
-    option: "[**IMPORTANT** Click to Read]"
+    option: "[Click to Read]"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
     option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
     option: "Folder: all output sounds and CSV files will go here."
@@ -64,17 +61,12 @@ beginPause: "Set Parameters"
     positive: "Buffer (s):", 0.025
 nocheck endPause: "Ok", 1
 
-if vowels_file$ <> "--"
-  vwl_tbl = Read Table from comma-separated file: vowels_file$
-  Rename: "vowels"
-endif
-if vowels_file$ == "--"
-  if !fileReadable ("/../dat/vowels.csv")
-    exitScript: "Please make sure to install the 'dat' folder from a current version of Fast Track."
-  endif  
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
-  Rename: "vowels"
-endif
+if !fileReadable ("/../dat/vowels.csv")
+    exitScript: "Please make sure there is a vowels.csv file in the /dat/ folder."
+endif  
+
+vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
+Rename: "vowels"
 
 ################################################################################################
 ###### This section adds group and color information to vowel tables if the user has not provided it
