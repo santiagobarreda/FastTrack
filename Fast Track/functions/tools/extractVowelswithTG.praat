@@ -66,7 +66,7 @@ if fileReadable ("/../dat/vowelstoextract.csv")
 endif 
 if !fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
-endi 
+endif 
 
 vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
 Rename: "vowels"
