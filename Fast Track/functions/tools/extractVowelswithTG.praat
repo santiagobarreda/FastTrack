@@ -20,9 +20,9 @@ word_tier = 0
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All arpabet vowels are extracted by default. You can edit the vowels.csv file in 'functions/dat/' and place all"
-    option: "sounds to be extracted in the 'label' column. You can (and should) also specify colors and groups for each sound."
-    option: "Set this file up before running this function."
+    option: "All arpabet vowels are extracted by default. If you place a file called 'vowelstocollect.csv' in the '/dat/' folder,"
+    option: "the sounds you specify there will be extracted. You can (and should) also specify colors and groups for each sound."
+    option: "Set this file up before running this function. You can use the 'arpabet.csv' file in /dat/ as a template."
     optionMenu: "", 1
     option: "[Click to Read]"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
@@ -61,9 +61,12 @@ beginPause: "Set Parameters"
     positive: "Buffer (s):", 0.025
 nocheck endPause: "Ok", 1
 
-if !fileReadable ("/../dat/vowels.csv")
-    exitScript: "Please make sure there is a vowels.csv file in the /dat/ folder."
-endif  
+if fileReadable ("/../dat/vowelstocollect.csv")
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstocollect.csv"
+endif 
+if !fileReadable ("/../dat/vowelstocollect.csv")
+  vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
+endi 
 
 vwl_tbl = Read Table from comma-separated file: "/../dat/vowels.csv"
 Rename: "vowels"
