@@ -65,6 +65,9 @@ if fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
 endif 
 if !fileReadable ("/../dat/vowelstoextract.csv")
+   if !fileReadable ("/../dat/arpabet.csv")
+     exisScript: 
+   endif
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
 endif 
 
