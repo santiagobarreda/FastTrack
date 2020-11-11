@@ -66,7 +66,7 @@ if fileReadable ("/../dat/vowelstoextract.csv")
 endif 
 if !fileReadable ("/../dat/vowelstoextract.csv")
    if !fileReadable ("/../dat/arpabet.csv")
-     exisScript: 
+     exitScript: "You do not have either an arpabet.csv nor a vowelstoextract.csv file in your /dat/ folder."
    endif
   vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
 endif 
