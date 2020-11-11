@@ -21,7 +21,7 @@ beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
     option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
-    option: "in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
+    option: "in the folder with your TextGrids, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
     option: "for each sound. The file should be set up before running this function. You can use the 'arpabet.csv' file in /dat/ as a template."
     optionMenu: "", 1
     option: "[Click to Read]"
@@ -61,12 +61,21 @@ beginPause: "Set Parameters"
     option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros before analysis"
     option: "with another function provided by Fast Track."
     positive: "Buffer (s):", 0.025
+
 nocheck endPause: "Ok", 1
 
-if fileReadable ("/../dat/vowelstoextract.csv")
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
+extract_file = 0
+
+if fileReadable (textGrid_folder$ + "/vowelstoextract.csv")
+  vwl_tbl = Read Table from comma-separated file: folder$ + "/vowelstoextract.csv"
+  extract_file = 1
 endif 
-if !fileReadable ("/../dat/vowelstoextract.csv")
+
+if fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
+  extract_file = 1
+endif 
+if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
    if !fileReadable ("/../dat/arpabet.csv")
      exitScript: "You do not have either an arpabet.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
@@ -120,6 +129,11 @@ endif
 if fileReadable ("../dat/wordstoskip.txt")
   words_to_skip = 1
   .skipWords = Read Strings from raw text file: "../dat/wordstoskip.txt"
+endif
+
+if fileReadable (textGrid_folder$ + "/wordstoskip.txt")
+  words_to_skip = 1
+  .skipWords = Read Strings from raw text file: textGrid_folder$ + "/wordstoskip.txt"
 endif
 
 if words_to_skip == 1

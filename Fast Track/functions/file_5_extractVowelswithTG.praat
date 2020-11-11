@@ -67,6 +67,7 @@ beginPause: "Set Parameters"
     option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros before analysis"
     option: "with another function provided by Fast Track."
     positive: "Buffer (s):", 0.025
+
 nocheck endPause: "Ok", 1
 
 if vowels_file$ <> "--"
