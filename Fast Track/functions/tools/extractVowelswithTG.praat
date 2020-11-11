@@ -39,6 +39,8 @@ beginPause: "Set Parameters"
 		integer: "Comment tier1:", 0
 		integer: "Comment tier2:", 0
 		integer: "Comment tier3:", 0
+    comment: "If anything is written in this tier, the segment will be skipped:"
+		integer: "Omit tier:", 0
     comment: "Collect vowels with the following stress."
     optionMenu: "Select stress", 2
     option: "Only primary stress"
@@ -138,7 +140,7 @@ endif
 obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
 
-all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound stress"
+all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
 all_file_info = Create Table with column names: "all_file_info", 0, "number file label group color"
 
 
@@ -154,7 +156,7 @@ for filecounter from 1 to nfiles
     snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
 
     ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound stress"
+    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
     if word_tier > 0
     Append column: "word"
     Append column: "word_interval"

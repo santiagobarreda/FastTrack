@@ -3,11 +3,10 @@ include utils/getSettings.praat
 include utils/saveSettings.praat
 
 @getSettings
-optiontype = -1
 clicked = 2
 
 menu = 1
-while clicked > 1
+while clicked <> 1
 	beginPause: "Set Parameters"
  	  if menu == 1
 	    comment: "Set default parameter settings."
@@ -60,10 +59,8 @@ while clicked > 1
     option: "Heuristics"
     option: "CSV output"
 
-	nocheck clicked = endPause: "Ok", "Switch Options", 1
-    if clicked == 2
-	  optiontype = optiontype * -1	  
-	endif
+	clicked = endPause: "Ok", "Switch Options", 1
+    writeInfoLine: clicked 
 endwhile
 
 folder$ = default_working_directory$
