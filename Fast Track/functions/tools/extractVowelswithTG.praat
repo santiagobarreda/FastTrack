@@ -155,6 +155,24 @@ obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
 
 all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
+if word_tier > 0
+  Append column: "word"
+  Append column: "word_interval"
+  Append column: "word_start"
+  Append column: "word_end"
+  Append column: "previous_word"
+  Append column: "next_word"
+endif
+if comment_tier1 > 0
+  Append column: "comment1"
+endif
+if comment_tier2 > 0
+  Append column: "comment2"
+endif
+if comment_tier3 > 0
+  Append column: "comment3"
+endif
+
 all_file_info = Create Table with column names: "all_file_info", 0, "number file label group color"
 
 
@@ -179,9 +197,6 @@ for filecounter from 1 to nfiles
     Append column: "previous_word"
     Append column: "next_word"
     endif
-
-    file_info = Create Table with column names: "fileinfo", 0, "number file label group color"
-    
     if comment_tier1 > 0
       Append column: "comment1"
     endif
@@ -192,6 +207,9 @@ for filecounter from 1 to nfiles
       Append column: "comment3"
     endif
 
+    file_info = Create Table with column names: "fileinfo", 0, "number file label group color"
+    
+    
     @extractVowels
 
     selectObject: tbl
