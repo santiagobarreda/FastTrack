@@ -150,6 +150,8 @@ if words_to_skip == 1
   removeObject: "Strings wordstoskip"  
 endif
 
+#################################################################################################
+
 
 obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
