@@ -12,6 +12,7 @@ procedure plotAggregate autorun
   ## some of these need to be set differently in different calls. others need to be allowed to equal 
   ## what they equal in the overall function
 
+    label_column$ = "label"
     beginPause: "Set Parameters"
       boolean: "Erase", erase ;
       boolean: "Add axes", add_axes ;
@@ -39,7 +40,8 @@ procedure plotAggregate autorun
       comment: "Options for plotting symbols:"
       positive: "Which bin to plot:", which_bin_to_plot
       positive: "Font size:", font_size
-      comment: "You can specify a symbol for each row, separated by a spae. This is a simple way to plot a small number of vowels."
+      word: "Label column", label_column$
+      comment: "You can also specify a symbol for each row, separated by a space. This is a simple way to plot a small number of vowels."
       sentence: "Plotting symbols:", plotting_symbols$
       positive: "Minimum F1:", minimum_F1
       positive: "Maximum F1:", maximum_F1
@@ -84,7 +86,7 @@ procedure plotAggregate autorun
   for i from 1 to nrows
 
       selectObject: tbl
-      color_use$ = Get value: i, color_column$
+      color_use$ = Get value: i, "color"
 
       if color > 1
         color_use$ color$
@@ -94,6 +96,7 @@ procedure plotAggregate autorun
       
     for j from 1 to number_of_bins
 
+      ### contour plotting
       if j > 1 and type_of_plot == 1
         oj = j - 1
         selectObject: tbl
@@ -117,6 +120,7 @@ procedure plotAggregate autorun
         Line width: 1
       endif
 
+      ### symbol plotting
       if j == which_bin_to_plot and type_of_plot == 2
         selectObject: tbl
         x = Get value: i, "f2"+string$(j)
@@ -128,9 +132,12 @@ procedure plotAggregate autorun
           label$ = Get string: i
         endif
 
+        if !variableExists ("label_column$")
+          label_column$ = "label"
+        endif
         selectObject: tbl
-        label$ = Get value: i, "label"
-
+        label$ = Get value: i, label_column$
+        
         Text special: x, "Centre", y, "Half", "Helvetica", font_size, "0", label$
       endif
     endfor
