@@ -11,6 +11,8 @@ include utils/addAcousticInfoToTable.praat
 include utils/editTracks.praat
 include utils/extractVowels.praat
 include utils/plotAggregate.praat
+include utils/getTGESettings.praat
+include utils/saveTGESettings.praat
 
 include tools/aggregate.praat
 include tools/aggregateAggregate.praat

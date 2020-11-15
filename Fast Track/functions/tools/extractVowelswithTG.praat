@@ -1,21 +1,7 @@
 
 procedure extractVowelswithTG
 
-segment_tier = 1
-word_tier = 0
-
-
-
-#selectObject: tg
-#tmp$ = Get tier name: 1
-#if tmp$ = "words"
-#  word_tier = 1
-#  segment_tier= 2
-#endif
-#tmp$ = Get tier name: 2
-#if tmp$ = "words"
-#  word_tier = 2
-#endif
+@getTGESettings
 
 beginPause: "Set Parameters"
     optionMenu: "", 1
@@ -28,32 +14,31 @@ beginPause: "Set Parameters"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
     option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
     option: "Folder: all output sounds and CSV files will go here."
-    sentence: "Sound folder:", folder$
-    sentence: "TextGrid folder:", folder$
-    sentence: "Folder:", folder$
+    sentence: "Sound folder:", sound_folder$
+    sentence: "TextGrid folder:", textGrid_folder$
+    sentence: "Output folder:", output_folder$
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
 		integer: "Word tier:", word_tier
     comment: "Optional tiers (up to 3) containing comments that will also be collected."
-		integer: "Comment tier1:", 0
-		integer: "Comment tier2:", 0
-		integer: "Comment tier3:", 0
+		integer: "Comment tier1:", comment_tier1
+		integer: "Comment tier2:", comment_tier2
+		integer: "Comment tier3:", comment_tier3
     comment: "If anything is written in this tier, the segment will be skipped:"
 		integer: "Omit tier:", 0
-    comment: "Collect vowels with the following stress."
-    optionMenu: "Select stress", 2
-    option: "Only primary stress"
-    option: "Primary and secondary stress"
-    option: "Any"
     optionMenu: "", 1
+    option: "[Click to Read]"
+    option: "This assumes the final symbol on the vowel labels is used to indicate stress."
+    option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
+    sentence: "Stress to extract", stress_to_extract$
     option: "[Click to Read]"
     option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
     option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
     option: " "
     option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
     option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
-		sentence: "Words to skip:", "--"
+		sentence: "Words to skip:", ""
     optionMenu: "", 1
     option: "[Click to Read]"
     option: "How much time should be added to edges (0 = no padding)?"
@@ -64,10 +49,13 @@ beginPause: "Set Parameters"
 
 nocheck endPause: "Ok", 1
 
+@saveTGESettings
+
+
 extract_file = 0
 
 if fileReadable (textGrid_folder$ + "/vowelstoextract.csv")
-  vwl_tbl = Read Table from comma-separated file: folder$ + "/vowelstoextract.csv"
+  vwl_tbl = Read Table from comma-separated file: textGrid_folder$ + "/vowelstoextract.csv"
   extract_file = 1
 endif 
 
@@ -83,6 +71,28 @@ if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
 endif 
 
 Rename: "vowels"
+
+
+################################################################################################
+###### This handles stress extraction
+
+stress_override = 0
+stress = 0
+
+if stress_to_extract$ <> ""
+  stress = 1
+  tmp_strs = Create Strings as tokens: stress_to_extract$, " ,"
+  stresses = To WordList
+  removeObject: tmp_strs
+  stress_override = 1
+endif
+
+if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
+  stress = 1
+  tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
+  stresses = To WordList
+  removeObject: tmp_strs
+endif 
 
 ################################################################################################
 ###### This section adds group and color information to vowel tables if the user has not provided it
@@ -116,12 +126,26 @@ for .tmpi from 1 to nrows
 endfor
 
 nocheck removeObject: .clr_str
-################################################################################################
 
+
+
+################################################################################################
+### stress extraction information
+
+if fileReadable ("/../dat/stresstoextract.csv")
+  stress_tbl = Read Table from comma-separated file: "/../dat/stresstoextract.csv"
+  .skipWords = Read Strings from raw text file: "../dat/wordstoskip.txt"
+
+  #To WordListTo WordList
+  #Has word: "bababu"
+endif 
+
+################################################################################################
+##### word skipping information
 
 words_to_skip = 0
 ## make table with words to skip
-if words_to_skip$ <> "--"
+if words_to_skip$ <> ""
   words_to_skip = 1
   .skipWords = Create Strings as tokens: words_to_skip$, " ,"
 endif
@@ -215,7 +239,7 @@ for filecounter from 1 to nfiles
     @extractVowels
 
     selectObject: tbl
-    Save as comma-separated file: folder$ + "/"+ basename$+ "_segmentation_info.csv"
+    Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
 
     selectObject: tbl
     plusObject: "Table all_tbl"
@@ -225,7 +249,7 @@ for filecounter from 1 to nfiles
     Rename: "all_tbl"
 
     selectObject: file_info
-    Save as comma-separated file: folder$ + "/"+ basename$+ "_file_information.csv"
+    Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
    
     selectObject: file_info
     plusObject: "Table all_file_info"
@@ -240,13 +264,13 @@ for filecounter from 1 to nfiles
 endfor
 
 selectObject: "Table all_tbl"
-Save as comma-separated file: folder$ + "/segmentation_information.csv"
+Save as comma-separated file: output_folder$ + "/segmentation_information.csv"
 
 selectObject: "Table all_file_info"
-Save as comma-separated file: folder$ + "/file_information.csv"
+Save as comma-separated file: output_folder$ + "/file_information.csv"
 
 selectObject: vwl_tbl
 nocheck Save as comma-separated file: vowels_file$
-removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info"
+removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info", stresses
 
 endproc

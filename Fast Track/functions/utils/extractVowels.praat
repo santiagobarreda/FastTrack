@@ -14,9 +14,12 @@ procedure extractVowels
   for i from 1 to nIntervals
     selectObject: tg
     vowel$ = Get label of interval: segment_tier, i
-    stress$ = right$ (vowel$, 1)
-    stress = number (stress$)
-    vowel$ = left$ (vowel$, 2)
+    
+    if stress == 1
+      stress$ = right$ (vowel$, 1)
+      len = length (vowel$)
+      vowel$ = left$ (vowel$, len-1)
+    endif
 
     ## get info about current (and previous and next) word and segment
     vowelStart = Get start time of interval: segment_tier, i
@@ -49,13 +52,13 @@ procedure extractVowels
       endif
     endif
 
-    if stress <> 1 and select_stress = 1
-      analyze = 0
-      extract = 0
-    endif
-    if stress = 0 and (select_stress = 1 or select_stress = 2)
-      analyze = 0
-      extract = 0
+    ## make this into table object. stress_to_extract$
+    ## look for label in column. extract of yes. thats it. 
+    
+    if stress == 1
+      selectObject: stresses
+      analyze = Has word: stress$
+      extract = analyze
     endif
 
     ## check duration and omit tier
@@ -67,6 +70,7 @@ procedure extractVowels
       endif
     endif    
     
+    ## check that vowel is longer than 30 ms
     if (vowelEnd-vowelStart) < 0.03
       extract = 0
     endif
@@ -144,7 +148,7 @@ procedure extractVowels
         if filecount < 10
           filename$ = basename$ + "_000" + string$(filecount)
         endif
-        Save as WAV file: folder$ + "/" + filename$ + ".wav"
+        Save as WAV file: output_folder$ + "/" + filename$ + ".wav"
         removeObject: snd_small
             
         selectObject: vwl_tbl
