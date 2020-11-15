@@ -44,3 +44,14 @@ Add action command: "Spectrogram", 0, "", 0, "", 0, "Fast Track -", "", 0, ""
 Add action command: "Spectrogram", 0, "", 0, "", 0, "Track folder...", "", 0, "../folder_1_analyzeFolder.praat"
 Add action command: "Spectrogram", 0, "", 0, "", 0, "Tools...", "", 0, "../folder_2_tools.praat"
 Add action command: "Spectrogram", 0, "", 0, "", 0, "Set options...", "", 0, "../proc_setOptions.praat"
+
+Add action command: "TextGrid", 0, "", 0, "", 0, "Fast Track -", "", 0, ""
+Add action command: "TextGrid", 0, "", 0, "", 0, "Track folder...", "", 0, "../folder_1_analyzeFolder.praat"
+Add action command: "TextGrid", 0, "", 0, "", 0, "Tools...", "", 0, "../folder_2_tools.praat"
+Add action command: "TextGrid", 0, "", 0, "", 0, "Set options...", "", 0, "../proc_setOptions.praat"
+
+Add action command: "Strings", 0, "", 0, "", 0, "Fast Track -", "", 0, ""
+Add action command: "Strings", 0, "", 0, "", 0, "Track folder...", "", 0, "../folder_1_analyzeFolder.praat"
+Add action command: "Strings", 0, "", 0, "", 0, "Tools...", "", 0, "../folder_2_tools.praat"
+Add action command: "Strings", 0, "", 0, "", 0, "Set options...", "", 0, "../proc_setOptions.praat"
+
