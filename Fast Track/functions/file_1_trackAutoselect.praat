@@ -224,28 +224,25 @@ if image = 1
     editor: snd
 	  sp = Extract visible spectrogram
 	  info$ = Editor info
-  	  viewstart = extractNumber (info$, "Window start: ")
-  	  viewend = extractNumber (info$, "Window end: ")
-  	  maximum_plotting_frequency = extractNumber (info$, "Spectrogram view to: ")
+  	maximum_plotting_frequency = extractNumber (info$, "Spectrogram view to: ")
     endeditor
-	  @plotTableContext: sp, tbl, maximum_plotting_frequency, 1
+    selectObject: sp
+	  @plotTable: sp, tbl, maximum_plotting_frequency, 1, "Maximum formant = " + string$(cutoff) + " Hz"
     removeObject: sp
 	endif
-
-
-
-
   # change to save with filename or not
   Save as 300-dpi PNG file: folder$ + "/file_winner.png"
  endif
 
  if image = 2
-	 Erase all
-	 ### here is where it would need to write out to a plot
-	if plot_in_context == 0
+	  Erase all
+	  ### here is where it would need to write out to a plot
+	  selectObject: snd
+
+    if analyze_selection == 1
       selectObject: tmp_snd
     endif
-	 selectObject: snd
+
 	 sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 
 	 width = 2.85
@@ -257,14 +254,12 @@ if image = 1
 		 selectObject: "Table formants_" + string$(z)
 		 tbl = selected ("Table")
      Font size: 8
-		 @plotTable: sp, tbl, maximum_plotting_frequency, 0.5
-     #Text: 0.5, "centre", 0.1, "Top", string$(cutoffs#[z])
+	   @plotTable: sp, tbl, maximum_plotting_frequency, 1, "Maximum formant = " + string$(cutoffs#[z]) + " Hz"
 
 		 if z = winner
-			 Select outer viewport: xlims#[z]-0.1, xlims#[z]+3.3, ylims#[z]-0.1, ylims#[z]+2.1
-			 Draw inner box
-			 Select outer viewport: xlims#[z]-0.05, xlims#[z]+3.25, ylims#[z]-0.05, ylims#[z]+2.05
-			 Draw inner box
+       Line width: 3
+       Draw inner box
+       Line width: 1
 		 endif
 	 endfor
 

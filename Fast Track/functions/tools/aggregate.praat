@@ -55,12 +55,12 @@ procedure aggregate autorun
   Append column: "group"
   Append column: "color"
   Append column: "number"
+  Append column: "cutoff"
   for j from 1 to number_of_bins
     for i from 1 to number_of_formants
       Append column: "f"+string$(i)+string$(j)
     endfor
   endfor
-
    
   for .iii from 1 to .nfiles
     selectObject: .file_info
@@ -75,6 +75,14 @@ procedure aggregate autorun
       Set numeric value: .j, "ntime", ceiling( tmp )
     endfor
 
+    ## section about gettin best cutoff frequency
+    .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
+    .tmp$ = Get string: 11
+    stringToVector_output# = zero#(number_of_formants)
+    @stringToVector: .tmp$
+    .cutoff = stringToVector_output#[1] 
+    removeObject: .info
+
     selectObject: .tbl
     .firstFrameTime = Get value: 1, "time"
     .lastFrameTime = Get value: .nframes, "time"
@@ -83,6 +91,7 @@ procedure aggregate autorun
 
     selectObject: .output
     Set numeric value: .iii, "duration", .duration
+    Set numeric value: .iii, "cutoff", .cutoff
 
     selectObject: .tbl
     .mf0 = Get mean: "f0"

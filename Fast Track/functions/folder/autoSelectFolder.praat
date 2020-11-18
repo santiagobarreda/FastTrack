@@ -90,10 +90,13 @@ procedure autoSelectFolder
       #appendInfoLine: .elapsedTime
     endif
 
-   # read in sound and make spectrogram
+    # read in sound and make spectrogram
     .snd = Read from file: folder$ +"/sounds/" + .basename$+ ".wav"
     if save_image = 1
       .sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
+      viewstart = Get start time
+      viewend = Get end time
+      middleTime = (viewstart + viewend) / 2
       Erase all
     endif
 
@@ -165,7 +168,7 @@ procedure autoSelectFolder
         selectObject: "Table output"
         .tbl = selected ("Table")
         Font size: 8
-        @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5
+        @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5, "Maximum formant = " + string$(.cutoffs#[.z]) + " Hz"
       endif
 
       removeObject: .fr
@@ -264,11 +267,9 @@ procedure autoSelectFolder
 
     ## save image if desired
     if save_image = 1
-
-      Select outer viewport: .xlims#[.winner]-0.1, .xlims#[.winner]+3.3, .ylims#[.winner]-0.1, .ylims#[.winner]+2.1
-      Draw inner box
-      Select outer viewport: .xlims#[.winner]-0.05, .xlims#[.winner]+3.25, .ylims#[.winner]-0.05, .ylims#[.winner]+2.05
-      Draw inner box
+       Line width: 3
+       Draw inner box
+       Line width: 1
 
       Font size: 10
       if number_of_steps = 8

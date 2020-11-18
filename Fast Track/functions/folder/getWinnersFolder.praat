@@ -24,54 +24,54 @@ procedure getWinnersFolder
   .tmp$ = Get string: 7
   number_of_coefficients_for_formant_prediction = number (.tmp$)
 
-	.tmp$ = Get string: 9
+  .tmp$ = Get string: 9
   number_of_formants = number (.tmp$)
 
-	.tmp$ = Get string: 13
-	@stringToVector: .tmp$
+  .tmp$ = Get string: 13
+  @stringToVector: .tmp$
   .totalerror# = stringToVector_output#
 
   removeObject: .info
+		
+  createDirectory: folder$ + "/images_winners"
 
-	createDirectory: folder$ + "/images_winners"
-
-	daySecond = 0
-	@daySecond
+  daySecond = 0
+  @daySecond
   .startSecond = daySecond
 
-	for .counter from 1 to .nfiles
+  for .counter from 1 to .nfiles
 		totalerror = 0
 		.winner = 0
 		.cutoff = 0
 		.minerror = 99999
 
-        selectObject: .file_info 
-        .basename$ = Get value: .counter, "file"
-        .basename$ = .basename$ - ".wav"
-	  .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
+    selectObject: .file_info 
+    .basename$ = Get value: .counter, "file"
+    .basename$ = .basename$ - ".wav"
+		.info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
 
-	  selectObject: .winners
-	  .winner = Get value: .counter, "winner"
-	  .wf1 = Get value: .counter, "F1"
-	  .wf2 = Get value: .counter, "F2"
-	  .wf3 = Get value: .counter, "F3"
+		selectObject: .winners
+		.winner = Get value: .counter, "winner"
+		.wf1 = Get value: .counter, "F1"
+		.wf2 = Get value: .counter, "F2"
+		.wf3 = Get value: .counter, "F3"
 		if number_of_formants == 3
 	  	.wf4 = .wf3
-		endif
-		if number_of_formants == 4
-			.wf4 = Get value: .counter, "F4"
-		endif
+	  endif
+	  if number_of_formants == 4
+	    .wf4 = Get value: .counter, "F4"
+	  endif
 
     selectObject: .info
-		if number_of_formants == 3
-			Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)
-		endif
-		if number_of_formants == 4
-			Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)+" "+string$(.wf4)
-		endif
+	  if number_of_formants == 3
+	 		Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)
+	  endif
+	  if number_of_formants == 4
+	 		Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)+" "+string$(.wf4)
+	  endif
 
-		writeInfoLine: "Getting winners (step 3): " + string$(.counter) +" of " + string$(.nfiles) + ", " + .basename$
-		if .counter > 10 and .nfiles > 60
+	  writeInfoLine: "Getting winners (step 3): " + string$(.counter) +" of " + string$(.nfiles) + ", " + .basename$
+	  if .counter > 10 and .nfiles > 60
 			daySecond = 0
 			@daySecond
 			.nowSecond = daySecond
@@ -81,6 +81,10 @@ procedure getWinnersFolder
 	    appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
 	  endif
 
+		## read in the sound file being considered
+  	.snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
+
+		##### This block is for the basic situation where all formants are from the same cutoff.
 		if (.winner = .wf1) & (.wf1 = .wf2) & (.wf3 = .wf3) & (.wf3 = .wf4)
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
 	   	Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
@@ -96,21 +100,13 @@ procedure getWinnersFolder
 			endfor
 		  selectObject: "Table output"
 		  .tbl = selected ("Table")
-
-  		.snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
-			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-
-			Erase all
-		  Select outer viewport: 0, 7.5, 0, 4.5
-		  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
-			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
-
 			@addAcousticInfoToTable: .tbl, .snd
 		  selectObject: "Table output"
 		  Save as comma-separated file: folder$ + "/csvs/"+ .basename$ + ".csv"
 
-			nocheck removeObject: .tbl, .snd, .tmp_fr, .sp
+			nocheck removeObject: .tmp_fr
 
+		##### This is for the more ocmplicated situation where different formants are taken from different analyses.
 		else
 
 	    .tmp_f1 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf1) + "_.Formant"
@@ -161,15 +157,6 @@ procedure getWinnersFolder
 			endfor
 		  selectObject: "Table output"
 		  .tbl = selected ("Table")
-
-  		.snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
-			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-
-			Erase all
-		  Select outer viewport: 0, 7.5, 0, 4.5
-		  @plotTable: .sp, .tbl, maximum_plotting_frequency, 1
-			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
-
 			@addAcousticInfoToTable: .tbl, .snd
 
       for .i from 1 to number_of_formants
@@ -188,8 +175,21 @@ procedure getWinnersFolder
 
 		  selectObject: "Table output"
 		  Save as comma-separated file: folder$ + "/csvs/"+ .basename$ + ".csv"
-			nocheck removeObject: .tbl, .snd, .sp, .tmp_f1, .tmp_f2, .tmp_f3, .tmp_f4
+			nocheck removeObject: .tmp_f1, .tmp_f2, .tmp_f3, .tmp_f4
 	  endif
+		#### alternate formant collection ends here
+
+    if save_images == 1
+			selectObject: .snd
+			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
+			Erase all
+			Select outer viewport: 0, 7.5, 0, 4.5
+			@plotTable: .sp, .tbl, maximum_plotting_frequency, 1 ,""
+			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
+			removeObject: .sp
+		endif 
+		removeObject: .snd, .tbl
+
 
 		selectObject: .info
 		if number_of_formants==3
