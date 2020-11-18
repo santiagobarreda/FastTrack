@@ -18,7 +18,7 @@ include tools/aggregate.praat
 include tools/aggregateAggregate.praat
 include tools/aggregateTables.praat
 include tools/addBuffer.praat
-include tools/predict.praat
+include tools/findOutliers.praat
 include tools/getCoefficients.praat
 include tools/editFolder.praat
 include tools/chopSoundFiles.praat

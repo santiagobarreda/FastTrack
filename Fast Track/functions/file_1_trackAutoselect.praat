@@ -227,7 +227,6 @@ if image = 1
   	  viewstart = extractNumber (info$, "Window start: ")
   	  viewend = extractNumber (info$, "Window end: ")
   	  maximum_plotting_frequency = extractNumber (info$, "Spectrogram view to: ")
-      writeInfoLine: maximum_plotting_frequency
     endeditor
 	  @plotTableContext: sp, tbl, maximum_plotting_frequency, 1
     removeObject: sp

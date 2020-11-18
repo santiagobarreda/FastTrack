@@ -86,8 +86,8 @@ procedure autoSelectFolder
       .endGuess = .totalTime - .elapsedTime
       .endGuess = round (.endGuess / 60) ; minus elapsed time?
       appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
-      appendInfoLine: .totalTime
-      appendInfoLine: .elapsedTime
+      #appendInfoLine: .totalTime
+      #appendInfoLine: .elapsedTime
     endif
 
    # read in sound and make spectrogram

@@ -165,8 +165,7 @@ if aggregate = 1
   @plotAggregate: 1
   Save as 300-dpi PNG file: folder$ + "/number.png"
 
-
-  #@getCoefficients: 1
+  @getCoefficients: 1
 endif
 
 

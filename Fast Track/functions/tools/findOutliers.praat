@@ -1,10 +1,30 @@
 
-procedure predict
+procedure findOutliers
 
+
+folder$ = "C:\Users\santi\Desktop\sounds"
+.agg = Read Table from comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
+.coeffs = Read Table from comma-separated file: folder$ + "/processed_data/coefficients.csv"
 nfiles = Get number of rows
-Down to TableOfReal: "vowel"
 
+for i from 1 to nfiles
+  selectObject: .agg
+  tmp$ = Get value: i, "label"
+  selectObject: .coeffs
+  Set string value: i, "file", tmp$
+endfor
+
+for i from 1 to 3
+  for j from 3 to 6
+    Remove column: "c" + string$(i) + string$(j)
+  endfor
+endfor
+
+
+
+.tblofrl = Down to TableOfReal: "file"
 To Discriminant
+
 selectObject: "TableOfReal coefficients"
 plusObject: "Discriminant coefficients"
 To ClassificationTable: "yes", "no"

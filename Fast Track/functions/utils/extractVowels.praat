@@ -171,7 +171,12 @@ procedure extractVowels
       selectObject: tbl
       Append row
       Set numeric value: segmentcount, "file", filecount*extract
-      Set string value: segmentcount, "filename", filename$
+
+      Set string value: segmentcount, "filename", "--"
+      if extract == 1
+        Set string value: segmentcount, "filename", filename$
+      endif
+
       Set numeric value: segmentcount, "duration", vowelEnd-vowelStart
       Set numeric value: segmentcount, "start", vowelStart
       Set numeric value: segmentcount, "end", vowelEnd

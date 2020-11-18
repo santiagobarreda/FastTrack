@@ -60,7 +60,6 @@ while clicked <> 1
     option: "CSV output"
 
 	clicked = endPause: "Ok", "Switch Options", 1
-    writeInfoLine: clicked 
 endwhile
 
 folder$ = default_working_directory$
