@@ -81,6 +81,13 @@ procedure getWinnersFolder
 	    appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
 	  endif
 
+		.tmp_info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
+    .tmp$ = Get string: 11
+    stringToVector_output# = zero#(number_of_formants)
+    @stringToVector: .tmp$
+    .winning_cutoff = stringToVector_output#[1] 
+    removeObject: .tmp_info
+
 		## read in the sound file being considered
   	.snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
 
@@ -184,12 +191,11 @@ procedure getWinnersFolder
 			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 			Erase all
 			Select outer viewport: 0, 7.5, 0, 4.5
-			@plotTable: .sp, .tbl, maximum_plotting_frequency, 1 ,""
+			@plotTable: .sp, .tbl, maximum_plotting_frequency, 1 ,"Maximum formant = " + string$(.winning_cutoff) + " Hz"			
 			Save as 300-dpi PNG file: folder$ + "/images_winners/" + .basename$ + "_winner_.png"
 			removeObject: .sp
 		endif 
 		removeObject: .snd, .tbl
-
 
 		selectObject: .info
 		if number_of_formants==3
