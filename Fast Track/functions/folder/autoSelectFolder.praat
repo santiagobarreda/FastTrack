@@ -269,7 +269,7 @@ procedure autoSelectFolder
     if save_image = 1
 
       Select outer viewport: .xlims#[.winner], .xlims#[.winner]+3.2, .ylims#[.winner], .ylims#[.winner]+2
-      Line width: 3
+      Line width: 4
       Draw inner box
       Line width: 1
 

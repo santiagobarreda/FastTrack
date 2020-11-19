@@ -257,7 +257,7 @@ if image = 1
 	   @plotTable: sp, tbl, maximum_plotting_frequency, 1, "Maximum formant = " + string$(cutoffs#[z]) + " Hz"
 
 		 if z = winner
-       Line width: 3
+       Line width: 4
        Draw inner box
        Line width: 1
 		 endif
