@@ -9,7 +9,7 @@
 
 ###
 ***
-**[New functionality as of 10/24/2020, please update!!]**
+**[New functionality as of 11/18/2020, please update!!]**
 ***
 
 
