@@ -108,7 +108,6 @@ if aggregate = 1
 
   plotting_symbols$ = "--"
   font_size = 28
-  number_of_bins = 5
   add_axes = 1
   erase = 1
   which_bin_to_plot = 3
@@ -127,7 +126,6 @@ if aggregate = 1
   
   plotting_symbols$ = "--"
   font_size = 14
-  number_of_bins = 5
   add_axes = 1
   erase = 1
   which_bin_to_plot = 3
@@ -147,7 +145,6 @@ if aggregate = 1
   tbl = selected()
   plotting_symbols$ = "--"
   font_size = 14
-  number_of_bins = 5
   add_axes = 1
   erase = 1
   which_bin_to_plot = 3

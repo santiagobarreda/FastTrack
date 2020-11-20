@@ -8,10 +8,6 @@ basename$ = selected$ ("Sound")
 include utils/importfunctions.praat
 @getSettings
 
-# set parameter for specifying vowels. make table
-.vwl_str = Create Strings as tokens: "AA AE AH AO AW AX AY EH ER EY IH IX IY OW OY UH UW UX", " ,"
-Rename: "vowels"
-
 selectObject: tg
 tmp$ = Get tier name: 1
 if tmp$ = "words"
@@ -23,9 +19,11 @@ if tmp$ = "words"
   word_tier = 2
 endif
 
+@getTGESettings
+
 
 beginPause: "Set Parameters"
-     optionMenu: "", 1
+    optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
     option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
     option: "in your desired output folder, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
@@ -43,10 +41,10 @@ beginPause: "Set Parameters"
     comment: "If anything is written in this tier, the segment will be skipped:"
 		integer: "Omit tier:", 0
     comment: "Collect vowels with the following stress."
-    optionMenu: "Select stress", 2
-    option: "Only primary stress"
-    option: "Primary and secondary stress"
-    option: "Any"
+    option: "[Click to Read]"
+    option: "This assumes the final symbol on the vowel labels is used to indicate stress."
+    option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
+    sentence: "Stress to extract", stress_to_extract$
     optionMenu: "", 1
     option: "[Click to Read]"
     option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
@@ -71,6 +69,30 @@ beginPause: "Set Parameters"
     positive: "Buffer (s):", 0.025
 
 nocheck endPause: "Ok", 1
+
+@saveTGESettings
+
+
+################################################################################################
+###### This handles stress extraction
+
+stress_override = 0
+stress = 0
+
+if stress_to_extract$ <> ""
+  stress = 1
+  tmp_strs = Create Strings as tokens: stress_to_extract$, " ,"
+  stresses = To WordList
+  removeObject: tmp_strs
+  stress_override = 1
+endif
+
+if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
+  stress = 1
+  tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
+  stresses = To WordList
+  removeObject: tmp_strs
+endif 
 
 
 ##############################################################################################
@@ -206,4 +228,4 @@ if save_file_information = 1
 endif
 
 
-removeObject: vwl_tbl, file_info, "Table table", "Strings vowels"
+removeObject: vwl_tbl, file_info, "Table table"

@@ -39,6 +39,18 @@ procedure getWinnersFolder
   @daySecond
   .startSecond = daySecond
 
+	bounds_specified = 0
+	if fileReadable ("/../dat/formantbounds.csv")
+		.formant_bounds = Read Table from comma-separated file: "/../dat/formantbounds.csv"		
+		.file_information = Read Table from comma-separated file: folder$ +"/file_information.csv"
+
+		.all_errors = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_errors.csv"
+		.all_f1s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f1s.csv"
+		.all_f2s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f2s.csv"
+		.all_f3s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f3s.csv"
+		bounds_specified = 1		
+	endif
+
   for .counter from 1 to .nfiles
 		totalerror = 0
 		.winner = 0
@@ -93,6 +105,35 @@ procedure getWinnersFolder
 
 		##### This block is for the basic situation where all formants are from the same cutoff.
 		if (.winner = .wf1) & (.wf1 = .wf2) & (.wf3 = .wf3) & (.wf3 = .wf4)
+   		## I should add heuristics here. do other check here and affect winners not errors. add column in winners column where smoothest
+  		## was not chosen due to some reason. never need to redo analyses
+
+			if bounds_specified == 1 and 1==2
+				selectObject: .file_information
+				current_label$ = Get value, .counter, "label" 
+				selectObject: .formant_bounds 
+				spot = Search column: "label", current_label$
+
+				if spot > 0
+					selectObject: .formant_bounds 
+					f1lower$ = Get value, spot, "f1upper" 
+					f1upper$ = Get value, spot, "f1lower" 
+					f2lower$ = Get value, spot, "f2upper" 
+					f2upper$ = Get value, spot, "f2lower" 
+					f3lower$ = Get value, spot, "f3upper" 
+					f3upper$ = Get value, spot, "f3lower" 
+
+
+					for .j in 1 to number_of_steps
+					selectObject: .all_errors 
+          Get value:, .counter, "e" + string$(.j)
+
+					endfor
+
+				endif
+			endif
+
+
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
 	   	Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
 

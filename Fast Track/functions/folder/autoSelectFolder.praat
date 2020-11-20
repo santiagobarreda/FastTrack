@@ -50,6 +50,25 @@ procedure autoSelectFolder
   @daySecond
   .startSecond = daySecond
 
+
+  all_errors = Create Table with column names: "allerrors", .nfiles, "e1"
+  for .i from 2 to number_of_steps
+    Append column: "e" + string$(.i)
+  endfor
+
+  all_f1s = Create Table with column names: "allf1s", .nfiles, "a1"
+  for .i from 2 to number_of_steps
+    Append column: "a" + string$(.i)
+  endfor
+  all_f2s = Create Table with column names: "allf2s", .nfiles, "a1"
+  for .i from 2 to number_of_steps
+    Append column: "a" + string$(.i)
+  endfor
+  all_f3s = Create Table with column names: "allf3s", .nfiles, "a1"
+  for .i from 2 to number_of_steps
+    Append column: "a" + string$(.i)
+  endfor
+
   #########################################################################################################################
   #########################################################################################################################
   ## main for loop
@@ -124,6 +143,9 @@ procedure autoSelectFolder
         .f4Error#[.z] = formantError#[4]
       endif
 
+      selectObject: all_errors
+      Set numeric value: .ii, "e"+string$(.z), .totalerror#[.z]
+
       #.f4ints#[.z] = f4coeffs#[1]
       #.f4bws#[.z] = f4bandwidth
 
@@ -159,6 +181,17 @@ procedure autoSelectFolder
           Copy: "tmp"
         endif
       endif
+
+
+      ## writing to files for alternate analysis selection. 
+      selectObject: all_f1s
+      Set numeric value: .ii, "a"+string$(.z), f1coeffs#[1]
+      selectObject: all_f2s
+      Set numeric value: .ii, "a"+string$(.z), f2coeffs#[1]
+      selectObject: all_f3s
+      Set numeric value: .ii, "a"+string$(.z), f3coeffs#[1]
+
+      
 
       ##################################################################################
       ## makes analysis plot if plot will be made
@@ -295,8 +328,24 @@ procedure autoSelectFolder
   #########################################################################################################################
   #########################################################################################################################
 
+  createDirectory: folder$ + "/infos_aggregated/"
+  
+  selectObject: all_errors
+  Save as comma-separated file: folder$ + "/infos_aggregated/all_errors.csv"
+
+  selectObject: all_f1s
+  Save as comma-separated file: folder$ + "/infos_aggregated/all_f1s.csv"
+  selectObject: all_f2s
+  Save as comma-separated file: folder$ + "/infos_aggregated/all_f2s.csv"
+  selectObject: all_f3s
+  Save as comma-separated file: folder$ + "/infos_aggregated/all_f3s.csv"
+
+
+
+
   selectObject: "Table winners"
   Save as comma-separated file: folder$ + "/winners.csv"
+
   removeObject: "Table winners"
   removeObject: .file_info, .info
 endproc
