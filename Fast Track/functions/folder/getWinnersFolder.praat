@@ -103,15 +103,14 @@ procedure getWinnersFolder
 
 		##### This block is for the basic situation where all formants are from the same cutoff.
 		if (.winner = .wf1) & (.wf1 = .wf2) & (.wf3 = .wf3) & (.wf3 = .wf4)
-   		## I should add heuristics here. do other check here and affect winners not errors. add column in winners column where smoothest
-  		## was not chosen due to some reason. never need to redo analyses
 
+   		## I should add heuristics here. do other check here and affect winners not errors. 
+			## add column in winners column where smoothest. was not chosen due to some reason. never need to redo analyses
 			if bounds_specified == 1 
 				selectObject: .file_info
 				current_label$ = Get value: .counter, "label"
 				selectObject: .formant_bounds 
 				spot = Search column: "label", current_label$
-
         #writeInfoLine: current_label$
 				#1+i
 				if spot > 0
@@ -136,9 +135,9 @@ procedure getWinnersFolder
 					writeInfoLine: wf1, " ",wf2, " ",wf3, " "
 					appendInfoLine: f1lower, " ",f1upper, " ",f2lower, " ",f2upper, " ",f3lower, " ",f3upper, " "
 
+					#####if out of bounds
 					if (f1lower>wf1) or (f1upper<wf1) or (f2lower>wf2) or (f2upper<wf2) or (f3lower>wf3) or (f3upper<wf3)
 					  tmpMinError = 1000000
-
 						for .j from 1 to number_of_steps
 							selectObject: .all_errors 
 							tmpe = Get value: .counter, "e" + string$(.j) 
@@ -148,19 +147,26 @@ procedure getWinnersFolder
 							tmpf2 = Get value: .counter, "a" + string$(.j)
 							selectObject: .all_f3s 
 							tmpf3 = Get value: .counter, "a" + string$(.j)
-
 							## check if a candidate has ALL permissible formant estimates and if so take the analysis with the lowest error as new winner. 
 							if (f1lower<tmpf1) and (f1upper>tmpf1) and (f2lower<tmpf2) and (f2upper>tmpf2) and (f3lower<tmpf3) and (f3upper>tmpf3)
                 if tmpe < tmpMinError
 									.winner = .j
 									.winning_cutoff = .cutoffs#[.j]
 									tmpMinError = tmpe
-								endif
-							endif		
-						endfor
-					endif
-				endif
-			endif
+									selectObject: .winners
+									Set numeric value: .counter, "winner", .winner
+									Set numeric value: .counter, "F1", .winner
+									Set numeric value: .counter, "F2", .winner
+									Set numeric value: .counter, "F3", .winner
+									if number_of_formants == 4
+										Set numeric value: .counter, "F4", .winner
+									endif
+								endif								
+							endif #### end check for better candidate							
+						endfor 
+					endif  ##### end if out of nounds					
+				endif  ### if label has a bound set
+			endif  ## if bounds exist
 
 
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
@@ -299,6 +305,9 @@ procedure getWinnersFolder
 
 		removeObject: .info
 	endfor
+
+  selectObject: .winners
+	Save as comma-separated file: folder$ + "/winners.csv"
 	removeObject: .winners, .file_info, .all_f1s, .all_f2s, .all_f3s, .all_errors
 
 endproc

@@ -345,6 +345,7 @@ procedure autoSelectFolder
 
   selectObject: "Table winners"
   Save as comma-separated file: folder$ + "/winners.csv"
+  Save as comma-separated file: folder$ + "/winners_backup.csv"
 
   removeObject: "Table winners"
   removeObject: .file_info, .info
