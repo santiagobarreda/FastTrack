@@ -184,8 +184,11 @@ procedure extractVowels
       Set numeric value: segmentcount, "interval", i
       Set string value: segmentcount, "previous_sound", previous_sound$
       Set string value: segmentcount, "next_sound", next_sound$
-      Set string value: segmentcount, "stress", stress$
-      
+
+      if stress == 1
+        Set string value: segmentcount, "stress", stress$
+      endif
+
       omitted = (extract == 0)
       Set numeric value: segmentcount, "omit", omitted
 

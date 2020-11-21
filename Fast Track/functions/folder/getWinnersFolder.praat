@@ -41,13 +41,11 @@ procedure getWinnersFolder
 
 	bounds_specified = 0
 	if fileReadable ("/../dat/formantbounds.csv")
-		.formant_bounds = Read Table from comma-separated file: "/../dat/formantbounds.csv"		
-		.file_information = Read Table from comma-separated file: folder$ +"/file_information.csv"
-
-		.all_errors = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_errors.csv"
-		.all_f1s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f1s.csv"
-		.all_f2s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f2s.csv"
-		.all_f3s = Read Table from comma-separated file: folder$ +"/infos_aggregates/all_f3s.csv"
+		.formant_bounds = Read Table from comma-separated file: "/../dat/formantbounds.csv"	
+		.all_errors = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_errors.csv"
+		.all_f1s = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_f1s.csv"
+		.all_f2s = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_f2s.csv"
+		.all_f3s = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_f3s.csv"
 		bounds_specified = 1		
 	endif
 
@@ -108,28 +106,59 @@ procedure getWinnersFolder
    		## I should add heuristics here. do other check here and affect winners not errors. add column in winners column where smoothest
   		## was not chosen due to some reason. never need to redo analyses
 
-			if bounds_specified == 1 and 1==2
-				selectObject: .file_information
-				current_label$ = Get value, .counter, "label" 
+			if bounds_specified == 1 
+				selectObject: .file_info
+				current_label$ = Get value: .counter, "label"
 				selectObject: .formant_bounds 
 				spot = Search column: "label", current_label$
 
+        #writeInfoLine: current_label$
+				#1+i
 				if spot > 0
 					selectObject: .formant_bounds 
-					f1lower$ = Get value, spot, "f1upper" 
-					f1upper$ = Get value, spot, "f1lower" 
-					f2lower$ = Get value, spot, "f2upper" 
-					f2upper$ = Get value, spot, "f2lower" 
-					f3lower$ = Get value, spot, "f3upper" 
-					f3upper$ = Get value, spot, "f3lower" 
+					f1lower = Get value: spot, "f1lower"
+					f1upper = Get value: spot, "f1upper"
+					f2lower = Get value: spot, "f2lower"
+					f2upper = Get value: spot, "f2upper"
+					f3lower = Get value: spot, "f3lower"
+					f3upper = Get value: spot, "f3upper"
 
+					selectObject: .all_f1s 
+					wf1 = Get value: .counter, "a" + string$(.winner)
+					selectObject: .all_f2s 
+					wf2 = Get value: .counter, "a" + string$(.winner)
+					selectObject: .all_f3s 
+					wf3 = Get value: .counter, "a" + string$(.winner)
 
-					for .j in 1 to number_of_steps
-					selectObject: .all_errors 
-          Get value:, .counter, "e" + string$(.j)
+          ## if any of the winning formants fall outside the bounds set, look for any alternative. 
+					## the smoothest alternative will be chosen, this may be terrible!
+					
+					writeInfoLine: wf1, " ",wf2, " ",wf3, " "
+					appendInfoLine: f1lower, " ",f1upper, " ",f2lower, " ",f2upper, " ",f3lower, " ",f3upper, " "
 
-					endfor
+					if (f1lower>wf1) or (f1upper<wf1) or (f2lower>wf2) or (f2upper<wf2) or (f3lower>wf3) or (f3upper<wf3)
+					  tmpMinError = 1000000
 
+						for .j from 1 to number_of_steps
+							selectObject: .all_errors 
+							tmpe = Get value: .counter, "e" + string$(.j) 
+							selectObject: .all_f1s 
+							tmpf1 = Get value: .counter, "a" + string$(.j)
+							selectObject: .all_f2s 
+							tmpf2 = Get value: .counter, "a" + string$(.j)
+							selectObject: .all_f3s 
+							tmpf3 = Get value: .counter, "a" + string$(.j)
+
+							## check if a candidate has ALL permissible formant estimates and if so take the analysis with the lowest error as new winner. 
+							if (f1lower<tmpf1) and (f1upper>tmpf1) and (f2lower<tmpf2) and (f2upper>tmpf2) and (f3lower<tmpf3) and (f3upper>tmpf3)
+                if tmpe < tmpMinError
+									.winner = .j
+									.winning_cutoff = .cutoffs#[.j]
+									tmpMinError = tmpe
+								endif
+							endif		
+						endfor
+					endif
 				endif
 			endif
 
@@ -227,6 +256,8 @@ procedure getWinnersFolder
 	  endif
 		#### alternate formant collection ends here
 
+
+
     if save_images == 1
 			selectObject: .snd
 			.sp = noprogress To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
@@ -268,6 +299,6 @@ procedure getWinnersFolder
 
 		removeObject: .info
 	endfor
-	removeObject: .winners, .file_info
+	removeObject: .winners, .file_info, .all_f1s, .all_f2s, .all_f3s, .all_errors
 
 endproc

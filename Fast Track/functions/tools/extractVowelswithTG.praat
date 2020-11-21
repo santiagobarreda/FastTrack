@@ -6,9 +6,9 @@ procedure extractVowelswithTG
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
+    option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
     option: "in the folder with your TextGrids, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
-    option: "for each sound. The file should be set up before running this function. You can use the 'arpabet.csv' file in /dat/ as a template."
+    option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
     optionMenu: "", 1
     option: "[Click to Read]"
     option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
@@ -27,6 +27,8 @@ beginPause: "Set Parameters"
 		integer: "Comment tier3:", comment_tier3
     comment: "If anything is written in this tier, the segment will be skipped:"
 		integer: "Omit tier:", 0
+    comment: "Is stress marked on vowels?"
+    boolean: "Stress", stress
     optionMenu: "", 1
     option: "[Click to Read]"
     option: "This assumes the final symbol on the vowel labels is used to indicate stress."
@@ -64,10 +66,10 @@ if fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
   extract_file = 1
 endif 
 if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
-   if !fileReadable ("/../dat/arpabet.csv")
-     exitScript: "You do not have either an arpabet.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
+   if !fileReadable ("/../dat/vowelstoextract_default.csv")
+     exitScript: "You do not have either an vowelstoextract_default.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
-  vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract_default.csv"
 endif 
 
 Rename: "vowels"
@@ -77,18 +79,14 @@ Rename: "vowels"
 ###### This handles stress extraction
 
 stress_override = 0
-stress = 0
-
 if stress_to_extract$ <> ""
-  stress = 1
   tmp_strs = Create Strings as tokens: stress_to_extract$, " ,"
   stresses = To WordList
   removeObject: tmp_strs
   stress_override = 1
 endif
 
-if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
-  stress = 1
+if stress == 1 and fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
   tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
   stresses = To WordList
   removeObject: tmp_strs
@@ -180,7 +178,10 @@ endif
 obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
 
-all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
+all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+if stress == 1
+  Append column: "stress"
+endif
 if word_tier > 0
   Append column: "word"
   Append column: "word_interval"
@@ -214,7 +215,10 @@ for filecounter from 1 to nfiles
     snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
 
     ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
+    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+    if stress == 1
+      Append column: "stress"
+    endif
     if word_tier > 0
     Append column: "word"
     Append column: "word_interval"
@@ -271,6 +275,7 @@ Save as comma-separated file: output_folder$ + "/file_information.csv"
 
 selectObject: vwl_tbl
 nocheck Save as comma-separated file: vowels_file$
-removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info", stresses
+removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info"
+nocheck removeObject: stresses
 
 endproc

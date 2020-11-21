@@ -25,9 +25,9 @@ endif
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All arpabet vowels (specified in /dat/arpabet.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
+    option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
     option: "in your desired output folder, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
-    option: "for each sound. The file should be set up before running this function. You can use the 'arpabet.csv' file in /dat/ as a template."
+    option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
     comment: "Files will be saved directly into the folder specified here."
     sentence: "Folder:", folder$
     comment: "Which tier contains segment information?"
@@ -110,10 +110,10 @@ if fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
   extract_file = 1
 endif 
 if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
-   if !fileReadable ("/../dat/arpabet.csv")
-     exitScript: "You do not have either an arpabet.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
+   if !fileReadable ("/../dat/vowelstoextract_default.csv")
+     exitScript: "You do not have either an vowelstoextract_default.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
-  vwl_tbl = Read Table from comma-separated file: "/../dat/arpabet.csv"
+  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract_default.csv"
 endif 
 
 Rename: "vowels"

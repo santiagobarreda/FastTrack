@@ -32,7 +32,9 @@ procedure getTGESettings
   
   words_to_skip$ = Get string: 11
 
-  
+  tmp$ = Get string: 12
+  stress = number (tmp$)
+
   removeObject: .settings
 
 

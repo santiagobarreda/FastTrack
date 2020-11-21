@@ -20,6 +20,8 @@ procedure saveTGESettings
   Set string: 9, tmp$ 
   Set string: 10, stress_to_extract$
   Set string: 11, words_to_skip$
+  tmp$ = string$(stress)
+  Set string: 12, tmp$ 
 
 
   Save as raw text file: "../settings/TGEsettings.txt"
