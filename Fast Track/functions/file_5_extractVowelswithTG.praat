@@ -40,7 +40,8 @@ beginPause: "Set Parameters"
 		integer: "Comment tier3:", 0
     comment: "If anything is written in this tier, the segment will be skipped:"
 		integer: "Omit tier:", 0
-    comment: "Collect vowels with the following stress."
+    comment: "Is stress marked on vowels?"
+    boolean: "Stress", stress
     option: "[Click to Read]"
     option: "This assumes the final symbol on the vowel labels is used to indicate stress."
     option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
@@ -77,18 +78,15 @@ nocheck endPause: "Ok", 1
 ###### This handles stress extraction
 
 stress_override = 0
-stress = 0
 
 if stress_to_extract$ <> ""
-  stress = 1
   tmp_strs = Create Strings as tokens: stress_to_extract$, " ,"
   stresses = To WordList
   removeObject: tmp_strs
   stress_override = 1
 endif
 
-if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
-  stress = 1
+if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0 and stress = 1
   tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
   stresses = To WordList
   removeObject: tmp_strs
@@ -188,7 +186,10 @@ endif
 #################################################################################################
 
   ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound stress omit"
+    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+    if stress == 1
+      Append column: "stress"
+    endif
     if word_tier > 0
     Append column: "word"
     Append column: "word_interval"
@@ -227,5 +228,5 @@ if save_file_information = 1
   Save as comma-separated file: folder$ + "/file_information.csv"
 endif
 
-
 removeObject: vwl_tbl, file_info, "Table table"
+nocheck removeObject: stresses
