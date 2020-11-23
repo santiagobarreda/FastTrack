@@ -1,7 +1,6 @@
 
 procedure getTGESettings
 
-
   .settings = Read Strings from raw text file: "../settings/TGEsettings.txt"
 
   sound_folder$ = Get string: 1

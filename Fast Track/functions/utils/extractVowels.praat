@@ -63,7 +63,8 @@ procedure extractVowels
 
     ## check duration and omit tier
     if omit_tier > 0
-      omitnum = Get interval at time: omit, (vowelStart+vowelEnd)/2
+      selectObject: tg
+      omitnum = Get interval at time: omit_tier, (vowelStart+vowelEnd)/2
       omit$ = Get label of interval: omit_tier, omitnum
       if omit$ <> ""
         extract = 0
