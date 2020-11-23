@@ -54,14 +54,14 @@ nocheck endPause: "Ok", 1
 @saveTGESettings
 
 
-if fileReadable ("/../dat/vowelstoextract.csv")
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
+if fileReadable ("../dat/vowelstoextract.csv")
+  vwl_tbl = Read Table from comma-separated file: "../dat/vowelstoextract.csv"
 endif 
-if !fileReadable ("/../dat/vowelstoextract.csv") 
-   if !fileReadable ("/../dat/vowelstoextract_default.csv")
+if !fileReadable ("../dat/vowelstoextract.csv") 
+   if !fileReadable ("../dat/vowelstoextract_default.csv")
      exitScript: "You do not have either an vowelstoextract_default.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract_default.csv"
+  vwl_tbl = Read Table from comma-separated file: "../dat/vowelstoextract_default.csv"
 endif 
 
 Rename: "vowels"
@@ -78,8 +78,8 @@ if stress_to_extract$ <> ""
   stress_override = 1
 endif
 
-if stress == 1 and fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0
-  tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
+if stress == 1 and fileReadable ("../dat/stresstoextract.txt") and stress_override == 0
+  tmp_strs = Read Strings from raw text file: "../dat/stresstoextract.txt"
   stresses = To WordList
   removeObject: tmp_strs
 endif 
@@ -122,10 +122,10 @@ nocheck removeObject: .clr_str
 ################################################################################################
 ### stress extraction information
 
-if fileReadable ("/../dat/stresstoextract.csv")
-  stress_tbl = Read Table from comma-separated file: "/../dat/stresstoextract.csv"
+if fileReadable ("../dat/stresstoextract.csv")
+  stress_tbl = Read Table from comma-separated file: "../dat/stresstoextract.csv"
   .skipWords = Read Strings from raw text file: "../dat/wordstoskip.txt"
-
+  
   #To WordListTo WordList
   #Has word: "bababu"
 endif 

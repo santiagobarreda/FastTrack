@@ -86,8 +86,8 @@ if stress_to_extract$ <> ""
   stress_override = 1
 endif
 
-if fileReadable ("/../dat/stresstoextract.txt") and stress_override == 0 and stress = 1
-  tmp_strs = Read Strings from raw text file: "/../dat/stresstoextract.txt"
+if fileReadable ("../dat/stresstoextract.txt") and stress_override == 0 and stress = 1
+  tmp_strs = Read Strings from raw text file: "../dat/stresstoextract.txt"
   stresses = To WordList
   removeObject: tmp_strs
 endif 
@@ -103,15 +103,15 @@ if fileReadable (folder$ + "/vowelstoextract.csv")
   extract_file = 1
 endif 
 
-if fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
+if fileReadable ("../dat/vowelstoextract.csv") and extract_file = 0
+  vwl_tbl = Read Table from comma-separated file: "../dat/vowelstoextract.csv"
   extract_file = 1
 endif 
-if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
-   if !fileReadable ("/../dat/vowelstoextract_default.csv")
+if !fileReadable ("../dat/vowelstoextract.csv") and extract_file = 0
+   if !fileReadable ("../dat/vowelstoextract_default.csv")
      exitScript: "You do not have either an vowelstoextract_default.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
-  vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract_default.csv"
+  vwl_tbl = Read Table from comma-separated file: "../dat/vowelstoextract_default.csv"
 endif 
 
 Rename: "vowels"

@@ -40,8 +40,8 @@ procedure getWinnersFolder
   .startSecond = daySecond
 
 	bounds_specified = 0
-	if fileReadable ("/../dat/formantbounds.csv")
-		.formant_bounds = Read Table from comma-separated file: "/../dat/formantbounds.csv"	
+	if fileReadable ("../dat/formantbounds.csv")
+		.formant_bounds = Read Table from comma-separated file: "../dat/formantbounds.csv"	
 		.all_errors = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_errors.csv"
 		.all_f1s = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_f1s.csv"
 		.all_f2s = Read Table from comma-separated file: folder$ +"/infos_aggregated/all_f2s.csv"
