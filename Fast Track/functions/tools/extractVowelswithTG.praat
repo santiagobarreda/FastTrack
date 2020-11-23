@@ -7,7 +7,7 @@ beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
     option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
-    option: "in the folder with your TextGrids, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
+    option: "in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
     option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
     optionMenu: "", 1
     option: "[Click to Read]"
@@ -53,19 +53,10 @@ nocheck endPause: "Ok", 1
 
 @saveTGESettings
 
-
-extract_file = 0
-
-if fileReadable (textGrid_folder$ + "/vowelstoextract.csv")
-  vwl_tbl = Read Table from comma-separated file: textGrid_folder$ + "/vowelstoextract.csv"
-  extract_file = 1
-endif 
-
-if fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
+if fileReadable ("/../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "/../dat/vowelstoextract.csv"
-  extract_file = 1
 endif 
-if !fileReadable ("/../dat/vowelstoextract.csv") and extract_file = 0
+if !fileReadable ("/../dat/vowelstoextract.csv") 
    if !fileReadable ("/../dat/vowelstoextract_default.csv")
      exitScript: "You do not have either an vowelstoextract_default.csv nor a vowelstoextract.csv file in your /dat/ folder. Please fix and run again!!"
    endif
