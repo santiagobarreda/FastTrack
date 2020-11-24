@@ -162,11 +162,11 @@ procedure getWinnersFolder
 										Set numeric value: .counter, "F4", .winner
 									endif
 								endif								
-							endif #### end check for better candidate							
+							endif ; end check for better candidate							
 						endfor 
-					endif  ##### end if out of nounds					
-				endif  ### if label has a bound set
-			endif  ## if bounds exist
+					endif  ; end if out of nounds					
+				endif  ; if label has a bound set
+			endif  ; if bounds exist
 
 
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
