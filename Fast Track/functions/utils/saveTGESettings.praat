@@ -23,6 +23,11 @@ procedure saveTGESettings
   tmp$ = string$(stress)
   Set string: 12, tmp$ 
 
+  tmp$ = string$(maintain_separate)
+  Set string: 13, tmp$ 
+  tmp$ = string$(omit_tier)
+  Set string: 14, tmp$ 
+
 
   Save as raw text file: "../settings/TGEsettings.txt"
   removeObject: .settings

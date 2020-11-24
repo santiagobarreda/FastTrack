@@ -34,6 +34,12 @@ procedure getTGESettings
   tmp$ = Get string: 12
   stress = number (tmp$)
 
+  tmp$ = Get string: 13
+  maintain_separate = number (tmp$)
+
+  tmp$ = Get string: 14
+  omit_tier = number (tmp$)
+
   removeObject: .settings
 
 

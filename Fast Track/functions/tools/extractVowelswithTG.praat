@@ -18,7 +18,7 @@ beginPause: "Set Parameters"
     sentence: "TextGrid folder:", textGrid_folder$
     sentence: "Output folder:", output_folder$
     comment: "Maintain separate files and information?"
-    boolean: "Maintain separate:", 0
+    boolean: "Maintain separate:", maintain_separate
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
@@ -28,7 +28,7 @@ beginPause: "Set Parameters"
 		integer: "Comment tier2:", comment_tier2
 		integer: "Comment tier3:", comment_tier3
     comment: "If anything is written in this tier, the segment will be skipped:"
-		integer: "Omit tier:", 0
+		integer: "Omit tier:", omit_tier
     comment: "Is stress marked on vowels?"
     boolean: "Stress", stress
     optionMenu: "", 1
