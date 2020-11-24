@@ -164,7 +164,6 @@ procedure extractVowels
 
         selectObject: file_info
         Append row
-        Set numeric value: filecount, "number", filecount
         Set string value: filecount, "file", filename$ + ".wav"
         Set string value: filecount, "label", vowel$
         Set numeric value: filecount, "group", spot
@@ -177,11 +176,10 @@ procedure extractVowels
       ## write information to table
       selectObject: tbl
       Append row
-      Set numeric value: segmentcount, "file", filecount*extract
-
-      Set string value: segmentcount, "filename", "--"
+      Set string value: segmentcount, "inputfile", basename$
+      Set string value: segmentcount, "outputfile", "--"
       if extract == 1
-        Set string value: segmentcount, "filename", filename$
+        Set string value: segmentcount, "outputfile", filename$
       endif
 
       Set numeric value: segmentcount, "duration", vowelEnd-vowelStart

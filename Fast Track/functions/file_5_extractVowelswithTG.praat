@@ -187,7 +187,7 @@ endif
 #################################################################################################
 
   ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+    tbl = Create Table with column names: "table", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
     if stress == 1
       Append column: "stress"
     endif

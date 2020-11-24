@@ -172,7 +172,7 @@ endif
 obj = Create Strings as file list: "files", textGrid_folder$ + "/*.TextGrid"
 nfiles = Get number of strings
 
-all_tbl = Create Table with column names: "all_tbl", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+all_tbl = Create Table with column names: "all_tbl", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
 if stress == 1
   Append column: "stress"
 endif
@@ -194,7 +194,7 @@ if comment_tier3 > 0
   Append column: "comment3"
 endif
 
-all_file_info = Create Table with column names: "all_file_info", 0, "number file label group color"
+all_file_info = Create Table with column names: "all_file_info", 0, "file label group color"
 
 
 for filecounter from 1 to nfiles
@@ -209,7 +209,7 @@ for filecounter from 1 to nfiles
     snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
 
     ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "file filename vowel interval duration start end previous_sound next_sound omit"
+    tbl = Create Table with column names: "table", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
     if stress == 1
       Append column: "stress"
     endif
@@ -231,7 +231,7 @@ for filecounter from 1 to nfiles
       Append column: "comment3"
     endif
 
-    file_info = Create Table with column names: "fileinfo", 0, "number file label group color"
+    file_info = Create Table with column names: "fileinfo", 0, "file label group color"
     
     if maintain_separate == 1
         createDirectory: output_folder$ + "/" + basename$
