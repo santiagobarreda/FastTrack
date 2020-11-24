@@ -308,6 +308,6 @@ procedure getWinnersFolder
 
   selectObject: .winners
 	Save as comma-separated file: folder$ + "/winners.csv"
-	removeObject: .winners, .file_info, .all_f1s, .all_f2s, .all_f3s, .all_errors
-
+	removeObject: .winners, .file_info
+	nocheck removeObject: .all_f1s, .all_f2s, .all_f3s, .all_errors
 endproc
