@@ -73,6 +73,7 @@ nocheck endPause: "Ok", 1
 
 @saveTGESettings
 
+maintain_separate = 0
 
 ################################################################################################
 ###### This handles stress extraction

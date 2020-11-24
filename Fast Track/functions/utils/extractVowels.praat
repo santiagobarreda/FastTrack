@@ -9,7 +9,7 @@ procedure extractVowels
   nIntervals = Get number of intervals: segment_tier
   segmentcount = 0
   filecount = 0
-
+  
   ## loop to go through all segment intervals
   for i from 1 to nIntervals
     selectObject: tg
@@ -149,7 +149,13 @@ procedure extractVowels
         if filecount < 10
           filename$ = basename$ + "_000" + string$(filecount)
         endif
-        Save as WAV file: output_folder$ + "/" + filename$ + ".wav"
+
+        if maintain_separate == 1
+          Save as WAV file: output_folder$ + "/" + basename$ + "/" + filename$ + ".wav"
+        endif
+        if maintain_separate == 0
+          Save as WAV file: output_folder$ + "/sounds/" + filename$ + ".wav"
+        endif
         removeObject: snd_small
             
         selectObject: vwl_tbl

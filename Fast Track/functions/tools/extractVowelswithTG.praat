@@ -17,6 +17,8 @@ beginPause: "Set Parameters"
     sentence: "Sound folder:", sound_folder$
     sentence: "TextGrid folder:", textGrid_folder$
     sentence: "Output folder:", output_folder$
+    comment: "Maintain separate files and information?"
+    boolean: "Maintain separate:", 0
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
     comment: "Which tier contains word information? (not necessary)"
@@ -231,12 +233,22 @@ for filecounter from 1 to nfiles
 
     file_info = Create Table with column names: "fileinfo", 0, "number file label group color"
     
-    
+    if maintain_separate == 1
+        createDirectory: output_folder$ + "/" + basename$
+    endif
+    if maintain_separate == 0
+        createDirectory: output_folder$ + "/sounds"
+    endif
+
     @extractVowels
 
-    selectObject: tbl
-    Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
-
+    if maintain_separate == 1
+      selectObject: file_info
+      Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
+      selectObject: tbl
+      Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
+    endif
+    
     selectObject: tbl
     plusObject: "Table all_tbl"
     Append
@@ -245,9 +257,6 @@ for filecounter from 1 to nfiles
     Rename: "all_tbl"
 
     selectObject: file_info
-    Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
-   
-    selectObject: file_info
     plusObject: "Table all_file_info"
     Append
     removeObject: file_info, "Table all_file_info"
@@ -255,7 +264,6 @@ for filecounter from 1 to nfiles
     Rename: "all_file_info"
 
     removeObject: snd, tg
-
 
 endfor
 
@@ -267,6 +275,7 @@ Save as comma-separated file: output_folder$ + "/file_information.csv"
 
 selectObject: vwl_tbl
 nocheck Save as comma-separated file: vowels_file$
+
 removeObject: vwl_tbl, obj, "Table all_tbl", "Table all_file_info"
 nocheck removeObject: stresses
 
