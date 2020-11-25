@@ -8,17 +8,6 @@ basename$ = selected$ ("Sound")
 include utils/importfunctions.praat
 @getSettings
 
-selectObject: tg
-tmp$ = Get tier name: 1
-if tmp$ = "words"
-  word_tier = 1
-  segment_tier= 2
-endif
-tmp$ = Get tier name: 2
-if tmp$ = "words"
-  word_tier = 2
-endif
-
 @getTGESettings
 
 
