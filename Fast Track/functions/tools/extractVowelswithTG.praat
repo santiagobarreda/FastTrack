@@ -271,6 +271,7 @@ selectObject: "Table all_tbl"
 Save as comma-separated file: output_folder$ + "/segmentation_information.csv"
 
 selectObject: "Table all_file_info"
+## add number information here
 Save as comma-separated file: output_folder$ + "/file_information.csv"
 
 selectObject: vwl_tbl
