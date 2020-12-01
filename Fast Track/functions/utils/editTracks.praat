@@ -61,12 +61,12 @@ procedure editTracks: fr
 
     Erase all
     Select outer viewport: 0, 7.5, 0, 4.5
-    @plotTable: sp, tbl, maximum_plotting_frequency, 1
+    @plotTable: sp, tbl, maximum_plotting_frequency, 1, ""
     #selectObject: snd
     #Play
 
     beginPause: "Is the tracking acceptable?"
-    nocheck .clicked = endPause: "Finish", "Edit", 1
+    .clicked = endPause: "Finish", "Edit", 1
 
     if .clicked = 2
       selectObject: fr
@@ -74,7 +74,7 @@ procedure editTracks: fr
       .gr = Down to FormantGrid
       View & Edit
       beginPause: "Done Editing"
-      nocheck endPause: "OK", 1
+      endPause: "OK", 1
 
       removeObject: fr
       fr = To Formant: 0.002, 0.1
