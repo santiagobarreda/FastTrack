@@ -54,7 +54,7 @@ procedure aggregate autorun
   Append column: "label"
   Append column: "group"
   Append column: "color"
-  #Append column: "number"
+  Append column: "number"
   Append column: "cutoff"
   for j from 1 to number_of_bins
     for i from 1 to number_of_formants
@@ -132,12 +132,12 @@ procedure aggregate autorun
       group$ = Get value: .iii, "group"
       label$ = Get value: .iii, "label"
       color$ = Get value: .iii, "color"
-      #number$ = Get value: .iii, "number"
+      number$ = Get value: .iii, "number"
       selectObject: .output
       Set string value: .iii, "group", group$
       Set string value: .iii, "label", label$
       Set string value: .iii, "color", color$
-      #Set string value: .iii, "number", number$
+      Set string value: .iii, "number", number$
     endif
 
     nocheck removeObject: .tbl

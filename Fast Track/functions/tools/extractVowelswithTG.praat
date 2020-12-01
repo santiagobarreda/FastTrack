@@ -194,7 +194,7 @@ if comment_tier3 > 0
   Append column: "comment3"
 endif
 
-all_file_info = Create Table with column names: "all_file_info", 0, "file label group color"
+all_file_info = Create Table with column names: "all_file_info", 0, "file label group color number"
 
 
 for filecounter from 1 to nfiles
@@ -231,7 +231,7 @@ for filecounter from 1 to nfiles
       Append column: "comment3"
     endif
 
-    file_info = Create Table with column names: "fileinfo", 0, "file label group color"
+    file_info = Create Table with column names: "fileinfo", 0, "file label group color number"
     
     if maintain_separate == 1
         createDirectory: output_folder$ + "/" + basename$
@@ -255,6 +255,17 @@ for filecounter from 1 to nfiles
     removeObject: tbl, "Table all_tbl"
     selectObject: "Table appended"
     Rename: "all_tbl"
+
+    selectObject: "Table all_file_info"
+    .tmpnrows = Get number of rows
+    if .tmpnrows > 0
+      .max = Get maximum: "number"
+    endif
+    if .tmpnrows == 0
+      .max = 0
+    endif
+    selectObject: file_info
+    Formula: "number", "self + .max"
 
     selectObject: file_info
     plusObject: "Table all_file_info"

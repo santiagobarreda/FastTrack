@@ -168,7 +168,7 @@ procedure extractVowels
         Set string value: filecount, "label", vowel$
         Set numeric value: filecount, "group", spot
         Set string value: filecount, "color", tmp_clr$
-
+        Set numeric value: filecount, "number", filecount
       endif
 
     
