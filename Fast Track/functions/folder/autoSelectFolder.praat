@@ -201,7 +201,7 @@ procedure autoSelectFolder
         selectObject: "Table output"
         .tbl = selected ("Table")
         Font size: 8
-        @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5, "Maximum formant = " + string$(.cutoffs#[.z]) + " Hz"
+        @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5, "Step " + string$(.z) + ", " + string$(.cutoffs#[.z]) + " Hz"
       endif
 
       removeObject: .fr
