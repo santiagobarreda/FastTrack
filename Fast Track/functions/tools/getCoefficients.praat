@@ -9,7 +9,6 @@ procedure getCoefficients autorun
      nocheck endPause: "Ok", 1
   endif
 
-
     ending$ = right$ (folder$,1)
     if ending$ == "/"
       folder$ = folder$ - "/"
@@ -29,7 +28,8 @@ procedure getCoefficients autorun
 
   .tmp$ = Get string: 9
   number_of_formants = number (.tmp$)
-
+  removeObject: .info
+  
   .output = Create Table with column names: "output", .nfiles, "file"
   for j from 1 to (number_of_coefficients_for_formant_prediction+1)
     for i from 1 to number_of_formants
@@ -92,5 +92,7 @@ procedure getCoefficients autorun
 
   selectObject: .output
   Save as comma-separated file: folder$ + "/processed_data/coefficients.csv"
-  #Rename: "coefficients"
+  Remove
+
+  removeObject: .strs
 endproc

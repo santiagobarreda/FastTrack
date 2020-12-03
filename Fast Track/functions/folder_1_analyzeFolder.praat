@@ -163,6 +163,7 @@ if aggregate = 1
   Save as 300-dpi PNG file: folder$ + "/number.png"
 
   @getCoefficients: 1
+  removeObject: "Table aggregated"
 endif
 
 

@@ -142,8 +142,11 @@ procedure aggregate autorun
 
     nocheck removeObject: .tbl
   endfor
+
   selectObject: .output
   Save as comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
   Rename: "aggregated"
-  
+
+  removeObject: .file_info
+
 endproc

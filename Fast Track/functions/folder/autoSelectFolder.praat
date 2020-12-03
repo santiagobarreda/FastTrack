@@ -349,4 +349,6 @@ procedure autoSelectFolder
 
   removeObject: "Table winners"
   removeObject: .file_info, .info
+	removeObject: all_f1s, all_f2s, all_f3s, all_errors
+
 endproc

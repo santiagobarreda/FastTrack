@@ -1,9 +1,11 @@
 
 #################################################################################################
 
-selectObject: "Table coefficients"
+## this needs to change to aggregate
+## also it needs to loop across formants and time points
+selectObject: "Table aggregated_data"
 Append column: "gbar"
-Formula... gbar (ln(self[row,"c11"])+ln(self[row,"c11"])+ln(self[row,"c11"])+ln(self[row,"c11"])) / 4
+Formula... gbar (ln(self[row,"f11"])+ln(self[row,"f21"])+ln(self[row,"f31"])) / 3
 
 #################################################################################################
 ## now there is a gbar column in coefficients. this needs to be aded to the regression table
@@ -14,12 +16,13 @@ Append column: "gbar"
 
 for i from 1 to nfiles
   # copy gbar
-  selectObject: "Table coefficients"  
+  selectObject: "Table aggregated_data"  
   tmp = Get value: i, "gbar"
   selectObject: "Table regression"  
   Set numeric value: i, "gbar", tmp
 
   ## set dummy
+  ## this now can be taken from the file info csv file
   selectObject: "Table token-info-num"  
   tmpv = Get value: i, "vowel"
   tmps = Get value: i, "speaker"

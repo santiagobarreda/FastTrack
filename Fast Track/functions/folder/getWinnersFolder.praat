@@ -304,3 +304,5 @@ procedure getWinnersFolder
 	removeObject: .winners, .file_info
 	nocheck removeObject: .all_f1s, .all_f2s, .all_f3s, .all_errors
 endproc
+
+
