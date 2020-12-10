@@ -12,7 +12,7 @@ procedure aggregate autorun
     optionMenu: "Number of formants:", number_of_formants
   			option: "3"
   			option: "4"
-    optionMenu: "Number of bins:", 3
+    optionMenu: "Number of bins:", number_of_bins
   			option: "1"
   			option: "3"
   			option: "5"
@@ -22,7 +22,7 @@ procedure aggregate autorun
     	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
-  nocheck endPause: "Ok", 1
+  endPause: "Ok", 1
   endif
 
   ending$ = right$ (folder$,1)

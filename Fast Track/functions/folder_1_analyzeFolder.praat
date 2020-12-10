@@ -50,7 +50,7 @@ beginPause: "Set Parameters"
     boolean: "Make images comparing analyses", 1
     boolean: "Make images showing winners", 1
     positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
-    optionMenu: "Number of bins:", 3
+    optionMenu: "Number of bins:", number_of_bins
   			option: "1"
   			option: "3"
   			option: "5"

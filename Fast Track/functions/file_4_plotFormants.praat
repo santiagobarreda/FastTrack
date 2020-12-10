@@ -17,7 +17,6 @@ include utils/importfunctions.praat
 clicked = 2
 plotting_symbol$ = "a"
 font_size = 18
-number_of_bins = 5
 add_axes = 1
 erase = 1
 which_bin_to_plot = 3
@@ -42,7 +41,13 @@ beginPause: "Set Parameters"
   choice: "Type of plot:", type_of_plot
     option: "Contours"
     option: "Points"
-  integer: "Number of bins:", number_of_bins
+  optionMenu: "Number of bins:", number_of_bins
+  			option: "1"
+  			option: "3"
+  			option: "5"
+        option: "7"
+        option: "9"
+        option: "10"
   optionMenu: "Color", 1
     option: "Red"
     option: "Blue"
@@ -72,6 +77,8 @@ beginPause: "Set Parameters"
 
 nocheck clicked = endPause: "Ok","Apply", 2
 
+
+number_of_bins = number(number_of_bins$)
 
 numberOfSelectedTables  = numberOfSelected ("Table")
 if numberOfSelectedTables == 1

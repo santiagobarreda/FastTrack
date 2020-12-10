@@ -19,7 +19,13 @@ procedure plotAggregate autorun
       choice: "Type of plot:", type_of_plot
         option: "Contours"
         option: "Points"
-      integer: "Number of bins:", number_of_bins
+      optionMenu: "Number of bins:", number_of_bins
+  			option: "1"
+  			option: "3"
+  			option: "5"
+        option: "7"
+        option: "9"
+        option: "10"
       optionMenu: "Color", 1
         option: "From Table"
         option: "Red"
@@ -51,6 +57,9 @@ procedure plotAggregate autorun
     nocheck clicked = endPause: "Ok","Apply", 2
 
   endif
+
+  
+  number_of_bins = number(number_of_bins$)
 
   if autorun == 1
     clicked = 1

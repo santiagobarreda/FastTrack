@@ -1,94 +1,134 @@
 
-#################################################################################################
+procedure aggregate ;autorun
+  @getSettings
 
-## this needs to change to aggregate
-## also it needs to loop across formants and time points
-selectObject: "Table aggregated_data"
-Append column: "gbar"
-Formula... gbar (ln(self[row,"f11"])+ln(self[row,"f21"])+ln(self[row,"f31"])) / 3
+  ;if autorun == 0
+  beginPause: "Set Parameters"
+    comment: "Indicate your working directory. This folder should contain a folder inside of it"
+    comment: "called 'processed_data' that contains the aggregated data you wish to normalize."
+    sentence: "Folder:", folder$
+    comment: "How many sections should signal be divided into? 1 returns the overall aggregated value. 3 returns"
+    comment: "aggregated results for the first third, midle third, and final third, and so on."
+    optionMenu: "Number of formants:", number_of_formants
+  			option: "3"
+  			option: "4"
+    optionMenu: "Number of bins:", number_of_bins
+  			option: "1"
+  			option: "3"
+  			option: "5"
+        option: "7"
+        option: "9"
+        option: "10"
+    real: "Arbitrary scaling:", 0
+    boolean: "Exponentiate:", 0
+  endPause: "Ok", 1
+  ;endif
 
-#################################################################################################
-## now there is a gbar column in coefficients. this needs to be aded to the regression table
-## along with the dummy variable info
-
-selectObject: "Table regression"
-Append column: "gbar"
-
-for i from 1 to nfiles
-  # copy gbar
-  selectObject: "Table aggregated_data"  
-  tmp = Get value: i, "gbar"
-  selectObject: "Table regression"  
-  Set numeric value: i, "gbar", tmp
-
-  ## set dummy
-  ## this now can be taken from the file info csv file
-  selectObject: "Table token-info-num"  
-  tmpv = Get value: i, "vowel"
-  tmps = Get value: i, "speaker"
-
-  selectObject: "Table regression"  
-  Set numeric value: i, "v"+string$(tmpv), 1
-  Set numeric value: i, "s"+string$(tmps), 1
-
-endfor 
-
-Remove column: "v1"
-Remove column: "s1"
-
-
-#################################################################################################
-## normalization part
-
-linreg = To linear regression
-info$ = Info
-intercept = extractNumber (info$, "Intercept: ")
-
-#writeInfoLine: intercept, " ", vnum," ", snum
-s1 = 0
-v1 = 0
-for i from 2 to snum
- s'i' = extractNumber (info$, "Coefficient of factor s" + string$(i)+ ": ")
-endfor
-
-for i from 2 to vnum
- v'i' = extractNumber (info$, "Coefficient of factor v" + string$(i)+ ": ")
-endfor
-
-selectObject: "Table token-info-num"
-Append column: "gbar"
-Append column: "gbarhat"
-Append column: "residual"
-
-for i from 1 to nfiles
-
-  selectObject: "Table coefficients"  
-  tmp = Get value: i, "gbar"
-
-  selectObject: "Table token-info-num"  
-  s = Get value: i, "speaker"
-  v = Get value: i, "vowel"
-
-  Set numeric value: i, "gbar", tmp
-  Set numeric value: i, "gbarhat", intercept + s's' + v'v'
-  Set numeric value: i, "residual", tmp - (intercept + s's' + v'v')
-
-endfor 
-
-selectObject: "Table coefficients"  
-Remove column: "gbar"
-
-removeObject: "Table regression"
-#removeObject: "Table token-info-num"
+  ending$ = right$ (folder$,1)
+  if ending$ == "/"
+    folder$ = folder$ - "/"
+  endif
+  if ending$ == "\"
+    folder$ = folder$ - "\"
+  endif
+  
+  @saveSettings
 
 
 
-# now given these gbarhats, I can pick best alternate analyses
-# actually it would be better to do the whole full regression with formantxvowel predictor, but Im not ready for that yet I dont think
+  aggdat = Read Table from comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
+  nfiles = Get number of rows
+  ncat = Get maximum: "group"
+
+  Copy: "ffdat"
+  Remove column: "file"
+  Remove column: "f0"
+  Remove column: "duration"
+  Remove column: "label"
+  Remove column: "group"
+  Remove column: "color"
+  Remove column: "number"
+  Remove column: "cutoff"
+  ffdatt = Transpose
+
+  if ncat == 1
+    beginPause: "Set Parameters"
+      comment: "Please note that your aggregated data file only distinguishes one group (category)."
+      comment: "This is likely incorrect and will mean your estimates of the average formant produced by this talker"
+      comment: "will be biased towards those categories that are represented most often."
+    endPause: "Ok", 1
+  endif
+
+  if arbitrary_scaling > 10
+    arbitrary_scaling = ln (arbitrary_scaling)
+  endif
 
 
 
+  #################################################################################################
+  ## now there is a gbar column in coefficients. this needs to be aded to the regression table
+  ## along with the dummy variable info
 
+  Create Table with column names: "regression", nfiles, "v1"
+  Formula: "v1",  "0"
+  for i from 2 to ncat
+    Append column: "v" + string$(i)
+    Formula: "v" + string$(i),  "0"
+  endfor
+  Append column: "gbar"
+
+  for i from 1 to nfiles
+    # copy gbar
+    selectObject: ffdatt
+    Set column label (index): i+1, string$(i)
+    Formula: string$(i), "ln(self)"
+    tmp = Get mean: string$(i)
+
+    selectObject: "Table regression"  
+    Set numeric value: i, "gbar", tmp
+
+    ## set dummy
+    ## this now can be taken from the file info csv file
+    selectObject: aggdat  
+    tmpv = Get value: i, "group"
+
+    selectObject: "Table regression"  
+    Set numeric value: i, "v"+string$(tmpv), 1
+  endfor 
+  Remove column: "v1"
+
+  #################################################################################################
+  ## normalization part
+
+  linreg = To linear regression
+  info$ = Info
+  intercept = extractNumber (info$, "Intercept: ")
+
+  total = intercept
+  for i from 2 to ncat
+  v'i' = extractNumber (info$, "Coefficient of factor v" + string$(i)+ ": ")
+  tmp = intercept + v'i'
+  total = total + tmp
+  endfor
+  gbar = total / ncat
+
+  ## copy aggregate, loop through data columns and log and subtract. provide optional unlogging value. 
+
+  selectObject: aggdat
+  Copy: "normalized"
+
+  for i from 1 to number_of_formants
+    for j from 1 to number_of_bins
+      selectObject: "Table normalized"  
+      Formula: "f"+string$(i)+string$(j), "ln(self)"
+      Formula: "f"+string$(i)+string$(j), "self - gbar + arbitrary_scaling"
+      if exponentiate = 1
+        Formula: "exp(self)"
+      endif
+    endfor
+  endfor 
+
+endproc
 
 
 

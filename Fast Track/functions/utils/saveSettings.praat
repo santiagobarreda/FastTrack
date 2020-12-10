@@ -32,6 +32,9 @@ procedure saveSettings
   Set string: 10, basis_functions$
   Set string: 11, error_method$
 
+  number_of_bins$ = string$(number_of_bins)
+  Set string: 12, number_of_bins$
+
   Save as raw text file: "../settings/settings.txt"
   removeObject: .tmp_str
 

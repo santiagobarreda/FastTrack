@@ -48,6 +48,9 @@ procedure getSettings
 
   error_method$ = Get string: 11
 
+  number_of_bins$ = Get string: 12
+  number_of_bins = number (number_of_bins$)
+
   removeObject: .settings
 
 
