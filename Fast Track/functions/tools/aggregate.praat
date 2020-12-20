@@ -18,7 +18,7 @@ procedure aggregate autorun
   			option: "5"
         option: "7"
         option: "9"
-        option: "10"
+        option: "11"
     	optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
@@ -35,7 +35,7 @@ procedure aggregate autorun
   
   @saveSettings
 
-  number_of_bins = number(number_of_bins$)
+  number_of_bins = 1 + (number_of_bins-1)*2
   number_of_formants = number(number_of_formants$)
   createDirectory: folder$ + "/processed_data/"
 

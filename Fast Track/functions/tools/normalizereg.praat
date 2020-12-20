@@ -35,7 +35,6 @@ procedure aggregate ;autorun
   @saveSettings
 
 
-
   aggdat = Read Table from comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
   nfiles = Get number of rows
   ncat = Get maximum: "group"
