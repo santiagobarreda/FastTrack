@@ -37,9 +37,16 @@ procedure extractVowels
 
     selectObject: vwl_tbl
     num = Search column: "label", vowel$
+
     if num > 0
       analyze = 1
       extract = 1
+
+      if stress == 1
+        selectObject: stresses
+        analyze = Has word: stress$
+        extract = analyze
+      endif
     endif
 
     ## check for skippable word here
@@ -55,12 +62,6 @@ procedure extractVowels
     ## make this into table object. stress_to_extract$
     ## look for label in column. extract of yes. thats it. 
     
-    if stress == 1
-      selectObject: stresses
-      analyze = Has word: stress$
-      extract = analyze
-    endif
-
     ## check duration and omit tier
     if omit_tier > 0
       selectObject: tg
@@ -79,6 +80,7 @@ procedure extractVowels
     ## if segment should be analyzed....
     ## add functionality to not extract but add to omit column, and not to file info!
     if analyze == 1
+    
       selectObject: tg
 
       next_sound$ = "--"
@@ -160,6 +162,7 @@ procedure extractVowels
             
         selectObject: vwl_tbl
         spot = Search column: "label", vowel$
+        writeInfoLine: vowel$
         tmp_clr$ = Get value: spot, "color"
 
         selectObject: file_info

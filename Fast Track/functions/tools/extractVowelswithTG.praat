@@ -67,7 +67,7 @@ if !fileReadable ("../dat/vowelstoextract.csv")
 endif 
 
 Rename: "vowels"
-
+num_colors = Get number of rows
 
 ################################################################################################
 ###### This handles stress extraction
@@ -110,7 +110,7 @@ for .tmpi from 1 to nrows
   endif
   if fill_color == 0
     selectObject: .clr_str
-     color_use = (.tmpi mod (18)) + 1
+     color_use = (.tmpi mod (num_colors)) + 1
     .tmp_clr = Get string: .tmpi
     selectObject: vwl_tbl
     Set string value: .tmpi, "color", "Blue"
