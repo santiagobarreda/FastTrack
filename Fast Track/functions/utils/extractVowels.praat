@@ -162,7 +162,6 @@ procedure extractVowels
             
         selectObject: vwl_tbl
         spot = Search column: "label", vowel$
-        writeInfoLine: vowel$
         tmp_clr$ = Get value: spot, "color"
 
         selectObject: file_info
