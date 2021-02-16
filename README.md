@@ -10,7 +10,9 @@
 ###
 ***
 If you use this, please cite it:
+
 Barreda, S. (2021). Fast Track: fast (nearly) automatic formant-tracking using Praat. Linguistics Vanguard, 7(1). https://doi.org/10.1515/lingvan-2020-0051
+
 Its the only way I can tell if people use it and what they use it for. Thanks!
 ***
 
