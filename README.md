@@ -8,14 +8,6 @@
 **A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[paper]](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing) [[YouTube]](https://www.youtube.com/watch?v=NaAKJJaPD8Y&t)
 
 ###
-***
-If you use this, please cite it:
-
-Barreda, S. (2021). Fast Track: fast (nearly) automatic formant-tracking using Praat. Linguistics Vanguard, 7(1). https://doi.org/10.1515/lingvan-2020-0051
-
-Its the only way I can tell if people use it and what they use it for. Thanks!
-***
-
 
 Fast Track is a Praat plugin mean to make accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
 
@@ -87,6 +79,14 @@ The plugin can analyze to a single file or to an entire folder of sounds at once
 
 [For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
 [Or check this paper out.](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing)
+
+***
+If you use this, please cite it:
+
+Barreda, S. (2021). Fast Track: fast (nearly) automatic formant-tracking using Praat. Linguistics Vanguard, 7(1). https://doi.org/10.1515/lingvan-2020-0051
+
+Its the only way I can tell if people use it and what they use it for. Thanks!
+***
 
 ### Author
 
