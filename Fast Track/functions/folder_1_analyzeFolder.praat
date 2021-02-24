@@ -1,7 +1,7 @@
 
 ## collect all regression coefficients in one big csv file. recreate after, collect winners,
 
-include utils/importfunctions.praat
+include utils/importFunctions.praat
 include folder/trackFolder.praat
 include folder/autoSelectFolder.praat
 include folder/getWinnersFolder.praat

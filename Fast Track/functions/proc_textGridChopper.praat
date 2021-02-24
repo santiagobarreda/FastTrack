@@ -5,7 +5,7 @@ tg = selected ("TextGrid")
 snd = selected ("Sound")
 basename$ = selected$ ("Sound")
 
-include utils/importfunctions.praat
+include utils/importFunctions.praat
 @getSettings
 
 # set parameter for specifying vowels. make table
