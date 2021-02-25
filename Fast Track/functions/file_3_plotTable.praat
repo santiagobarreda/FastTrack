@@ -3,7 +3,7 @@
 snd = selected ("Sound")
 tbl = selected ("Table")
 
-include utils/importfunctions.praat
+include utils/importFunctions.praat
 
 @getSettings
 beginPause: "Set Parameters"

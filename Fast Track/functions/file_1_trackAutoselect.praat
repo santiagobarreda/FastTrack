@@ -3,7 +3,7 @@
 ########################################################################################################################################################
 ## Initial setup
 
-include utils/importfunctions.praat
+include utils/importFunctions.praat
 
 
 snd = selected ()

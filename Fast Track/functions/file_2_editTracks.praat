@@ -2,7 +2,7 @@
 snd = selected ("Sound")
 fr = selected ("Formant")
 
-include utils/importfunctions.praat
+include utils/importFunctions.praat
 @getSettings
 
 beginPause: "Set Parameters"
