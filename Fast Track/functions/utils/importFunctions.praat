@@ -15,7 +15,7 @@ include utils/getTGESettings.praat
 include utils/saveTGESettings.praat
 
 include tools/aggregate.praat
-include tools/aggregateaggregate.praat
+include tools/aggregateAggregate.praat
 include tools/aggregateTables.praat
 include tools/addBuffer.praat
 include tools/findOutliers.praat

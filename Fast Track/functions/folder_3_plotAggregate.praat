@@ -9,7 +9,7 @@
 ########################################################################################################################################################
 ## Initial setup
 
-include utils/importFunctions.praat
+include utils/importfunctions.praat
 
 
 tbl = selected ("Table")

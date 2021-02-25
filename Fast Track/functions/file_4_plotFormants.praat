@@ -12,7 +12,7 @@
 tbl = selected ("Table")
 basename$ = selected$ ("Table")
 
-include utils/importFunctions.praat
+include utils/importfunctions.praat
 
 clicked = 2
 plotting_symbol$ = "a"

@@ -1,6 +1,6 @@
 
 
-include utils/importFunctions.praat
+include utils/importfunctions.praat
 
 tables# = selected# ("Table")
 
