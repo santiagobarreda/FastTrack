@@ -18,3 +18,4 @@ sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
 @plotTable: sp, tbl, maximum_plotting_frequency, 1
 
 removeObject: sp
+
