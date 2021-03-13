@@ -14,7 +14,7 @@ Citation:
 
 ###
 
-Fast Track is a Praat plugin mean to make accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
+Fast Track is a Praat plugin that makes accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
 
 Fast Track has built-in functions to help along every step of a vowel analysis project from start to finish (with more coming):
   
