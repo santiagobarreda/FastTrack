@@ -1,16 +1,14 @@
 
 procedure getWinnersFolder
   .winners = Read Table from comma-separated file: folder$ + "/winners.csv"
-  
   .file_info = Read Table from comma-separated file: folder$ +"/file_information.csv"
   .nfiles = Get number of rows
   .basename$ = Get value: 1, "file"
 
-  winf1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  winf2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  winf3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  winf4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  createDirectory: folder$ + "/images_winners"
 
+  
+	##############################################################################
   ## get information about previous analysis using the first info file
   .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
   .tmp$ = Get string: 3
@@ -30,15 +28,22 @@ procedure getWinnersFolder
   .tmp$ = Get string: 13
   @stringToVector: .tmp$
   .totalerror# = stringToVector_output#
-
   removeObject: .info
+  ##############################################################################
+	
+	## these will collect the winning coefficients to write to the info file
+  winf1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  winf2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  winf3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  winf4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
 		
-  createDirectory: folder$ + "/images_winners"
-
+  ## counters involved in prediction of process duration
   daySecond = 0
   @daySecond
   .startSecond = daySecond
 
+  ## if formant bounds have been specified, these are read in, in addition to information about alternate
+	## available analyses
 	bounds_specified = 0
 	if fileReadable ("../dat/formantbounds.csv")
 		.formant_bounds = Read Table from comma-separated file: "../dat/formantbounds.csv"	
@@ -49,7 +54,11 @@ procedure getWinnersFolder
 		bounds_specified = 1		
 	endif
 
-  for .counter from 1 to .nfiles
+	#############################################################################################################
+	#############################################################################################################
+	### MAIN LOOP
+
+  for .counter from 1 to .nfiles 
 		totalerror = 0
 		.winner = 0
 		.cutoff = 0
@@ -163,7 +172,6 @@ procedure getWinnersFolder
 				endif  ; if label has a bound set
 			endif  ; if bounds exist
 
-
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
 	   	Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
 
@@ -184,7 +192,7 @@ procedure getWinnersFolder
 
 			nocheck removeObject: .tmp_fr
 
-		##### This is for the more ocmplicated situation where different formants are taken from different analyses.
+		##### This is for the more complicated situation where different formants are taken from different analyses.
 		else
 
 	    .tmp_f1 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf1) + "_.Formant"
@@ -299,6 +307,11 @@ procedure getWinnersFolder
 		removeObject: .info
 	endfor
 
+	## END MAIN LOOP
+  #############################################################################################################
+	#############################################################################################################
+
+  ## write out updated winners file and remove created Praat objects
   selectObject: .winners
 	Save as comma-separated file: folder$ + "/winners.csv"
 	removeObject: .winners, .file_info
