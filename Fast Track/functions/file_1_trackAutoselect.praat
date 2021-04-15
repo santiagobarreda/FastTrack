@@ -52,7 +52,7 @@ beginPause: "Set Parameters"
     option: "Aggregation options: How many temporal bins should be used, and which statistic should be calculated in each bin?"
 
 optionMenu: "What to track:", what_to_track
-    option: "Entire sound"
+  option: "Entire sound"
 	option: "Selection in Edit Window (plot visible)"
 	option: "Selection in Edit Window (plot only selection)"
 	option: "Selection in Edit Window (plot whole sound)"
@@ -217,7 +217,7 @@ if image = 1
 
   if what_to_track <> 2
     sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-	  @plotTable: sp, tbl, maximum_plotting_frequency, 1
+	  @plotTable: sp, tbl, maximum_plotting_frequency, 1, "Maximum formant = " + string$(cutoff) + " Hz"
     removeObject: sp
   endif
   if what_to_track == 2
