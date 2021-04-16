@@ -55,6 +55,7 @@ nocheck endPause: "Ok", 1
 
 @saveTGESettings
 
+createDirectory: output_folder$ 
 
 if fileReadable ("../dat/vowelstoextract.csv")
   vwl_tbl = Read Table from comma-separated file: "../dat/vowelstoextract.csv"
