@@ -58,7 +58,7 @@ procedure getWinnersFolder
 	#############################################################################################################
 	### MAIN LOOP
 
-  for .counter from 1 to .nfiles 
+  for .counter from 1 to .nfiles  
 		totalerror = 0
 		.winner = 0
 		.cutoff = 0
@@ -195,6 +195,7 @@ procedure getWinnersFolder
 		##### This is for the more complicated situation where different formants are taken from different analyses.
 		else
 
+			# read from the four formant files
 	    .tmp_f1 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf1) + "_.Formant"
 	    .number_of_frames = Get number of frames
 	    .tmp_f2 = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.wf2) + "_.Formant"
@@ -210,11 +211,14 @@ procedure getWinnersFolder
 	      selectObject: .tmp_f3
 	      .tf3 = Get value at time: 3, .tmp_time, "hertz", "Linear"
 	      .tb3 = Get bandwidth at time: 3, .tmp_time, "hertz", "Linear"
-
+ 
+				# use the F1 winner as the base file and place new values into this when defined.
 	      selectObject: .tmp_f1
-        Formula (frequencies): "if row = 2 and col=" + string$(.j) +" then " + string$(.tf2) + " else self endif"
-        Formula (bandwidths): "if row = 2 and col=" + string$(.j) +" then " + string$(.tb2) + " else self endif"
-        if (.tf3 <> undefined)
+        if (.tf2 <> undefined)
+	        Formula (frequencies): "if row = 2 and col=" + string$(.j) +" then " + string$(.tf2) + " else self endif"
+  	      Formula (bandwidths): "if row = 2 and col=" + string$(.j) +" then " + string$(.tb2) + " else self endif"
+				endif
+		    if (.tf3 <> undefined)
           Formula (frequencies): "if row = 3 and col=" + string$(.j) +" then " + string$(.tf3) + " else self endif"
           Formula (bandwidths): "if row = 3 and col=" + string$(.j) +" then " + string$(.tb3) + " else self endif"
         endif
