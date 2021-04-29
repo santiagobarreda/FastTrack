@@ -47,7 +47,7 @@ beginPause: "Set Parameters"
     optionMenu: "Number of formants", number_of_formants
             option: "3"
             option: "4"
-    boolean: "Make images comparing analyses", 1
+    boolean: "Make images comparing analyses", 0
     boolean: "Make images showing winners", 1
     positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
     optionMenu: "Number of bins:", number_of_bins

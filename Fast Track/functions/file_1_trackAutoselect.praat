@@ -5,14 +5,18 @@
 
 include utils/importFunctions.praat
 
-
 snd = selected ()
 basename$ = selected$ ("Sound")
 total_duration = Get total duration
 
+## If I knew how to check if one was already open for this file I would. 
+## but I dont know how. if anyone knows please let me know!
 View & Edit
 
+# the form is in a loop so that multiple analyses can be run
 clicked = 2
+
+# this is the initial state of many of the flag variables in the function
 return_formant = 0
 save_formant = 0
 save_csv = 0
@@ -52,7 +56,7 @@ beginPause: "Set Parameters"
     option: "Aggregation options: How many temporal bins should be used, and which statistic should be calculated in each bin?"
 
 optionMenu: "What to track:", what_to_track
-    option: "Entire sound"
+  option: "Entire sound"
 	option: "Selection in Edit Window (plot visible)"
 	option: "Selection in Edit Window (plot only selection)"
 	option: "Selection in Edit Window (plot whole sound)"
@@ -85,18 +89,22 @@ nocheck clicked = endPause: "Ok","Apply", 1
 number_of_steps = number(number_of_steps$)
 number_of_formants = number(number_of_formants$)
 
-
+# re-check sound file name in case this is second run (given that the form is a loop)
 numberOfSelectedSounds  = numberOfSelected ("Sound")
 if numberOfSelectedSounds == 1
   snd = selected ()
   basename$ = selected$ ("Sound")
 endif
 
+# settings are saved out tp the text file during each iteration
 @saveSettings
 
+# is = whole sound so >1 is a selection
 if what_to_track > 1
   analyze_selection = 1
 endif
+# plot in context determines whether the whole spectrogram needs to be used
+# or just a selection
 plot_in_context = 1
 if what_to_track == 3
   plot_in_context = 0
@@ -109,13 +117,16 @@ if analyze_selection == 1
   endeditor
   ## if selection is greater than 30 milliseconds
   if (end - start) < 0.03 
-    exitScript: "Selection is less than 30 milliseconds, please select more sound."
+    analyze_selection = 0
+    #exitScript: "Selection is less than 30 milliseconds, please select more sound."
   endif
 endif
 
 
-
 if analyze_selection == 1	
+  # this first part nudges selection edges if they are too close to the end of the file
+  # and moves selection edges further to acomodate the window length. Then the sound is 
+  # extracted and selected
   if start < 0.025
     start = 0
   endif
@@ -139,34 +150,38 @@ if analyze_selection == 1
 endif
 
 
-
-#endif
-
 ########################################################################################################################################################
 ########################################################################################################################################################
 ## Error estimation section
 
+# error related variables
 formantError# = zero#(number_of_formants)
 totalError = 0
 minerror = 999999
 error# =  zero# (number_of_steps)
 cutoffs# = zero#(number_of_steps)
 
+# determine analysis frequencies given number of steps and cutoffs
 stepSize = (highest_analysis_frequency-lowest_analysis_frequency) / (number_of_steps-1)
 for i from 1 to number_of_steps
   cutoffs#[i] = round (lowest_analysis_frequency+stepSize*(i-1))
 endfor
 
-writeInfoLine: "Median absolute error for frequency (total,F1 F2 F3 F4):"
+# I need to change this to something more useful like the winning regression coefficients or something
+writeInfoLine: "Analyzing..."
 
+winner = 1
+
+## loop that performs the analyses
 for z from 1 to number_of_steps
+  appendInfoLine: z
 	selectObject: snd
 
     if analyze_selection == 1
       selectObject: tmp_snd
     endif
 
-  ## add buffer here. make silence, make copy of sound, make nother silence. concatenate, then erase everything!
+  # analysis of sounds
 	if tracking_method$ == "burg"
     noprogress To Formant (burg): time_step, 5.5, cutoffs#[z], 0.025, 50
   endif
@@ -176,30 +191,49 @@ for z from 1 to number_of_steps
   Rename: "formants_" + string$(z)
   formantObject = selected ("Formant")
 
+  # this is where the contours actually get modeled. check this function out for info.
+  # it also created a lot of useful variables like the coefficient and error vectors that get used below.
+  # in praat these are all global variables, functions dont return results. 
 	@findError: formantObject
 	Rename: "formants_" + string$(z)
 
-  error#[z] = sum(formantError#)
-  error#[z] = round (error#[z] * 10) / 10
-
-  appendInfoLine: ""
-  appendInfo: "cutoff " + string$(cutoffs#[z]) + " Hz: "
-  appendInfo: string$(error#[z]) + ", "
-  appendInfo: formantError#
-endfor
-
-winner = 1
-for z from 2 to number_of_steps
+  # if current step minimizes the error, make it the new winner
   if error#[z] <  minerror
 	  winner = z
 	  cutoff = cutoffs#[z]
 	  minerror = error#[z]
+
+    # store regression coefficients for output in info window
+    tmp_f1coeffs# = f1coeffs#
+    tmp_f2coeffs# = f2coeffs#
+    tmp_f3coeffs# = f3coeffs#
+    if number_of_formants == 4
+      tmp_f4coeffs# = f4coeffs#
+    endif
   endif
+
+  error#[z] = sum(formantError#)
+  error#[z] = round (error#[z] * 10) / 10
+  
 endfor
 
+writeInfoLine: "Best cutoff is: " + string$(cutoff)
 appendInfoLine: ""
+appendInfoLine: "F1 coefficients: "
+appendInfoLine: tmp_f1coeffs#
+appendInfoLine: "F2 coefficients: "
+appendInfoLine: tmp_f2coeffs#
+appendInfoLine: "F3 coefficients: "
+appendInfoLine: tmp_f3coeffs#
+if number_of_formants == 4
+  appendInfoLine: "F4 coefficients: "
+  appendInfoLine: tmp_f4coeffs#
+endif
 appendInfoLine: ""
-appendInfoLine: "Best cutoff is: " + string$(cutoff)
+appendInfoLine: "The first number in each row (the intercept) is a good estimate of the"
+appendInfoLine: "frequency of the formant at the analysis midpoint. The second number indicates"
+appendInfoLine: "its linear slope, the third its quadratic component (u-shapedness), ... etc."
+
 
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -215,11 +249,15 @@ if image = 1
     selectObject: tmp_snd
   endif
 
+  ## if NOT current view
   if what_to_track <> 2
     sp = To Spectrogram: 0.007, maximum_plotting_frequency, 0.002, 5, "Gaussian"
-	  @plotTable: sp, tbl, maximum_plotting_frequency, 1
+	  @plotTable: sp, tbl, maximum_plotting_frequency, 1, "Maximum formant = " + string$(cutoff) + " Hz"
     removeObject: sp
   endif
+
+  # if YEs current view, this needs to grab the current spectrogram from the view window and plot it.
+  # analysis also needs to be scaled to the frequency limit of the view so that these match. 
   if what_to_track == 2
     editor: snd
 	  sp = Extract visible spectrogram
@@ -234,9 +272,9 @@ if image = 1
   Save as 300-dpi PNG file: folder$ + "/file_winner.png"
  endif
 
+ # this is for the comparison images. pretty straightforward
  if image = 2
 	  Erase all
-	  ### here is where it would need to write out to a plot
 	  selectObject: snd
 
     if analyze_selection == 1
@@ -281,7 +319,7 @@ nocheck removeObject: sp
 
 ########################################################################################################################################################
 ########################################################################################################################################################
-## Save data and delete backup files
+## Save data and delete backup files. nothing fancy here. a lot of removing objects
 
 
 for z from 1 to number_of_steps
@@ -345,9 +383,6 @@ if analyze_selection == 1
 endif
 
 selectObject: snd
-
-
-
 
 endwhile
 
