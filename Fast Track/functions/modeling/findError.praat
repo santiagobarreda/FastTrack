@@ -1,5 +1,5 @@
 
-procedure findError .fr
+procedure findError .fr, .number_of_coefficients_for_formant_prediction
 
   ####################################################################################
   # sets up table called output that will contain all information abotu values, prediction, error, etc.
@@ -44,7 +44,7 @@ procedure findError .fr
   Formula: "time1", "row / number_of_frames"
   Formula: "time1", "cos(( self )*pi*2*(1*0.5))"
 
-  for .c from 2 to number_of_coefficients_for_formant_prediction
+  for .c from 2 to .number_of_coefficients_for_formant_prediction
     select Table output
     Append column... time'.c'
     Formula: "time"+string$(.c), "row / " + string$(number_of_frames)
@@ -54,24 +54,24 @@ procedure findError .fr
   ####################################################################################
   ## prediction of formant values and collections of prediction coefficients
 
-  f1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  f2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  f3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  f1coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
+  f2coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
+  f3coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
   if number_of_formants == 4
-    f4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+    f4coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
   endif
 
   for .fnum from 1 to number_of_formants
-    @predictFormants: .fnum
+    @predictFormants: .fnum, .number_of_coefficients_for_formant_prediction
     f'.fnum'coeffs#[1] = round (intercept * 10) / 10
-    for .cnum from 1 to number_of_coefficients_for_formant_prediction
+    for .cnum from 1 to .number_of_coefficients_for_formant_prediction
       f'.fnum'coeffs#[.cnum+1] = round(coeff'.cnum' * 10) / 10
     endfor
   endfor
 
   ## predictor information no longer needed in output. it was only there to speed up prediction
   select Table output
-  for .ff from 1 to number_of_coefficients_for_formant_prediction
+  for .ff from 1 to .number_of_coefficients_for_formant_prediction
     Remove column... time'.ff'
   endfor
 

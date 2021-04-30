@@ -5,7 +5,7 @@ procedure editTracks: fr
   .clicked = 0
   while .clicked <> 1
     totalerror = 0
-    @findError: fr
+    @findError: fr, number_of_coefficients_for_formant_prediction
     selectObject: "Table output"
     tbl = selected ("Table")
     .nrows = Get number of rows

@@ -1,5 +1,5 @@
 
-procedure predictFormants .ff
+procedure predictFormants .ff, .number_of_coefficients_for_formant_prediction
   selectObject: "Table output"
   Copy: "regression"
   Remove column... frame
@@ -23,7 +23,7 @@ procedure predictFormants .ff
   #Append column... f'.ff'p
   #Formula... f'.ff'p intercept
 
-  for .c from 1 to number_of_coefficients_for_formant_prediction
+  for .c from 1 to .number_of_coefficients_for_formant_prediction
     coeff'.c' = extractNumber (info$, "Coefficient of factor time" + string$(.c)+ ": ")
     select Table output
     Formula... f'.ff'p self + self[row,"time"+string$(.c)] * coeff'.c'
@@ -54,7 +54,7 @@ procedure predictFormants .ff
   #select Table output
   #Formula... f'.ff'p intercept
 
-  #for .c from 1 to number_of_coefficients_for_formant_prediction
+  #for .c from 1 to .number_of_coefficients_for_formant_prediction
   #  coeff'.c' = extractNumber (info$, "Coefficient of factor time" + string$(.c)+ ": ")
   #  select Table output
   #  Formula... f'.ff'p self + self[row,"time"+string$(.c)] * coeff'.c'
