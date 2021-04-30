@@ -197,6 +197,9 @@ for z from 1 to number_of_steps
 	@findError: formantObject
 	Rename: "formants_" + string$(z)
 
+  error#[z] = sum(formantError#)
+  error#[z] = round (error#[z] * 10) / 10
+
   # if current step minimizes the error, make it the new winner
   if error#[z] <  minerror
 	  winner = z
@@ -211,10 +214,7 @@ for z from 1 to number_of_steps
       tmp_f4coeffs# = f4coeffs#
     endif
   endif
-
-  error#[z] = sum(formantError#)
-  error#[z] = round (error#[z] * 10) / 10
-  
+   
 endfor
 
 writeInfoLine: "Best cutoff is: " + string$(cutoff)
