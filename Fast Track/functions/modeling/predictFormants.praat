@@ -15,6 +15,7 @@ procedure predictFormants .ff
 
   select Table regression
   .linreg = To linear regression
+
   info$ = Info
   intercept = extractNumber (info$, "Intercept: ")
   select Table output
