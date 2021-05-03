@@ -1,5 +1,5 @@
 
-procedure predictFormants .ff, .number_of_coefficients_for_formant_prediction
+procedure predictFormants .ff, .number_of_coefficients_for_formant_prediction, .number_of_formants
   selectObject: "Table output"
   Copy: "regression"
   Remove column... frame
@@ -7,7 +7,7 @@ procedure predictFormants .ff, .number_of_coefficients_for_formant_prediction
   Append column... formant
   Formula... formant self[row,"f"+string$(.ff)]
 
-  for .i from 1 to number_of_formants
+  for .i from 1 to .number_of_formants
     Remove column... f'.i'
     Remove column... b'.i'
     Remove column... f'.i'p

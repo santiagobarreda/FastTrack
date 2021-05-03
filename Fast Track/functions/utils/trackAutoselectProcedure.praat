@@ -84,7 +84,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
     # this is where the contours actually get modeled. check this function out for info.
     # it also created a lot of useful variables like the coefficient and error vectors that get used below.
     # in praat these are all global variables, functions dont return results. 
-    @findError: .formantObject, .number_of_coefficients_for_formant_prediction
+    @findError: .formantObject, .number_of_coefficients_for_formant_prediction, .number_of_formants
     Rename: "formants_" + string$(z)
   
     # if current step minimizes the error, make it the new winner

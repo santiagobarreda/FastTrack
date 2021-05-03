@@ -175,7 +175,7 @@ procedure getWinnersFolder
 	  	.tmp_fr = Read from file: folder$ + "/formants/"+ .basename$ + "_" + string$(.winner) + "_.Formant"
 	   	Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
 
-		  @findError: .tmp_fr, number_of_coefficients_for_formant_prediction
+		  @findError: .tmp_fr, number_of_coefficients_for_formant_prediction, number_of_formants
 			for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
 				winf1coeffs#[.jj] = f1coeffs#[.jj]
 				winf2coeffs#[.jj] = f2coeffs#[.jj]
@@ -236,7 +236,7 @@ procedure getWinnersFolder
 
 	    selectObject: .tmp_f1
 	    Save as short text file: folder$ + "/formants_winners/" + .basename$ + "_winner_.Formant"
-			@findError: .tmp_f1, number_of_coefficients_for_formant_prediction
+			@findError: .tmp_f1, number_of_coefficients_for_formant_prediction, number_of_formants
 			for .jj from 1 to (number_of_coefficients_for_formant_prediction+1)
 				winf1coeffs#[.jj] = f1coeffs#[.jj]
 				winf2coeffs#[.jj] = f2coeffs#[.jj]
