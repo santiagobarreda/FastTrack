@@ -133,7 +133,7 @@ procedure autoSelectFolder
       ##################################################################################
       ## this part determines the winner
 
-  	  @findError: .fr
+  	  @findError: .fr, number_of_coefficients_for_formant_prediction, number_of_formants
       .totalerror#[.z] = sum(formantError#)
       .totalerror#[.z] = round (.totalerror#[.z] * 10) / 10
       .f1Error#[.z] = formantError#[1]
