@@ -86,6 +86,9 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
     # in praat these are all global variables, functions dont return results. 
     @findError: .formantObject, .number_of_coefficients_for_formant_prediction, .number_of_formants
     Rename: "formants_" + string$(z)
+
+    .error#[z] = sum(formantError#)
+    .error#[z] = round (.error#[z] * 10) / 10  
   
     # if current step minimizes the error, make it the new winner
     if .error#[z] <  .minerror
@@ -101,10 +104,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
       if .number_of_formants == 4
         .f4coeffs# = f4coeffs#
       endif
-    endif
-  
-    .error#[z] = sum(formantError#)
-    .error#[z] = round (.error#[z] * 10) / 10
+    endif 
     
   endfor
     
