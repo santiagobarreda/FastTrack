@@ -88,7 +88,6 @@ procedure findError .fr, .number_of_coefficients_for_formant_prediction, .number
   #Formula... error2 abs(self) * self[row,"b2"]
   #Formula... error3 abs(self) * self[row,"b3"]
 
-  if number_of_formants == 4
   if .number_of_formants == 4
     Formula: "error4", "abs(self)"
     #Formula... error4 abs(self) * self[row,"b4"]
