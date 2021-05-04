@@ -7,7 +7,7 @@ include utils/importFunctions.praat
 # - .lowest_analysis_frequency: Lowest analysis frequency (Hz).
 # - .highest_analysis_frequency: Highest analysis frequency (Hz).
 # - .number_of_steps: the analyses between low and high analysis limits. More analysis
-#      steps may improve results, but will increase.
+#      steps may improve results, but will increase analysis time.
 # - .number_of_coefficients_for_formant_prediction: More coefficients allow for more
 #      sudden, and 'wiggly' formant motion.
 # - .number_of_formants: The best analysis will be found on average across all desired
@@ -17,6 +17,9 @@ include utils/importFunctions.praat
 #      0: Don't show an image
 #      1: Show image of winner
 #      2: Show image comparing of all analyses
+#    *NB* Images are only generated when using Praat interactively with it GUI. If the
+#         procedure is called from a script run from the command line, no image is generated,
+#         regardless of the value of this parameter.
 # - .snd_to_plot: sound object for plotting.
 # - .plot_current_view: if image > 0, whether to plot the view of the current window (1) or not (0)
 # - .maximum_plotting_frequency: if image > 0, maximum frequency for image.
