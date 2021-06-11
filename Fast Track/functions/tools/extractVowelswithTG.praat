@@ -208,75 +208,75 @@ for filecounter from 1 to nfiles
 
     if (fileReadable: sound_folder$ + "/" + basename$ + ".wav") & (nintervals > 1)
 		snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
+	
+		## make table that will contain all output information
+		tbl = Create Table with column names: "table", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
+		if stress == 1
+		  Append column: "stress"
+		endif
+		if word_tier > 0
+		Append column: "word"
+		Append column: "word_interval"
+		Append column: "word_start"
+		Append column: "word_end"
+		Append column: "previous_word"
+		Append column: "next_word"
+		endif
+		if comment_tier1 > 0
+		  Append column: "comment1"
+		endif
+		if comment_tier2 > 0
+		  Append column: "comment2"
+		endif
+		if comment_tier3 > 0
+		  Append column: "comment3"
+		endif
+
+		file_info = Create Table with column names: "fileinfo", 0, "file label group color number"
+		
+		if maintain_separate == 1
+			createDirectory: output_folder$ + "/" + basename$
+		endif
+		if maintain_separate == 0
+			createDirectory: output_folder$ + "/sounds"
+		endif
+
+		@extractVowels
+
+		if maintain_separate == 1
+		  selectObject: file_info
+		  Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
+		  selectObject: tbl
+		  Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
+		endif
+		
+		selectObject: tbl
+		plusObject: "Table all_tbl"
+		Append
+		removeObject: tbl, "Table all_tbl"
+		selectObject: "Table appended"
+		Rename: "all_tbl"
+
+		selectObject: "Table all_file_info"
+		.tmpnrows = Get number of rows
+		if .tmpnrows > 0
+		  .max = Get maximum: "number"
+		endif
+		if .tmpnrows == 0
+		  .max = 0
+		endif
+		selectObject: file_info
+		Formula: "number", "self + .max"
+
+		selectObject: file_info
+		plusObject: "Table all_file_info"
+		Append
+		removeObject: file_info, "Table all_file_info"
+		selectObject: "Table appended"
+		Rename: "all_file_info"
+
+		removeObject: snd, tg
 	endif
-    ## make table that will contain all output information
-    tbl = Create Table with column names: "table", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
-    if stress == 1
-      Append column: "stress"
-    endif
-    if word_tier > 0
-    Append column: "word"
-    Append column: "word_interval"
-    Append column: "word_start"
-    Append column: "word_end"
-    Append column: "previous_word"
-    Append column: "next_word"
-    endif
-    if comment_tier1 > 0
-      Append column: "comment1"
-    endif
-    if comment_tier2 > 0
-      Append column: "comment2"
-    endif
-    if comment_tier3 > 0
-      Append column: "comment3"
-    endif
-
-    file_info = Create Table with column names: "fileinfo", 0, "file label group color number"
-    
-    if maintain_separate == 1
-        createDirectory: output_folder$ + "/" + basename$
-    endif
-    if maintain_separate == 0
-        createDirectory: output_folder$ + "/sounds"
-    endif
-
-    @extractVowels
-
-    if maintain_separate == 1
-      selectObject: file_info
-      Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
-      selectObject: tbl
-      Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
-    endif
-    
-    selectObject: tbl
-    plusObject: "Table all_tbl"
-    Append
-    removeObject: tbl, "Table all_tbl"
-    selectObject: "Table appended"
-    Rename: "all_tbl"
-
-    selectObject: "Table all_file_info"
-    .tmpnrows = Get number of rows
-    if .tmpnrows > 0
-      .max = Get maximum: "number"
-    endif
-    if .tmpnrows == 0
-      .max = 0
-    endif
-    selectObject: file_info
-    Formula: "number", "self + .max"
-
-    selectObject: file_info
-    plusObject: "Table all_file_info"
-    Append
-    removeObject: file_info, "Table all_file_info"
-    selectObject: "Table appended"
-    Rename: "all_file_info"
-
-    removeObject: snd, tg
-
 endfor
 
 selectObject: "Table all_tbl"
