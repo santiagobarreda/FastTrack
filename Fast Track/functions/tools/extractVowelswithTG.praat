@@ -207,8 +207,8 @@ for filecounter from 1 to nfiles
     nintervals = Get number of intervals: 1
 
     if (fileReadable: sound_folder$ + "/" + basename$ + ".wav") & (nintervals > 1)
-    snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
-
+		snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
+	endif
     ## make table that will contain all output information
     tbl = Create Table with column names: "table", 0, "inputfile outputfile vowel interval duration start end previous_sound next_sound omit"
     if stress == 1
