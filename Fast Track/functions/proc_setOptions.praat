@@ -29,6 +29,8 @@ while clicked <> 1
 		  sentence: "Tracking method:", tracking_method$
 		  sentence: "Basis functions:", basis_functions$
 		  sentence: "Error method:", error_method$
+		  comment: "If you have trouble seeing the bottom of some pause windows, tick this box:"
+		  boolean: "Hide Click to Read boxes", hide_Click_to_Read_boxes
 		endif
 	if menu == 2
 	  boolean: "Enable F1 frequency heuristic:", enable_F1_frequency_heuristic

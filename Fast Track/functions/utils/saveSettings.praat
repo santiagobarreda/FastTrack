@@ -34,6 +34,9 @@ procedure saveSettings
 
   number_of_bins$ = string$(number_of_bins)
   Set string: 12, number_of_bins$
+  
+  hide_Click_to_Read_boxes$ = string$(hide_Click_to_Read_boxes)
+  Set string: 13, hide_Click_to_Read_boxes$
 
   Save as raw text file: "../settings/settings.txt"
   removeObject: .tmp_str
