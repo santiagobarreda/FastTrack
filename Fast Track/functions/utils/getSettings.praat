@@ -50,6 +50,9 @@ procedure getSettings
 
   number_of_bins$ = Get string: 12
   number_of_bins = number (number_of_bins$)
+  
+  hide_Click_to_Read_boxes$ = Get string: 13
+  hide_Click_to_Read_boxes = number(hide_Click_to_Read_boxes$)
 
   removeObject: .settings
 
