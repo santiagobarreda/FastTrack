@@ -4,16 +4,18 @@ procedure extractVowelswithTG
 @getTGESettings
 
 beginPause: "Set Parameters"
-    optionMenu: "", 1
-    option: "[**IMPORTANT** Click to Read]"
-    option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
-    option: "in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
-    option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
-    option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
-    option: "Folder: all output sounds and CSV files will go here."
+	if not hide_Click_to_Read_boxes
+		optionMenu: "", 1
+		option: "[**IMPORTANT** Click to Read]"
+		option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
+		option: "in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
+		option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
+		optionMenu: "", 1
+		option: "[Click to Read]"
+		option: "Sounds folder: sounds will be extracted for all sound files in this folder with corresponding text grids."
+		option: "TextGrid folder: any TextGrids here willbe matched up with sounds with the same filename in the above folder."
+		option: "Folder: all output sounds and CSV files will go here."
+	endif
     sentence: "Sound folder:", sound_folder$
     sentence: "TextGrid folder:", textGrid_folder$
     sentence: "Output folder:", output_folder$
@@ -31,24 +33,31 @@ beginPause: "Set Parameters"
 		integer: "Omit tier:", omit_tier
     comment: "Is stress marked on vowels?"
     boolean: "Stress", stress
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "This assumes the final symbol on the vowel labels is used to indicate stress."
-    option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
-    sentence: "Stress to extract", stress_to_extract$
-    option: "[Click to Read]"
-    option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
-    option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
-    option: " "
-    option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
-    option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
+	if not hide_Click_to_Read_boxes
+		optionMenu: "", 1
+		option: "[Click to Read]"
+		option: "This assumes the final symbol on the vowel labels is used to indicate stress."
+		option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
+    endif
+	sentence: "Stress to extract", stress_to_extract$
+	if not hide_Click_to_Read_boxes
+		optionMenu: "", 1
+		option: "[Click to Read]"
+		option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
+		option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
+		option: " "
+		option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
+		option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
+	endif
 		sentence: "Words to skip:", ""
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "How much time should be added to edges (0 = no padding)?"
-    option: "Setting the buffer to 0.025 allows formant tracking to the edge of the sound when using"
-    option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros before analysis"
-    option: "with another function provided by Fast Track."
+	if not hide_Click_to_Read_boxes
+		optionMenu: "", 1
+		option: "[Click to Read]"
+		option: "How much time should be added to edges (0 = no padding)?"
+		option: "Setting the buffer to 0.025 allows formant tracking to the edge of the sound when using"
+		option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros before analysis"
+		option: "with another function provided by Fast Track."
+	endif
     positive: "Buffer (s):", 0.025
 
 nocheck endPause: "Ok", 1
