@@ -94,21 +94,25 @@ procedure autoSelectFolder
     selectObject: .file_info 
     .basename$ = Get value: .ii, "file"
     .basename$ = .basename$ - ".wav"
-    writeInfoLine: "Selecting winners (step 2): " +string$(.ii) +" of " + string$(.nfiles) + ", " + .basename$
+	
+	##Optionally show progress
+	if show_progress
+		writeInfoLine: "Selecting winners (step 2): " +string$(.ii) +" of " + string$(.nfiles) + ", " + .basename$
 
-    ## timing part
-    if .ii > 10 and .nfiles > 60
-      @daySecond
-      .nowSecond = daySecond
-      .elapsedTime = .nowSecond - .startSecond
-      .totalTime = .elapsedTime * (.nfiles / .ii)
-      .endGuess = .totalTime - .elapsedTime
-      .endGuess = round (.endGuess / 60) ; minus elapsed time?
-      appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
-      #appendInfoLine: .totalTime
-      #appendInfoLine: .elapsedTime
-    endif
-
+		## timing part
+		if .ii > 10 and .nfiles > 60
+		  @daySecond
+		  .nowSecond = daySecond
+		  .elapsedTime = .nowSecond - .startSecond
+		  .totalTime = .elapsedTime * (.nfiles / .ii)
+		  .endGuess = .totalTime - .elapsedTime
+		  .endGuess = round (.endGuess / 60) ; minus elapsed time?
+		  appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+		  #appendInfoLine: .totalTime
+		  #appendInfoLine: .elapsedTime
+		endif
+	endif
+	
     # read in sound and make spectrogram
     .snd = Read from file: folder$ +"/sounds/" + .basename$+ ".wav"
     if save_image = 1
