@@ -1,8 +1,7 @@
 
-procedure aggregate autorun
+procedure advancedAggregate 
   @getSettings
 
-  value_to_collect = 1
   if autorun == 0
   beginPause: "Set Parameters"
     comment: "Indicate your working directory. This folder should contain a folder inside of it"
@@ -24,11 +23,8 @@ procedure aggregate autorun
   	    option: "median"
   	  	option: "mean"
     choice: "Value to collect", 1
-        option: "Observed formant"
-        option: "Predicted (smooth) formant"
-		#sentence: "Points to measure:", ""
-    #real: "number of samples:", 0
-
+        button: "Observed formant"
+        button: "Predicted (smooth) formant"
   endPause: "Ok", 1
   endif
 
@@ -41,13 +37,6 @@ procedure aggregate autorun
   endif
   
   @saveSettings
-
-  points_to_measure = 0
-  #if points_to_measure$ <> "" 
-  #  points_to_measure = 1
-  #  .measure_points = Create Strings as tokens: points_to_measure$, " "
-  #  .npoints = Get number of strings
-  #endif
 
   number_of_bins = 1 + (number_of_bins-1)*2
   number_of_formants = number(number_of_formants$)
@@ -119,41 +108,20 @@ procedure aggregate autorun
     selectObject: .output
     Set numeric value: .iii, "f0", .mf0
 
-    column_label_append$ = ""
-    if value_to_collect == 2
-      column_label_append$ = "p"
-    endif
-    
-    ## I think mostly just this part needs to change
-    if points_to_measure == 0
-      for .j from 1 to number_of_bins
-        selectObject: .tbl
-        .tmp_tbl = Extract rows where column (number): "ntime", "equal to", .j
-        for .k from 1 to number_of_formants
-          if statistic == 2
-            .mf'.k''.j' = Get mean: "f"+string$(.k)+column_label_append$
-          endif
-          if statistic == 1
-            .mf'.k''.j' = Get quantile: "f"+string$(.k)+column_label_append$, 0.5
-          endif
-        endfor
-        removeObject: .tmp_tbl
+
+    for .j from 1 to number_of_bins
+      selectObject: .tbl
+      .tmp_tbl = Extract rows where column (number): "ntime", "equal to", .j
+      for .k from 1 to number_of_formants
+        if statistic == 2
+          .mf'.k''.j' = Get mean: "f"+string$(.k)
+        endif
+        if statistic == 1
+          .mf'.k''.j' = Get quantile: "f"+string$(.k), 0.5
+        endif
       endfor
-    endif
-
-    #if points_to_measure == 1
-    #  for .j from 1 to number_of_bins
-    #    selectObject: .measure_points
-    #    .timepoint$ = Get string: i
-        # .timepoint = number (.timepoint$)
-    #    Formula: "point", .timepoint$
-    #    Append difference column: "time", "point", "diff"
-    #    Formula: "diff", "abs (self)"
-
-     # endfor
-    #  1+i
-    #endif
-
+      removeObject: .tmp_tbl
+    endfor
 
     selectObject: .output
     Set string value... .iii file '.basename$'
