@@ -36,14 +36,16 @@ procedure trackFolder
       .basename$ = .basename$ - ".wav"
 
       ## message about expected computing time
-      writeInfoLine: "Tracking formants (step 1): " + string$(.iii) +" of " + string$(.nfiles) + ", " + .basename$
-      if .iii > 10 and .nfiles > 60
-        @daySecond
-        .nowSecond = daySecond
-        .elapsedTime = .nowSecond - .startSecond
-        .totalTime = .elapsedTime * (.nfiles / .iii)
-        .endGuess = round (.totalTime / 60)
-        appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+	  if show_progress
+		  writeInfoLine: "Tracking formants (step 1): " + string$(.iii) +" of " + string$(.nfiles) + ", " + .basename$
+		  if .iii > 10 and .nfiles > 60
+			@daySecond
+			.nowSecond = daySecond
+			.elapsedTime = .nowSecond - .startSecond
+			.totalTime = .elapsedTime * (.nfiles / .iii)
+			.endGuess = round (.totalTime / 60)
+			appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+		  endif
       endif
 
       for .z from 1 to number_of_steps

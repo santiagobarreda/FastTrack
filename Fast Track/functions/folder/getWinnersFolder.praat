@@ -88,16 +88,19 @@ procedure getWinnersFolder
 	  if number_of_formants == 4
 	 		Set string: 11, string$(.wf1)+" "+string$(.wf2)+" "+string$(.wf3)+" "+string$(.wf4)
 	  endif
-
-	  writeInfoLine: "Getting winners (step 3): " + string$(.counter) +" of " + string$(.nfiles) + ", " + .basename$
-	  if .counter > 10 and .nfiles > 60
-			daySecond = 0
-			@daySecond
-			.nowSecond = daySecond
-			.elapsedTime = .nowSecond - .startSecond
-	    .totalTime = .elapsedTime * (.nfiles / .counter)
-	    .endGuess = round (.totalTime / 60)
-	    appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+	  
+	  ##Optionally show progress
+	  if show_progress
+		  writeInfoLine: "Getting winners (step 3): " + string$(.counter) +" of " + string$(.nfiles) + ", " + .basename$
+		  if .counter > 10 and .nfiles > 60
+				daySecond = 0
+				@daySecond
+				.nowSecond = daySecond
+				.elapsedTime = .nowSecond - .startSecond
+			.totalTime = .elapsedTime * (.nfiles / .counter)
+			.endGuess = round (.totalTime / 60)
+			appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+		  endif
 	  endif
 
 		
