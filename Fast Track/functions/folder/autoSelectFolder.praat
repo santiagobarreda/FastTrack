@@ -125,7 +125,7 @@ procedure autoSelectFolder
 
     writeFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","Regression analysis information for: " + .basename$
     appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of formants: " + string$(number_of_formants)
-    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coeccicients: " + string$(number_of_coefficients_for_formant_prediction)
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coefficients: " + string$(number_of_coefficients_for_formant_prediction)
 
     ##########################################################################################################
     ## loop across number of analysis steps
