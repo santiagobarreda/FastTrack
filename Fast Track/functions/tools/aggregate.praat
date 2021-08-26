@@ -1,6 +1,6 @@
 
 procedure aggregate autorun
-  @getSettings
+  #@getSettings
 
   value_to_collect = 1
   if autorun == 0
@@ -40,7 +40,7 @@ procedure aggregate autorun
     folder$ = folder$ - "\"
   endif
   
-  @saveSettings
+  #@saveSettings
 
   points_to_measure = 0
   #if points_to_measure$ <> "" 
