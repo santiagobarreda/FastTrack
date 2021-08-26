@@ -1,8 +1,6 @@
 
 procedure trackFolder
   createDirectory: folder$ + "/infos/"
-  createDirectory: folder$ + "/formants_edited"
-  createDirectory: folder$ + "/formants_winners"
   createDirectory: folder$ + "/formants"
 
   @daySecond

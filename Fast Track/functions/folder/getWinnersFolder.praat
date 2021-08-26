@@ -6,7 +6,7 @@ procedure getWinnersFolder
   .basename$ = Get value: 1, "file"
 
   createDirectory: folder$ + "/images_winners"
-
+  createDirectory: folder$ + "/formants_winners"
   
 	##############################################################################
   ## get information about previous analysis using the first info file
