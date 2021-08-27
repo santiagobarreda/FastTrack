@@ -19,6 +19,8 @@ procedure autoSelectFolder
    @stringToVector: .tmp$
   .cutoffs# = stringToVector_output#
 
+  # this needs to overwrite if user specifies a different order after tracking. 
+  # check if new matches old if not re-write.
   .tmp$ = Get string: 7
   number_of_coefficients_for_formant_prediction = number (.tmp$)
 
