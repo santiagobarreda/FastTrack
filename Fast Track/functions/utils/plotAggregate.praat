@@ -3,7 +3,7 @@ procedure plotAggregate autorun
 
   clicked = 2
 
-  @getSettings
+  #@getSettings
   color = 1
   while clicked == 2
 
