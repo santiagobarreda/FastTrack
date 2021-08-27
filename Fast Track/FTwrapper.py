@@ -134,7 +134,7 @@ parselmouth.praat.run_file(os.path.join(wkdir, "functions", "folder_1_analyzeFol
 #%% make the comparison images
 dynamic_range=50
 if make_images_comparing_analyses == "1":
-    print("Starting comparison image generation...this may take a while...")
+    print("Starting comparison image generation in Python...this may take a while...")
     sounds = sorted(os.listdir(os.path.join(folder, "sounds")))
     comparisons = sorted(os.listdir(os.path.join(folder, "comparisons")))
 
@@ -164,6 +164,10 @@ if make_images_comparing_analyses == "1":
             axs[i][j].plot(csv['time'], csv['f1p'], color="#ffd11a")
             axs[i][j].plot(csv['time'], csv['f2p'], color="green")
             axs[i][j].plot(csv['time'], csv['f3p'], color="blue")
+            
+            if number_of_formants == "4":
+                axs[i][j].scatter(csv['time'], csv['f4'], marker = "o", s=15, c='none', edgecolors='magenta', linewidths = .75)
+                axs[i][j].plot(csv['time'], csv['f4p'], color="red")
             j+=1
             if j%plots_per_row==0:
                 i+=1
@@ -199,8 +203,12 @@ def draw_spectrogram(spectrogram, csv, Hz, name, dynamic_range=50):
     plt.plot(csv['time'], csv['f2p'], color="green")
     plt.plot(csv['time'], csv['f3p'], color="blue")
     
+    if number_of_formants == "4":
+        plt.scatter(csv['time'], csv['f4'], marker = "o", s=15, c='none', edgecolors='magenta', linewidths = .75)
+        plt.plot(csv['time'], csv['f4p'], color="red")
+    
 if make_images_showing_winners == '1':
-    print("Starting winning image generation...")
+    print("Starting winning image generation in Python...")
     winnerHz = pd.read_csv(os.path.join(folder, 'processed_data', 'aggregated_data.csv'), encoding="utf8", dialect="excel")
     winnerHz = pd.Series(winnerHz.cutoff.values,index=winnerHz.file).to_dict()
     csvs = os.listdir(os.path.join(folder, "csvs"))
@@ -219,4 +227,4 @@ if make_images_showing_winners == '1':
         #plt.show()
         plt.close()
 
-    
+print("Python Wrapper to Fast Track has completed.")    
