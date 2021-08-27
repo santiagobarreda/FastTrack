@@ -30,17 +30,6 @@ form Set Parameters
 #	positive aggregate
 endform
 sepIndex = index(folder$, "\")
-if sepIndex == 0
-	sep$ = "/"
-	writeInfoLine: sepIndex
-	writeInfoLine: folder$
-	writeInfoLine: sep$
-
-else
-	sep$ = "\"
-	writeInfoLine: sepIndex
-	writeInfoLine: folder$
-	writeInfoLine: sep$
 
 ending$ = right$ (folder$,1)
 if ending$ == "/"
@@ -52,16 +41,16 @@ endif
 
 @getSettings_python
 
-writeInfoLine: "Analysis settings found in folder"
+writeInfoLine: "Analysis settings:"
 appendInfoLine: "Folder: ", folder$
-appendInfoLine: "Number of steps: ", number_of_steps
+appendInfoLine: "Number of steps: ", number_of_steps$
 appendInfoLine: "Number of coefficients for formant prediction: ", number_of_coefficients_for_formant_prediction
 appendInfoLine: "Lowest analysis frequency (Hz): ", lowest_analysis_frequency
 appendInfoLine: "Highest analysis frequency (Hz): ", highest_analysis_frequency
 appendInfoLine: "Maximum frequency to plot: ", maximum_plotting_frequency
 appendInfoLine: "Analysis time step: ", time_step
 appendInfoLine: "Tracking method: ", tracking_method$
-appendInfoLine: "Number of formants to track: ", number_of_formants
+appendInfoLine: "Number of formants to track: ", number_of_formants$
 appendInfoLine: "Basis function: ", basis_functions$
 appendInfoLine: "Error method: ", error_method$
 appendInfoLine: "Number of bins for formant track: ", number_of_bins
@@ -74,6 +63,8 @@ appendInfoLine: "Autoselect winners: ", autoselect_winners
 appendInfoLine: "Get winners: ", get_winners
 appendInfoLine: "Aggregate: ", aggregate 
 
+number_of_steps = number(number_of_steps$)
+number_of_formants = number(number_of_formants$)
 
 daySecond = 0
 save_csvs = 1
