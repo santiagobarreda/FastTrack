@@ -203,6 +203,8 @@ procedure autoSelectFolder
       if save_image = 1
         Select outer viewport: .xlims#[.z], .xlims#[.z]+3.2, .ylims#[.z], .ylims#[.z]+2
         selectObject: "Table output"
+	createDirectory: folder$ + "/comparisons/"
+	Save as comma-separated file: folder$ + "/comparisons/" + .basename$-".wav" + "_" + string$(.cutoffs#[.z]) + ".csv"
         .tbl = selected ("Table")
         Font size: 8
         @plotTable: .sp, .tbl, maximum_plotting_frequency, 0.5, "Step " + string$(.z) + ", " + string$(.cutoffs#[.z]) + " Hz"
