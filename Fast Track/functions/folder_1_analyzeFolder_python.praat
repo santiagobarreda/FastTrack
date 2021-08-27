@@ -1,7 +1,7 @@
 
 ## collect all regression coefficients in one big csv file. recreate after, collect winners,
 
-include utils/getSettings_python_wrapper.praat
+include utils/getSettings_python.praat
 include utils/importFunctions.praat
 include folder/trackFolder.praat
 include folder/autoSelectFolder.praat
@@ -11,7 +11,7 @@ form Set Parameters
     sentence folder
 #	positive number_of_steps
 #	positive number_of_coefficients_for_formant_prediction
-#    positive lowest_analysis_frequency
+#    	positive lowest_analysis_frequency
 #	positive highest_analysis_frequency
 #	positive maximum_plotting_frequency
 #	positive time_step
@@ -83,17 +83,14 @@ overAllStart = daySecond
 
 
 if track_formants = 1
-  writeInfoLine: "Heading to trackFolder"
   @trackFolder
 endif
 if autoselect_winners = 1
   save_image = make_images_comparing_analyses
-  appendInfoLine: "Heading to autoSelectFolder"
   @autoSelectFolder
 endif
 if get_winners = 1
   save_images = make_images_showing_winners
-  appendInfoLine: "Heading to getWinners"
   @getWinnersFolder
 endif
 
