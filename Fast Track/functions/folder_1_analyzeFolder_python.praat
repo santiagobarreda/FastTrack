@@ -50,7 +50,7 @@ if ending$ == "\"
   folder$ = folder$ - "\"
 endif
 
-@getSettings_python_wrapper
+@getSettings_python
 
 writeInfoLine: "Analysis settings found in folder"
 appendInfoLine: "Folder: ", folder$
