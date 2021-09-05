@@ -25,6 +25,7 @@ include tools/chopSoundFiles.praat
 include tools/makeTextGrids.praat
 include tools/extractVowelswithTG.praat
 include tools/prepareFileInfo.praat
+include tools/normalizereg.praat
 
 
 versionPraat$ = left$(praatVersion$, (rindex(praatVersion$, ".")-1));
