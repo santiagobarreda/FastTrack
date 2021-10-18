@@ -207,7 +207,7 @@ for filecounter from 1 to nfiles
     basename$ = filename$ - ".TextGrid"
 
     tg = Read from file: textGrid_folder$ + "/" + filename$
-    nintervals = Get number of intervals: 1
+    nintervals = Get number of intervals: segment_tier
 
     if (fileReadable: sound_folder$ + "/" + basename$ + ".wav") & (nintervals > 1)
       snd = Read from file: sound_folder$ + "/" + basename$ + ".wav"
