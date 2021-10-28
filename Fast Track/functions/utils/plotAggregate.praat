@@ -20,6 +20,7 @@ procedure plotAggregate autorun
         choice: "Type of plot:", type_of_plot
           option: "Contours"
           option: "Points"
+          option: "Numbers"
         optionMenu: "Number of bins:", number_of_bins
           option: "1"
           option: "3"
@@ -58,6 +59,12 @@ procedure plotAggregate autorun
       nocheck clicked = endPause: "Ok","Apply", 2
 
     endif
+
+    if type_of_plot == 3
+      label_column$ = "number"
+      type_of_plot = 2
+    endif
+
 
     if number_of_bins == 0
       number_of_bins = number(number_of_bins$)
