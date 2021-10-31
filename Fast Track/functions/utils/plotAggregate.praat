@@ -62,7 +62,6 @@ procedure plotAggregate autorun
 
     if type_of_plot == 3
       label_column$ = "number"
-      type_of_plot = 2
     endif
 
 
@@ -139,7 +138,7 @@ procedure plotAggregate autorun
         endif
 
         ### symbol plotting
-        if j == which_bin_to_plot and type_of_plot == 2
+        if j == which_bin_to_plot and type_of_plot > 1
           selectObject: tbl
           x = Get value: i, "f2"+string$(j)
           y = Get value: i, "f1"+string$(j)
