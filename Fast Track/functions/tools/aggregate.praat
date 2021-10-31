@@ -2,6 +2,7 @@
 procedure aggregate autorun
   @getSettings
 
+  ## add option to chose to output missing rows or not?
   value_to_collect = 1
   if autorun == 0
   beginPause: "Set Parameters"
@@ -81,7 +82,11 @@ procedure aggregate autorun
     .basename$ = Get value: .iii, "file"
     .basename$ = .basename$ - ".wav"
 
+    ## if file readable append row to output and do this
+    ## if not do not append and skip 
     .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
+
+
     .nframes = Get number of rows
     Append column: "ntime"
     for .j from 1 to .nframes
