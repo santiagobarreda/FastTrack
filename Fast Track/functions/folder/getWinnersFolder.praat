@@ -8,7 +8,7 @@ procedure getWinnersFolder
   createDirectory: folder$ + "/images_winners"
   createDirectory: folder$ + "/formants_winners"
   
-	##############################################################################
+  ##############################################################################
   ## get information about previous analysis using the first info file
   .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$-".wav" + "_info.txt"
   .tmp$ = Get string: 3
@@ -63,6 +63,8 @@ procedure getWinnersFolder
 		.winner = 0
 		.cutoff = 0
 		.minerror = 99999
+
+		## I think I can skip here if .winner == 0
 
     selectObject: .file_info 
     .basename$ = Get value: .counter, "file"
