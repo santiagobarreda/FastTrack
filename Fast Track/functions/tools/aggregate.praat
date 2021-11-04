@@ -61,8 +61,11 @@ procedure aggregate autorun
   .file_info = Read Table from comma-separated file: folder$ + "/file_information.csv"
   .nfiles = Get number of rows
 
+  .winners = Read Table from comma-separated file: folder$ + "/winners.csv"
+
+
   ## add columns to ouput table
-  Create Table with column names: "output", .nfiles, "file"
+  Create Table with column names: "output", 0, "file"
   .output = selected ("Table")
   Append column: "f0"
   Append column: "duration"
@@ -77,110 +80,117 @@ procedure aggregate autorun
     endfor
   endfor
    
+  .output_counter = 0
   for .iii from 1 to .nfiles
-    selectObject: .file_info
-    .basename$ = Get value: .iii, "file"
-    .basename$ = .basename$ - ".wav"
 
-    ## if file readable append row to output and do this
-    ## if not do not append and skip 
-    .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
+  	selectObject: .winners
+		.winner = Get value: .iii, "winner"
 
-
-    .nframes = Get number of rows
-    Append column: "ntime"
-    for .j from 1 to .nframes
-      tmp = .j / (.nframes/number_of_bins)
-      Set numeric value: .j, "ntime", ceiling( tmp )
-    endfor
-
-    ## section about gettin best cutoff frequency
-    .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
-    .tmp$ = Get string: 11
-    stringToVector_output# = zero#(number_of_formants)
-    @stringToVector: .tmp$
-    .cutoff = stringToVector_output#[1] 
-    removeObject: .info
-
-    selectObject: .tbl
-    .firstFrameTime = Get value: 1, "time"
-    .lastFrameTime = Get value: .nframes, "time"
-    .duration = .lastFrameTime - .firstFrameTime
-    .duration = round(.duration * 1000) / 1000
-
-    selectObject: .output
-    Set numeric value: .iii, "duration", .duration
-    Set numeric value: .iii, "cutoff", .cutoff
-
-    selectObject: .tbl
-    .mf0 = Get mean: "f0"
-
-    if .mf0 > 0
-      .tmp_tbl = Extract rows where column (number): "f0", "greater than", 0
-      .mf0 = Get mean: "f0"
-      .mf0 = round(.mf0 * 10) / 10
-      removeObject: .tmp_tbl
-    endif    
-    selectObject: .output
-    Set numeric value: .iii, "f0", .mf0
-
-    column_label_append$ = ""
-    if value_to_collect == 2
-      column_label_append$ = "p"
-    endif
-    
-    ## I think mostly just this part needs to change
-    if points_to_measure == 0
-      for .j from 1 to number_of_bins
-        selectObject: .tbl
-        .tmp_tbl = Extract rows where column (number): "ntime", "equal to", .j
-        for .k from 1 to number_of_formants
-          if statistic == 2
-            .mf'.k''.j' = Get mean: "f"+string$(.k)+column_label_append$
-          endif
-          if statistic == 1
-            .mf'.k''.j' = Get quantile: "f"+string$(.k)+column_label_append$, 0.5
-          endif
-        endfor
-        removeObject: .tmp_tbl
-      endfor
-    endif
-
-    #if points_to_measure == 1
-    #  for .j from 1 to number_of_bins
-    #    selectObject: .measure_points
-    #    .timepoint$ = Get string: i
-        # .timepoint = number (.timepoint$)
-    #    Formula: "point", .timepoint$
-    #    Append difference column: "time", "point", "diff"
-    #    Formula: "diff", "abs (self)"
-
-     # endfor
-    #  1+i
-    #endif
-
-
-    selectObject: .output
-    Set string value... .iii file '.basename$'
-    for .j from 1 to number_of_bins
-      for .i from 1 to number_of_formants
-        Set numeric value... .iii f'.i''.j' round(.mf'.i''.j')
-      endfor
-    endfor
+    if .winner > 0
+      selectObject: .output
+      Append row
+      .output_counter = .output_counter + 1
 
       selectObject: .file_info
-      group$ = Get value: .iii, "group"
-      label$ = Get value: .iii, "label"
-      color$ = Get value: .iii, "color"
-      number$ = Get value: .iii, "number"
-      selectObject: .output
-      Set string value: .iii, "group", group$
-      Set string value: .iii, "label", label$
-      Set string value: .iii, "color", color$
-      Set string value: .iii, "number", number$
-    endif
+      .basename$ = Get value: .iii, "file"
+      .basename$ = .basename$ - ".wav"
 
-    nocheck removeObject: .tbl
+      ## if file readable append row to output and do this
+      ## if not do not append and skip 
+      .tbl = Read Table from comma-separated file: folder$ + "/csvs/" + .basename$ + ".csv"
+
+      .nframes = Get number of rows
+      Append column: "ntime"
+      for .j from 1 to .nframes
+        tmp = .j / (.nframes/number_of_bins)
+        Set numeric value: .j, "ntime", ceiling( tmp )
+      endfor
+      
+      ## section about gettin best cutoff frequency
+      .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
+      .tmp$ = Get string: 11
+      stringToVector_output# = zero#(number_of_formants)
+      @stringToVector: .tmp$
+      .cutoff = stringToVector_output#[1] 
+      removeObject: .info
+
+      selectObject: .tbl
+      .firstFrameTime = Get value: 1, "time"
+      .lastFrameTime = Get value: .nframes, "time"
+      .duration = .lastFrameTime - .firstFrameTime
+      .duration = round(.duration * 1000) / 1000
+
+      selectObject: .output
+      Set numeric value: .output_counter, "duration", .duration
+      Set numeric value: .output_counter, "cutoff", .cutoff
+
+      selectObject: .tbl
+      .mf0 = Get mean: "f0"
+
+      if .mf0 > 0
+        .tmp_tbl = Extract rows where column (number): "f0", "greater than", 0
+        .mf0 = Get mean: "f0"
+        .mf0 = round(.mf0 * 10) / 10
+        removeObject: .tmp_tbl
+      endif    
+      selectObject: .output
+      Set numeric value: .output_counter, "f0", .mf0
+
+      column_label_append$ = ""
+      if value_to_collect == 2
+        column_label_append$ = "p"
+      endif
+      
+      if points_to_measure == 0
+        for .j from 1 to number_of_bins
+          selectObject: .tbl
+          .tmp_tbl = Extract rows where column (number): "ntime", "equal to", .j
+          for .k from 1 to number_of_formants
+            if statistic == 2
+              .mf'.k''.j' = Get mean: "f"+string$(.k)+column_label_append$
+            endif
+            if statistic == 1
+              .mf'.k''.j' = Get quantile: "f"+string$(.k)+column_label_append$, 0.5
+            endif
+          endfor
+          removeObject: .tmp_tbl
+        endfor
+      endif
+
+      #if points_to_measure == 1
+      #  for .j from 1 to number_of_bins
+      #    selectObject: .measure_points
+      #    .timepoint$ = Get string: i
+          # .timepoint = number (.timepoint$)
+      #    Formula: "point", .timepoint$
+      #    Append difference column: "time", "point", "diff"
+      #    Formula: "diff", "abs (self)"
+      # endfor
+      #  1+i
+      #endif
+
+      selectObject: .output
+      Set string value... .output_counter file '.basename$'
+      for .j from 1 to number_of_bins
+        for .i from 1 to number_of_formants
+          Set numeric value... .output_counter f'.i''.j' round(.mf'.i''.j')
+        endfor
+      endfor
+
+        selectObject: .file_info
+        group$ = Get value: .iii, "group"
+        label$ = Get value: .iii, "label"
+        color$ = Get value: .iii, "color"
+        number$ = Get value: .iii, "number"
+        selectObject: .output
+        Set string value: .output_counter, "group", group$
+        Set string value: .output_counter, "label", label$
+        Set string value: .output_counter, "color", color$
+        Set string value: .output_counter, "number", number$
+      endif
+
+      nocheck removeObject: .tbl
+    endif
   endfor
 
   selectObject: .output
