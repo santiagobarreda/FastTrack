@@ -14,10 +14,31 @@ include utils/importFunctions.praat
 beginPause: "Set Parameters"
     optionMenu: "", 1
     option: "[**IMPORTANT** Click to Read]"
-    option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default. If you place a file called 'vowelstoextract.csv'"
-    option: "in your desired output folder, or in the '/dat/' folder, the sounds you specify there will be extracted. You can (and should) also specify colors and groups"
-    option: "for each sound. The file should be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
-    comment: "Files will be saved directly into the folder specified here."
+    option: "All IPA and arpabet vowels (specified in /dat/vowelstoextract_default.csv) are extracted by default." 
+    option: "If you place a file called 'vowelstoextract.csv' in the '/dat/' folder, the sounds you specify there will"
+    option: "be extracted. You can (and should) also specify colors and groups for each sound. The file should "
+    option: "be set up before running this function. You can use the 'vowelstoextract_default.csv' file in /dat/ as a template."
+    option: " "
+    option: "Stress is marked on vowels: Click if your vowels are coded like A01, where the final character encodes stress. If"
+    option: "your stress is indicated using diacritics on the vowel itself, this does not need to be checked."
+    option: " "
+    option: "Stress to extract: This assumes the final symbol on the vowel labels is used to indicate stress."
+    option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
+    option: " "
+    option: "Words to skip: Vowels will not be extracted from any words specified here. Please spell words exactly as they"
+    option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
+    option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
+    option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
+    option: " "
+    option: "Save segmentation information: saves a table with information about the vowels extracted."
+    option: "For example, start and end times, and the current and previous words are saved."
+    option: " "
+    option: "Save file information: saves a file that can be used to analyze extracted sounds in a folder analysis."
+    option: " "
+    option: "Buffer: How much time should be added to edges (0 = no padding)? Setting the buffer to 0.025"
+    option: "allows formant tracking to the edge of the sound when using a 50ms analysis window.  Alternatively, "
+    option: "sounds can be padded with zeros before analysis with another function provided by Fast Track."
+
     sentence: "Folder:", folder$
     comment: "Which tier contains segment information?"
     positive: "Segment tier:", segment_tier
@@ -29,33 +50,11 @@ beginPause: "Set Parameters"
 		integer: "Comment tier3:", 0
     comment: "If anything is written in this tier, the segment will be skipped:"
 		integer: "Omit tier:", 0
-    comment: "Is stress marked on vowels?"
-    boolean: "Stress", stress
-    option: "[Click to Read]"
-    option: "This assumes the final symbol on the vowel labels is used to indicate stress."
-    option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
+    boolean: "Stress is marked on vowels", stress
     sentence: "Stress to extract", stress_to_extract$
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
-    option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
-    option: " "
-    option: "Alternatively, a file called wordstoskip.txt can be placed in the /dat/ folder. Each line should contain one"
-    option: "word to be skipped. This file will be used if it exists so be sure to erase it when no longer needed."
-		sentence: "Words to skip:", "--"
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "The first option saves a table with information about the vowels extracted."
-    option: "For example, start and end times, and the current and previous words are saved."
-    option: "The second option saves a file that can be used to analyze extractec sounds in a folder analysis."
+    sentence: "Words to skip:", "--"
     boolean: "Save segmentation information:", 1
     boolean: "Save file information:", 1
-    optionMenu: "", 1
-    option: "[Click to Read]"
-    option: "How much time should be added to edges (0 = no padding)?"
-    option: "Setting the buffer to 0.025 allows formant tracking to the edge of the sound when using"
-    option: "a 50ms analysis window. Alternatively, sounds can be padded with zeros before analysis"
-    option: "with another function provided by Fast Track."
     positive: "Buffer (s):", 0.025
 
 nocheck endPause: "Ok", 1
@@ -63,6 +62,7 @@ nocheck endPause: "Ok", 1
 @saveTGESettings
 
 maintain_separate = 0
+stress = stress_is_marked_on_vowels
 output_folder$ = folder$
 
 ################################################################################################

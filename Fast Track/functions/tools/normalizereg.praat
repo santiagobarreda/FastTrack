@@ -1,14 +1,33 @@
 
-procedure aggregate ;autorun
+procedure normalizereg ;autorun
   @getSettings
 
   ;if autorun == 0
   beginPause: "Set Parameters"
-    comment: "Indicate your working directory. This folder should contain a folder inside of it"
-    comment: "called 'processed_data' that contains the aggregated data you wish to normalize."
+
+   optionMenu: "", 1
+    option: "[**IMPORTANT** Click to Read]"
+    option: ""
+    option: "This function performs log mean normalization using the regression approach outlined in paper 1 below. "
+    option: "To make outputs compatible with ANAE normalization, just add an arbitrary scaling value and exponentiate"  
+    option: "the results. Other normalization methods are not implemented because these demonstrably erase "
+    option: "phonetic/linguistic/social information from vowel production data. This is demonstrated in paper 2,"
+    option: "and the theoretical basis for this expectation is presented in paper 3."
+    option: ""
+    option: "Folder: Indicate your working directory. This folder should contain a folder inside of it"
+    option:  "called 'processed_data' that contains the aggregated data you wish to normalize."
+    option: " "
+    option: "Number of formants: Indicate how many formants the aggregated data has."
+    option: "Number of bins: Indicate how times slices the aggregated data has."
+    option: " "
+    option: "Arbitrary scaling: an arbitrary number can be added back to the normalized files, as in ANAE normalization."
+    option: "Exponetiate: if checked, normalized values will be changed back into Hertz values."
+    sentence: "Paper 1", "https://santiagobarreda.com/cvfiles/2018_Barreda_Nearey.pdf"
+    sentence: "Paper 2", "https://santiagobarreda.com/cvfiles/Barreda_LVAC_2021.pdf"
+    sentence: "Paper 3", "https://santiagobarreda.com/cvfiles/2020_Barreda.pdf"
+    comment: " "
+    comment: " "
     sentence: "Folder:", folder$
-    comment: "How many sections should signal be divided into? 1 returns the overall aggregated value. 3 returns"
-    comment: "aggregated results for the first third, midle third, and final third, and so on."
     optionMenu: "Number of formants:", number_of_formants
   			option: "3"
   			option: "4"
@@ -23,6 +42,9 @@ procedure aggregate ;autorun
     boolean: "Exponentiate:", 0
   endPause: "Ok", 1
   ;endif
+
+  nformants = number (number_of_formants$)
+  nbins = number (number_of_bins$)
 
   ending$ = right$ (folder$,1)
   if ending$ == "/"
@@ -40,14 +62,14 @@ procedure aggregate ;autorun
   ncat = Get maximum: "group"
 
   Copy: "ffdat"
-  Remove column: "file"
-  Remove column: "f0"
-  Remove column: "duration"
-  Remove column: "label"
-  Remove column: "group"
-  Remove column: "color"
-  Remove column: "number"
-  Remove column: "cutoff"
+  nocheck Remove column: "file"
+  nocheck Remove column: "f0"
+  nocheck Remove column: "duration"
+  nocheck Remove column: "label"
+  nocheck Remove column: "group"
+  nocheck Remove column: "color"
+  nocheck Remove column: "number"
+  nocheck Remove column: "cutoff"
   ffdatt = Transpose
 
   if ncat == 1
@@ -116,16 +138,25 @@ procedure aggregate ;autorun
   selectObject: aggdat
   Copy: "normalized"
 
-  for i from 1 to number_of_formants
-    for j from 1 to number_of_bins
+  for i from 1 to nformants
+    for j from 1 to nbins
       selectObject: "Table normalized"  
       Formula: "f"+string$(i)+string$(j), "ln(self)"
       Formula: "f"+string$(i)+string$(j), "self - gbar + arbitrary_scaling"
       if exponentiate = 1
-        Formula: "exp(self)"
+        Formula: "f"+string$(i)+string$(j), "exp(self)"
       endif
     endfor
   endfor 
+
+  Save as comma-separated file: folder$ + "/processed_data/normalized_aggregated_data.csv"
+  
+  nocheck removeObject: aggdat
+  nocheck removeObject: linreg
+  nocheck removeObject: "Table regression"
+  nocheck removeObject: "Table regression"
+  nocheck removeObject: "Table ffdat"
+  nocheck removeObject: "Table ffdat_transposed"
 
 endproc
 

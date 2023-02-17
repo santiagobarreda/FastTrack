@@ -44,6 +44,7 @@ beginPause: "Set Parameters"
       option: "Edit folder"
       option: "Get coefficients"
       option: "Make TextGrids"
+      option: "Normalize Formants"
       option: "Prepare file information"
 nocheck endPause: "Ok", 1
 
@@ -72,6 +73,8 @@ if option == 8
   @makeTextGrids
 endif
 if option == 9
+  @normalizereg: 0
+endif
+if option == 10
   @prepareFileInfo: 0
 endif
-
