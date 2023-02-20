@@ -85,10 +85,6 @@ The plugin can analyze to a single file or to an entire folder of sounds at once
 [For more information please see the wiki](https://github.com/santiagobarreda/FastTrack/wiki)!
 [Or check this paper out.](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing)
 
-#### Automation
-
-[link TBD]
-
 ***
 If you use this, please cite it:
 
