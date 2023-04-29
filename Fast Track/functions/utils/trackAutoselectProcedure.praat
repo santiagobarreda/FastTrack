@@ -139,7 +139,8 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
       removeObject: .sp
     endif
     # change to save with filename or not
-    Save as 300-dpi PNG file: .folder$ + "/file_winner.png"
+    Save as 300-dpi PNG file: .folder$ + "/" + .basename$ + "_winner.png"
+
   endif
   
   # this is for the comparison images. pretty straightforward
@@ -179,7 +180,8 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
     elsif .number_of_steps = 24
       Select outer viewport: 0, 12, 0, 12
     endif
-    Save as 300-dpi PNG file: .folder$ + "/file_comparison.png"
+    Save as 300-dpi PNG file: .folder$ + "/" + .basename$ + "_comparison.png"
+
   endif
   nocheck removeObject: .sp
   
