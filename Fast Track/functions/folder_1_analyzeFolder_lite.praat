@@ -109,8 +109,11 @@ writeInfoLine: "Analyzing..."
 image = 1
 output_formant = 0
 output_table = 1
-folder$ = sound_folder$ + "/output"
-createDirectory: sound_folder$ + "/output"
+folder$ = sound_folder$ 
+createDirectory: sound_folder$ 
+
+# will hold cutoff information to be saved at end of loop
+cutoffs = Create Strings as tokens: "winner", ""
 
 for .iii from 1 to .nfiles
 
@@ -128,13 +131,26 @@ for .iii from 1 to .nfiles
     plot_current_view = 0
     # do the analysis and get the output
     @trackAutoselect: sound_to_analyse, folder$, lowest_analysis_frequency, highest_analysis_frequency, number_of_steps, number_of_coefficients_for_formant_prediction, number_of_formants, tracking_method$, image, sound_to_plot, plot_current_view, maximum_plotting_frequency, output_formant, output_table, save_all_formants
+    cutoffs_string$ = string$ (trackAutoselect.cutoff)
 
-  if (.totdur - 0.050) < (number_of_coefficients_for_formant_prediction*2*time_step)
+    selectObject: cutoffs
+    Insert string: 0, cutoffs_string$
+  endif
+  
+  if (.totdur - 0.050)  < (number_of_coefficients_for_formant_prediction*2*time_step)
     selectObject: file_info
     Set numeric value: .iii, "omit", 1
+    
+    selectObject: cutoffs
+    Insert string: 0, "0"
   endif
-
-  removeObject: .snd
-
+  
+  removeObject: .snd 
 endfor
-  removeObject: file_info
+
+selectObject: cutoffs
+Save as raw text file: sound_folder$ + "/cutoffs.csv"
+
+removeObject: file_info, cutoffs
+
+writeInfoLine: "Analyzing... and finished!"
