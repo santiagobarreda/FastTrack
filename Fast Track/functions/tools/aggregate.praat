@@ -61,8 +61,17 @@ procedure aggregate autorun
   .file_info = Read Table from comma-separated file: folder$ + "/file_information.csv"
   .nfiles = Get number of rows
 
-  .winners = Read Table from comma-separated file: folder$ + "/winners.csv"
+  winners_exists = 0
+  if fileReadable (folder$ + "/winners.csv")
+    winners_exists = 1
+    .winners = Read Table from comma-separated file: folder$ + "/winners.csv"
+  endif
 
+  cutoffs_exists = 0
+  if fileReadable (folder$ + "/cutoffs.csv")
+    cutoffs_exists = 1
+    .winners = Read Table from comma-separated file: folder$ + "/cutoffs.csv"
+  endif
 
   ## add columns to ouput table
   Create Table with column names: "output", 0, "file"
@@ -106,14 +115,20 @@ procedure aggregate autorun
         Set numeric value: .j, "ntime", ceiling( tmp )
       endfor
       
-      ## section about gettin best cutoff frequency
-      .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
-      .tmp$ = Get string: 11
-      stringToVector_output# = zero#(number_of_formants)
-      @stringToVector: .tmp$
-      .cutoff = stringToVector_output#[1] 
-      removeObject: .info
+      if winners_exists = 1
+        ## section about gettin best cutoff frequency
+        .info = Read Strings from raw text file: folder$ + "/infos/" + .basename$ + "_info.txt"
+        .tmp$ = Get string: 11
+        stringToVector_output# = zero#(number_of_formants)
+        @stringToVector: .tmp$
+        .cutoff = stringToVector_output#[1] 
+        removeObject: .info
+      endif 
 
+      if cutoffs_exists = 1
+        .cutoff = .winner
+      endif 
+      
       selectObject: .tbl
       .firstFrameTime = Get value: 1, "time"
       .lastFrameTime = Get value: .nframes, "time"
