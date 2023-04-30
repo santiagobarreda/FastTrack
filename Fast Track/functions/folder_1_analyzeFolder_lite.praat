@@ -111,7 +111,6 @@ output_formant = 0
 output_table = 1
 folder$ = sound_folder$ + "/output"
 createDirectory: sound_folder$ + "/output"
-writeInfoLine: sound_folder$ + "/output"
 
 for .iii from 1 to .nfiles
 
@@ -138,3 +137,4 @@ for .iii from 1 to .nfiles
   removeObject: .snd
 
 endfor
+  removeObject: file_info
