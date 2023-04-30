@@ -69,6 +69,16 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
   endfor
     
   .winner = 1
+
+  if .output_table = 1
+    createDirectory: sound_folder$ + "/csvs/"
+  endif
+  if .image = 1
+    createDirectory: sound_folder$ + "/images_winners/"
+  endif
+  if .image = 2
+    createDirectory: sound_folder$ + "/images_comparisons/"
+  endif
   
   ## loop that performs the analyses
   for z from 1 to .number_of_steps
@@ -142,7 +152,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
       removeObject: .sp
     endif
     # change to save with filename or not
-    Save as 300-dpi PNG file: .folder$ + "/" + .basename$ + "_winner.png"
+    Save as 300-dpi PNG file: .folder$ + "/images_winners/" + .basename$ + "_winner.png"
 
   endif
   
@@ -183,7 +193,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
     elsif .number_of_steps = 24
       Select outer viewport: 0, 12, 0, 12
     endif
-    Save as 300-dpi PNG file: .folder$ + "/" + .basename$ + "_comparison.png"
+    Save as 300-dpi PNG file: .folder$ + "/images_comparison/" + .basename$ + "_comparison.png"
 
   endif
   nocheck removeObject: .sp
@@ -191,8 +201,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
   ########################################################################################################################################################
   ########################################################################################################################################################
   ## Save data and delete backup files. nothing fancy here. a lot of removing objects
-  
-  
+
   for z from 1 to .number_of_steps
   	# (.output_...: 1=save, 2=return, 3=both)
   	if (.output_formant = 1 or .output_formant = 3 or .output_all_candidates = 1) and z = .winner
@@ -230,7 +239,7 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
   # (.output_...: 1=save, 2=return, 3=both)
   if .output_table = 1 or .output_table = 3
   	selectObject: "Table formants_" + string$(.winner)
-  	Save as comma-separated file: .folder$ + "/" + .basename$ + ".csv"
+  	Save as comma-separated file: .folder$ + "/csvs/" + .basename$ + ".csv"
   endif  
   if .output_table >= 2
   	selectObject: "Table formants_" + string$(.winner)
