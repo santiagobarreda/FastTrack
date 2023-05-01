@@ -106,7 +106,7 @@ Append column: "omit"
 
 # I need to change this to something more useful like the winning regression coefficients or something
 writeInfoLine: "Analyzing..."
-image = 1
+image = make_winner_images
 output_formant = 0
 output_table = 1
 folder$ = sound_folder$ 
