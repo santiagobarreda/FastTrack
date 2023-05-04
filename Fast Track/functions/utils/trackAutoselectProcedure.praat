@@ -71,13 +71,13 @@ procedure trackAutoselect: .snd, .folder$, .lowest_analysis_frequency, .highest_
   .winner = 1
 
   if .output_table = 1
-    createDirectory: sound_folder$ + "/csvs/"
+    createDirectory: folder$ + "/csvs/"
   endif
   if .image = 1
-    createDirectory: sound_folder$ + "/images_winners/"
+    createDirectory: folder$ + "/images_winners/"
   endif
   if .image = 2
-    createDirectory: sound_folder$ + "/images_comparisons/"
+    createDirectory: folder$ + "/images_comparisons/"
   endif
   
   ## loop that performs the analyses
