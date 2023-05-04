@@ -212,6 +212,6 @@ procedure aggregate autorun
   Save as comma-separated file: folder$ + "/processed_data/aggregated_data.csv"
   Rename: "aggregated"
 
-  removeObject: .file_info
+  nocheck removeObject: .file_info
 
 endproc
