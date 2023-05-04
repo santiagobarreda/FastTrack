@@ -74,12 +74,18 @@ beginPause: "Set Parameters"
   	        option: "median"
   					option: "mean"
  	boolean: "make winner images", make_winner_images
+  boolean: "Aggregate", 1
+
 nocheck endPause: "Ok", 1
 
 number_of_steps = number(number_of_steps$)
 number_of_formants = number(number_of_formants$)
 
 sound_folder$ = folder$
+
+if !fileReadable: folder$ + "/file_information.csv"
+    @prepareFileInfo: 1
+endif
 
 # re-check sound file name in case this is second run (given that the form is a loop)
 numberOfSelectedSounds  = numberOfSelected ("Sound")
@@ -151,6 +157,73 @@ endfor
 selectObject: cutoffs
 Save as raw text file: sound_folder$ + "/cutoffs.csv"
 
-removeObject: file_info, cutoffs
+if aggregate = 1
+  @aggregate: 1
+  selectObject: "Table aggregated"
+  tbl = selected()
+
+  plotting_symbols$ = "--"
+  font_size = 28
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 1
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 0
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: sound_folder$ + "/contours.png"
+  
+  plotting_symbols$ = "--"
+  font_size = 14
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 2
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 0
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: sound_folder$ + "/label.png"
+
+  tbl = selected()
+  plotting_symbols$ = "--"
+  font_size = 14
+  add_axes = 1
+  erase = 1
+  which_bin_to_plot = 3
+  all_points = 0
+  line_width = 2
+  type_of_plot = 2
+  arrow_size = 1
+  point_size = 1.5
+  draw_grid = 1
+  label_column$ = "number"
+  minimum_F1 = 200
+  maximum_F1 = 1200
+  minimum_F2 = 500
+  maximum_F2 = 3000
+  @plotAggregate: 1
+  Save as 300-dpi PNG file: sound_folder$ + "/number.png"
+
+  removeObject: "Table aggregated"
+endif
+
+nocheck removeObject: file_info
+nocheck removeObject: "Table cutoffs"
+nocheck removeObject: "Strings list"
+nocheck removeObject: "Strings tokens"
 
 writeInfoLine: "Analyzing... and finished!"
