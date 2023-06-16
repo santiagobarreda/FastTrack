@@ -239,6 +239,7 @@ for filecounter from 1 to nfiles
       
       if maintain_separate == 1
           createDirectory: output_folder$ + "/" + basename$
+          createDirectory: output_folder$ + "/" + basename$ + "/sounds"
       endif
       if maintain_separate == 0
           createDirectory: output_folder$ + "/sounds"
@@ -248,9 +249,9 @@ for filecounter from 1 to nfiles
 
       if maintain_separate == 1
         selectObject: file_info
-        Save as comma-separated file: output_folder$ + "/"+ basename$+ "_file_information.csv"
+        Save as comma-separated file: output_folder$ + "/"+ basename$ + "/" + "file_information.csv"
         selectObject: tbl
-        Save as comma-separated file: output_folder$ + "/"+ basename$+ "_segmentation_info.csv"
+        Save as comma-separated file: output_folder$ + "/"+ basename$ + "/" + "segmentation_info.csv"
       endif
       
       selectObject: tbl

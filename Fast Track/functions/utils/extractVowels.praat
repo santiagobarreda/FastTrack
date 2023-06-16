@@ -161,7 +161,7 @@ procedure extractVowels
         endif
 
         if maintain_separate == 1
-          Save as WAV file: output_folder$ + "/" + basename$ + "/" + filename$ + ".wav"
+          Save as WAV file: output_folder$ + "/" + basename$ + "/sounds/" + filename$ + ".wav"
         endif
         if maintain_separate == 0
           Save as WAV file: output_folder$ + "/sounds/" + filename$ + ".wav"
