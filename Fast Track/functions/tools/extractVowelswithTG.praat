@@ -36,6 +36,7 @@ beginPause: "Set Parameters"
     option: "This assumes the final symbol on the vowel labels is used to indicate stress."
     option: "Indicate which stress symbols you want to extract (leave blank for no symbols)"
     sentence: "Stress to extract", stress_to_extract$
+    optionMenu: "", 1
     option: "[Click to Read]"
     option: "Vowels will not be extracted from any words specified here. Please spell words exactly as they"
     option: "will appear in the textgrid (including capitalization). Words should be separated by a space."
