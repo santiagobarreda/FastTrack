@@ -19,6 +19,8 @@ procedure autoSelectFolder
    @stringToVector: .tmp$
   .cutoffs# = stringToVector_output#
 
+  # this needs to overwrite if user specifies a different order after tracking. 
+  # check if new matches old if not re-write.
   .tmp$ = Get string: 7
   number_of_coefficients_for_formant_prediction = number (.tmp$)
 
@@ -94,21 +96,25 @@ procedure autoSelectFolder
     selectObject: .file_info 
     .basename$ = Get value: .ii, "file"
     .basename$ = .basename$ - ".wav"
-    writeInfoLine: "Selecting winners (step 2): " +string$(.ii) +" of " + string$(.nfiles) + ", " + .basename$
+	
+	##Optionally show progress
+	if show_progress
+		writeInfoLine: "Selecting winners (step 2): " +string$(.ii) +" of " + string$(.nfiles) + ", " + .basename$
 
-    ## timing part
-    if .ii > 10 and .nfiles > 60
-      @daySecond
-      .nowSecond = daySecond
-      .elapsedTime = .nowSecond - .startSecond
-      .totalTime = .elapsedTime * (.nfiles / .ii)
-      .endGuess = .totalTime - .elapsedTime
-      .endGuess = round (.endGuess / 60) ; minus elapsed time?
-      appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
-      #appendInfoLine: .totalTime
-      #appendInfoLine: .elapsedTime
-    endif
-
+		## timing part
+		if .ii > 10 and .nfiles > 60
+		  @daySecond
+		  .nowSecond = daySecond
+		  .elapsedTime = .nowSecond - .startSecond
+		  .totalTime = .elapsedTime * (.nfiles / .ii)
+		  .endGuess = .totalTime - .elapsedTime
+		  .endGuess = round (.endGuess / 60) ; minus elapsed time?
+		  appendInfoLine: "Process should take about " + string$(.endGuess) + " more minutes at current rate."
+		  #appendInfoLine: .totalTime
+		  #appendInfoLine: .elapsedTime
+		endif
+	endif
+	
     # read in sound and make spectrogram
     .snd = Read from file: folder$ +"/sounds/" + .basename$+ ".wav"
     if save_image = 1
@@ -121,7 +127,7 @@ procedure autoSelectFolder
 
     writeFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","Regression analysis information for: " + .basename$
     appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of formants: " + string$(number_of_formants)
-    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coeccicients: " + string$(number_of_coefficients_for_formant_prediction)
+    appendFileLine: folder$ + "/regression_infos/" + .basename$ + ".txt","number of coefficients: " + string$(number_of_coefficients_for_formant_prediction)
 
     ##########################################################################################################
     ## loop across number of analysis steps
@@ -133,7 +139,7 @@ procedure autoSelectFolder
       ##################################################################################
       ## this part determines the winner
 
-  	  @findError: .fr
+  	  @findError: .fr, number_of_coefficients_for_formant_prediction, number_of_formants
       .totalerror#[.z] = sum(formantError#)
       .totalerror#[.z] = round (.totalerror#[.z] * 10) / 10
       .f1Error#[.z] = formantError#[1]

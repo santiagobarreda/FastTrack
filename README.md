@@ -5,16 +5,18 @@
 </p>   
 &nbsp;
 
-**A Praat plugin for fast, accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[paper]](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing) [[YouTube]](https://www.youtube.com/watch?v=NaAKJJaPD8Y&t)
+**A Praat plugin for fast(ish), accurate, (nearly) automatic formant-tracking.** [[wiki]](https://github.com/santiagobarreda/FastTrack/wiki) [[YouTube]](https://www.youtube.com/watch?v=NaAKJJaPD8Y&t)
+
+[[download paper]](https://drive.google.com/file/d/1RP0Lxj6PzCxaPsMQ53QXI0Kk-SwwETUl/view?usp=sharing)
 
 Citation:
 [Barreda, S. (2021). Fast Track: fast (nearly) automatic formant-tracking using Praat. Linguistics Vanguard, 7(1)](https://doi.org/10.1515/lingvan-2020-0051)
 
 ###
 
-Fast Track is a Praat plugin mean to make accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
+Fast Track is a Praat plugin that makes accurate formant tracking fast and easy. Fast Track automatically runs multiple formant analyses on a given sound file, and tries to pick the best one for you (surrounded by extra boxes in the example below). 
 
-Fast Track has built-in functions to help along every step of a vowel analysis project from start to finish (with more coming):
+Fast Track has built-in functions to help along every step of a vowel analysis project from start to finish:
   
 * Extract vowel sounds from larger recordings with TextGrids files.
 
@@ -60,6 +62,8 @@ The plugin can analyze to a single file or to an entire folder of sounds at once
 * A log of the selected analyses, which can then be used to select alternate preferred analysis. 
 
 * Detailed information regarding the analyses carried out for each sound.   
+
+* A new (as of 6/23) 'lite' version that doesn't save any intermediate files.  
 
 &nbsp;
 

@@ -9,6 +9,9 @@ procedure extractVowels
   nIntervals = Get number of intervals: segment_tier
   segmentcount = 0
   filecount = 0
+
+  selectObject: snd
+  snd_duration = Get duration
   
   ## loop to go through all segment intervals
   for i from 1 to nIntervals
@@ -74,7 +77,12 @@ procedure extractVowels
     
     ## check that vowel is longer than 30 ms
     if (vowelEnd-vowelStart) < 0.03
-      extract = 0
+      extract = 0    
+    endif
+
+    ## check that the vowel doesnt occur after the sound has ended. 
+    if (vowelEnd > snd_duration)
+      analyze = 0
     endif
 
     ## if segment should be analyzed....
@@ -153,7 +161,7 @@ procedure extractVowels
         endif
 
         if maintain_separate == 1
-          Save as WAV file: output_folder$ + "/" + basename$ + "/" + filename$ + ".wav"
+          Save as WAV file: output_folder$ + "/" + basename$ + "/sounds/" + filename$ + ".wav"
         endif
         if maintain_separate == 0
           Save as WAV file: output_folder$ + "/sounds/" + filename$ + ".wav"

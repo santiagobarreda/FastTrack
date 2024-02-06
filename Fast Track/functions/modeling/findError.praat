@@ -1,5 +1,5 @@
 
-procedure findError .fr
+procedure findError .fr, .number_of_coefficients_for_formant_prediction, .number_of_formants
 
   ####################################################################################
   # sets up table called output that will contain all information abotu values, prediction, error, etc.
@@ -20,7 +20,7 @@ procedure findError .fr
     Set column label (label): "B"+string$(.i)+"(Hz)", "b"+string$(.i)
   endfor
 
-  if number_of_formants == 3
+  if .number_of_formants == 3
     Remove column: "b4"
     Remove column: "f4"
   endif
@@ -29,7 +29,7 @@ procedure findError .fr
   Append column: "f2p"
   Append column: "f3p"
 
-  if number_of_formants == 4
+  if .number_of_formants == 4
     Append column: "f4p"
   endif
 
@@ -44,7 +44,7 @@ procedure findError .fr
   Formula: "time1", "row / number_of_frames"
   Formula: "time1", "cos(( self )*pi*2*(1*0.5))"
 
-  for .c from 2 to number_of_coefficients_for_formant_prediction
+  for .c from 2 to .number_of_coefficients_for_formant_prediction
     select Table output
     Append column... time'.c'
     Formula: "time"+string$(.c), "row / " + string$(number_of_frames)
@@ -54,38 +54,43 @@ procedure findError .fr
   ####################################################################################
   ## prediction of formant values and collections of prediction coefficients
 
-  f1coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  f2coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  f3coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
-  if number_of_formants == 4
-    f4coeffs# = zero# (number_of_coefficients_for_formant_prediction+1)
+  f1coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
+  f2coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
+  f3coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
+  if .number_of_formants == 4
+    f4coeffs# = zero# (.number_of_coefficients_for_formant_prediction+1)
   endif
 
-  for .fnum from 1 to number_of_formants
-    @predictFormants: .fnum
+  for .fnum from 1 to .number_of_formants
+    @predictFormants: .fnum, .number_of_coefficients_for_formant_prediction, .number_of_formants
     f'.fnum'coeffs#[1] = round (intercept * 10) / 10
-    for .cnum from 1 to number_of_coefficients_for_formant_prediction
+    for .cnum from 1 to .number_of_coefficients_for_formant_prediction
       f'.fnum'coeffs#[.cnum+1] = round(coeff'.cnum' * 10) / 10
     endfor
   endfor
 
   ## predictor information no longer needed in output. it was only there to speed up prediction
   select Table output
-  for .ff from 1 to number_of_coefficients_for_formant_prediction
+  for .ff from 1 to .number_of_coefficients_for_formant_prediction
     Remove column... time'.ff'
   endfor
 
   ###############################################################################
   ### Here is where the error is calculated. 
 
-  formantError# = zero#(number_of_formants)
+  formantError# = zero#(.number_of_formants)
   totalerror = 0
   select Table output
   Formula: "error1", "abs(self)"
   Formula: "error2", "abs(self)"
   Formula: "error3", "abs(self)"
-  if number_of_formants == 4
+  #Formula... error1 abs(self) * self[row,"b1"]
+  #Formula... error2 abs(self) * self[row,"b2"]
+  #Formula... error3 abs(self) * self[row,"b3"]
+
+  if .number_of_formants == 4
     Formula: "error4", "abs(self)"
+    #Formula... error4 abs(self) * self[row,"b4"]
   endif
   ;.tmp = Get quantile: "error1", 0.5
   .tmp = Get mean: "error1"
@@ -96,7 +101,7 @@ procedure findError .fr
   ;.tmp = Get quantile: "error3", 0.5
   .tmp = Get mean: "error3"
   formantError#[3] = round((.tmp)*10)/10
-  if number_of_formants == 4
+  if .number_of_formants == 4
     ;.tmp = Get quantile: "error4", 0.5
     .tmp = Get mean: "error4"
     formantError#[4] = round((.tmp)*10)/10
@@ -132,7 +137,7 @@ procedure findError .fr
     formantError#[3] = formantError#[3] + 10000
   endif
 
-  if number_of_formants == 4
+  if .number_of_formants == 4
     tmp1 = Get quantile: "f1", 0.5
     tmp2 = Get quantile: "f2", 0.5
     tmp3 = Get quantile: "f3", 0.5
@@ -145,7 +150,7 @@ procedure findError .fr
     endif
   endif
 
-  for .ff from 1 to number_of_formants
+  for .ff from 1 to .number_of_formants
     Remove column... error'.ff'
   endfor
   Remove column... frame

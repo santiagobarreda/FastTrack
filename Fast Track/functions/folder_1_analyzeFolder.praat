@@ -60,6 +60,7 @@ beginPause: "Set Parameters"
     optionMenu: "Statistic", 1
   	        option: "median"
   					option: "mean"
+	boolean: "Show progress", 0
      optionMenu: "", 1
     option: "[Click to Read]"
    option: "Uncheck to skip step. Individual steps can be carried out if previous step has been completed."

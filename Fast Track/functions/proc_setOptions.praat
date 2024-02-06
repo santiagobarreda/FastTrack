@@ -25,7 +25,7 @@ while clicked <> 1
 		  comment: "More coefficients allow for more sudden, and 'wiggly' formant motion."
 		  positive: "Number of coefficients for formant prediction:", number_of_coefficients_for_formant_prediction
 		  positive: "Maximum plotting frequency (Hz):", maximum_plotting_frequency
-		  positive: "Time step (ms):", time_step
+		  positive: "Time step (s):", time_step
 		  sentence: "Tracking method:", tracking_method$
 		  sentence: "Basis functions:", basis_functions$
 		  sentence: "Error method:", error_method$
