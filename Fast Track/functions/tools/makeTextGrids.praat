@@ -44,6 +44,7 @@ procedure makeTextGrids
     filename$ = Get string: i
     basename$ = filename$ - ".wav"
     .snd = Read from file: folder$ + "/" + filename$
+    Scale intensity: 70
 
     if !fileReadable: folder$ + "/textGrids/" + basename$ + ".TextGrid"
       .tg = To TextGrid: "segments", ""
