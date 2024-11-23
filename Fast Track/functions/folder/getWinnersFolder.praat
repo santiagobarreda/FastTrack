@@ -109,7 +109,7 @@ procedure getWinnersFolder
       .snd = Read from file: folder$ + "/sounds/" + .basename$ + ".wav"
 
       ##### This block is for the basic situation where all formants are from the same cutoff.
-      if (.winner = .wf1) & (.wf1 = .wf2) & (.wf3 = .wf3) & (.wf3 = .wf4)
+      if (.winner = .wf1) & (.wf1 = .wf2) & (.wf2 = .wf3) & (.wf3 = .wf4)
 
         ## I should add heuristics here. do other check here and affect winners not errors. 
         ## add column in winners column where smoothest. was not chosen due to some reason. never need to redo analyses
