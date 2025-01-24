@@ -51,5 +51,5 @@ procedure addBuffer
 
   endfor
 
-  remobeObject: obj
+  removeObject: obj
 endproc
