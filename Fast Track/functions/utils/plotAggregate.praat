@@ -5,7 +5,7 @@ procedure plotAggregate autorun
 
   @getSettings
   color = 1
-  number_of_bins = 0
+  number_of_bins_chosen = 0
   while clicked == 2
 
     if autorun == 0
@@ -21,13 +21,13 @@ procedure plotAggregate autorun
           option: "Contours"
           option: "Points"
           option: "Numbers"
-        optionMenu: "Number of bins:", number_of_bins
+        optionMenu: "Number of bins:", number_of_bins_chosen
           option: "1"
           option: "3"
           option: "5"
           option: "7"
           option: "9"
-          option: "10"
+          option: "11"
         optionMenu: "Color", 1
           option: "From Table"
           option: "Red"
@@ -65,9 +65,12 @@ procedure plotAggregate autorun
     endif
 
 
-    if number_of_bins == 0
-      number_of_bins = number(number_of_bins$)
+    ## number_of_bins_chosen is the number of the respective option in the menu
+    if number_of_bins_chosen == 0
+      number_of_bins_chosen = number_of_bins
     endif
+    ## set number_of_bins to the actual number stored in the option
+    number_of_bins = number(number_of_bins$)
 
     if autorun == 1
       clicked = 1
